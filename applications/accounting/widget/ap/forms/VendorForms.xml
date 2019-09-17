@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+    <form name="ListVendors" type="list" list-name="listIt" paginate-target="findVendors" odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="Vendor"/>
+                <field-map field-name="orderBy" value="partyId"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="partyId" title="${uiLabelMap.PartyPartyId}" widget-style="buttontext">
+            <hyperlink description="${partyId}" target="editVendor" also-hidden="false">
+                <parameter param-name="partyId"/>
+            </hyperlink>
+        </field>
+        <field name="manifestCompanyName" title="${uiLabelMap.PartyManifestCompanyName}">
+            <display/>
+        </field>
+        <field name="manifestCompanyTitle" title="${uiLabelMap.PartyManifestCompanyTitle}">
+            <display/>
+        </field>
+        <field name="manifestLogoUrl" title="${uiLabelMap.PartyManifestLogoUrl}">
+            <display/>
+        </field>
+        <field name="manifestPolicies" title="${uiLabelMap.PartyManifestPolicies}">
+            <display/>
+        </field>
+        <field name="noOfDays" title="${uiLabelMap.NumberOfDays}">
+            <display/>
+        </field>
+        <!--added from me-->
+        <field name="TrialBalanceReport"  title="${uiLabelMap.AccountingGlAccountTrialBalanceReport}" widget-style="buttontext">
+            <hyperlink description="${partyId}" target="report" also-hidden="false">
+                <parameter param-name="partyId"/>
+            </hyperlink>
+        </field>
+    </form>
+<!--    <form name="EditVendor" type="single" target="updateVendor" title="" default-map-name="vendor">
+        <actions>
+            <entity-one entity-name="Vendor" value-field="vendor"/>
+        </actions>
+        <alt-target use-when="partyId==null" target="createVendor"/>
+        <alt-target use-when="partyId!=null&amp;&amp;vendor!=null" target="updateVendor"/>
+        <field use-when="partyId==null" name="partyId" title="${uiLabelMap.PartyPartyId}" required-field="true"><lookup target-form-name="LookupPerson"/></field>
+        <field use-when="partyId!=null&amp;&amp;vendor!=null" name="partyId" title="${uiLabelMap.PartyPartyId}"><display/></field>
+        <field use-when="partyId==null" name="manifestCompanyName" title="${uiLabelMap.PartyManifestCompanyName}"><text/></field>
+        <field use-when="partyId!=null&amp;&amp;vendor!=null" name="manifestCompanyName" title="${uiLabelMap.PartyManifestCompanyName}"><text default-value="${parameters.manifestCompanyName}"/></field>
+        <field use-when="partyId==null" name="manifestCompanyTitle" title="${uiLabelMap.PartyManifestCompanyTitle}"><text/></field>
+        <field use-when="partyId!=null&amp;&amp;vendor!=null" name="manifestCompanyTitle" title="${uiLabelMap.PartyManifestCompanyTitle}"><text default-value="${parameters.manifestCompanyTitle}"/></field>
+        <field use-when="partyId==null" name="manifestLogoUrl" title="${uiLabelMap.PartyManifestLogoUrl}"><text/></field>
+        <field use-when="partyId!=null&amp;&amp;vendor!=null" name="manifestLogoUrl" title="${uiLabelMap.PartyManifestLogoUrl}"><text default-value="${parameters.manifestLogoUrl}"/></field>
+        <field use-when="partyId==null" name="manifestPolicies" title="${uiLabelMap.PartyManifestPolicies}"><text/></field>
+        <field use-when="partyId!=null&amp;&amp;vendor!=null" name="manifestPolicies" title="${uiLabelMap.PartyManifestPolicies}"><text default-value="${parameters.manifestPolicies}"/></field>
+        <field name="submitButton" use-when="partyId==null" title="${uiLabelMap.CommonCreate}"><submit button-type="button"/></field>
+        <field name="submitButton" use-when="partyId!=null&amp;&amp;vendor!=null" title="${uiLabelMap.CommonUpdate}"><submit button-type="button"/></field>
+    </form>-->
+    
+     <form name="EditVendor" type="single" target="updateVendor" title="" default-map-name="vendor">
+        <actions>
+            <entity-one entity-name="Vendor" value-field="vendor"/>
+        </actions>
+        <alt-target use-when="partyId==null" target="createVendor"/>
+        <alt-target use-when="partyId!=null&amp;&amp;vendor!=null" target="updateVendor"/>
+        <field use-when="partyId==null" name="partyId" title="${uiLabelMap.PartyPartyId}" required-field="true"><lookup target-form-name="LookupPerson"/></field>
+        <field use-when="partyId!=null&amp;&amp;vendor!=null" name="partyId" title="${uiLabelMap.PartyPartyId}"><display/></field>
+        <field use-when="partyId==null" name="manifestCompanyName" title="${uiLabelMap.PartyManifestCompanyName}"><text/></field>
+        <field use-when="partyId!=null&amp;&amp;vendor!=null" name="manifestCompanyName" title="${uiLabelMap.PartyManifestCompanyName}"><text default-value="${parameters.manifestCompanyName}"/></field>
+        <field use-when="partyId==null" name="manifestCompanyTitle" title="${uiLabelMap.PartyManifestCompanyTitle}"><text/></field>
+
+        <field use-when="partyId!=null&amp;&amp;vendor!=null" name="manifestCompanyTitle" title="${uiLabelMap.PartyManifestCompanyTitle}">
+            <text default-value="${parameters.manifestCompanyTitle}"/>
+        </field>
+         <field use-when="partyId==null&amp;&amp;vendor==null" name="noOfDays" title="${uiLabelMap.NumberOfDays}"><text default-value="${parameters.noOfDays}"/></field>
+                <field use-when="partyId!=null" name="noOfDays" title="Number Of Days"><text/></field>
+
+        <field use-when="partyId==null" name="manifestLogoUrl" title="${uiLabelMap.PartyManifestLogoUrl}"><text/></field>
+        <field use-when="partyId!=null&amp;&amp;vendor!=null" name="manifestLogoUrl" title="${uiLabelMap.PartyManifestLogoUrl}"><text default-value="${parameters.manifestLogoUrl}"/></field>
+        <field use-when="partyId==null" name="manifestPolicies" title="${uiLabelMap.PartyManifestPolicies}"><text/></field>
+        
+        <field use-when="partyId!=null&amp;&amp;vendor!=null" name="manifestPolicies" title="${uiLabelMap.PartyManifestPolicies}">
+            <text default-value="${parameters.manifestPolicies}"/>
+        </field>
+        <field name="submitButton" use-when="partyId==null" title="${uiLabelMap.CommonCreate}"><submit button-type="button"/></field>
+        <field name="submitButton" use-when="partyId!=null&amp;&amp;vendor!=null" title="${uiLabelMap.CommonUpdate}"><submit button-type="button"/></field>
+    </form>
+    <form name="FindVendors" type="single" target="findVendors" title="Find and List Vendors"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="partyId" title="${uiLabelMap.CommonId} ${uiLabelMap.PartyVendor} " parameter-name="partyId"><text-find size="25"></text-find></field>
+        <field name="manifestCompanyName" title="${uiLabelMap.PartyManifestCompanyName}" parameter-name="manifestCompanyName"><text-find size="25"></text-find></field>
+        <field name="manifestCompanyTitle" title="${uiLabelMap.PartyManifestCompanyTitle}" parameter-name="manifestCompanyTitle"><text-find size="25"></text-find></field>
+        <field name="manifestLogoUrl" title="${uiLabelMap.PartyManifestLogoUrl}" parameter-name="manifestLogoUrl"><text-find size="25"></text-find></field>
+        <field  name="noOfDays" title="${uiLabelMap.NumberOfDays}" parameter-name="noOfDays"><text-find size="25"></text-find></field>
+
+        <field name="manifestPolicies" title="${uiLabelMap.PartyManifestPolicies}" parameter-name="manifestPolicies"><text-find size="25"></text-find></field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="find" title="${uiLabelMap.CommonFind}"><submit/></field>
+    </form>
+    <!--added from me-->
+    <form name="FindVendorsReport" type="single" target="findVendorsReport?Report=${parameters.Report}&amp;notTrans=${parameters.notTrans}" title="Find and List Vendors"
+              header-row-style="header-row" default-table-style="basic-table"> 
+       <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <!--          <actions>
+            <entity-condition entity-name="Invoice" list="invoiceList">
+                <condition-list combine="or">
+                    <condition-expr field-name="partyId" />
+                    <condition-expr field-name="partyId" />
+                </condition-list>
+            </entity-condition>
+        </actions>-->
+        <!--        <field  name="VendorID" parameter-name="partyId" >
+            <drop-down>
+                 <entity-options key-field-name="partyId" entity-name="Vendor" description="${partyId}"/>
+            </drop-down> 
+        </field>-->
+        <!--<text-find size="25"></text-find>-->
+        <!--<lookup target-form-name="LookupPartyName"/> parameters.PartyIdCost "-->
+        <!--use-when="${parameters.Report}.equals(2)"-->
+           <field name="partyId" title="${uiLabelMap.PartyId}" parameter-name="partyId" required-field="true"
+                  use-when="groovy: ${parameters.Report}.equals(3)" >
+            <lookup target-form-name="LookupPartyName"  default-value="${parameters.PartyIdCost}" />
+           </field>
+           <field name="partyId" title="${uiLabelMap.PartyId}" parameter-name="partyId" required-field="true"
+                  use-when="groovy: ${parameters.Report}.equals(2)" >
+            <lookup target-form-name="partyCostCenter"  default-value="${parameters.PartyIdCost}" />
+           </field>
+           <!--use-when="${parameters.Report}.equals(1)"-->
+        <field name="partyId" title="${uiLabelMap.PartyVendor}" parameter-name="partyId" required-field="true" 
+         use-when="groovy: ${parameters.Report}.equals(1)">
+            <drop-down allow-empty="false" no-current-selected-key="">
+                <entity-options entity-name="Vendor" key-field-name="partyId" description="${partyId} ${manifestCompanyName}">
+                    <entity-order-by field-name="partyId"/>
+                </entity-options>
+            </drop-down>
+        </field>
+      
+        
+         <field name="fromDate" title="${uiLabelMap.FormFieldTitle_datefrom}" parameter-name="fromDate"><date-time type="date"/></field>
+         <field name="toDate" title="${uiLabelMap.FormFieldTitle_dateThru}" parameter-name="toDate" ><date-time type="date"/></field>
+
+          <field name="flagBeginBalance" 
+               title="${uiLabelMap.BeginBalance}">
+            <radio no-current-selected-key="O">
+                <option key="W"  description="${uiLabelMap.WithBeginBalance}" />
+                <option key="O"  description="${uiLabelMap.WithoutBeginBalance}" />          
+            </radio>
+        </field>
+<!--        <field name="fromDate" title="fromDate" parameter-name="fromDate">
+            <text-find size="25"></text-find>       
+        </field>-->
+        
+        <!--<date-time type="date"/>-->
+        <!--<field name="fromDate" ><text-find size="25"></text-find><date-time type="date"/></field>-->
+
+<!--        <field name="toDate" title="toDate" parameter-name="toDate">
+            <text-find size="25"></text-find>
+        </field>-->
+<!--
+        <field name="noConditionFind">
+            <hidden value="Y"/> if this isn't there then with all fields empty no query will be done 
+        </field>-->
+        <field name="performSearch" position="1"><hidden value="Y"/></field>
+        <field name="find" title="${uiLabelMap.CommonFind}" event="onclick" 
+               action="javascript:
+                  findVendorsReport();                                                  
+                "><submit/>
+        </field>
+    </form>
+    <!--list-name="reportTrialBalance"-->
+    <!--<form name="ListVendorsReport" type="list" list-name="resultSql" paginate-target="findVendorsReport" odd-row-style="alternate-row" default-table-style="basic-table hover-bar">-->
+    <form name="ListVendorsReport" type="list"  list-name="map3" paginate-target="findVendorsReport"
+          odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+
+<!--         <field name="id" title="id"><display /></field> 
+        <field name="acctgTransId" title="acctgTransId"><display /></field> -->
+
+<!--     <auto-fields-entity entity-name="TrialBalanceReport" default-field-type="find"/>-->
+        <!--        <field name="1" title="ID 1"><display description="${x}"/></field>
+        <field name="2" title="ID 2"><display description="${x}"/></field>-->
+        <!--<loop count="$i(1..5)">-->            
+        <!--<string-to-list string="1" list-name="counter"/> 
+        <string-to-list string="2" list-name="counter"/> 
+        <string-to-list string="3" list-name="counter"/> 
+        <string-to-list string="4" list-name="counter"/> 
+        <string-to-list string="5" list-name="counter"/> 
+        -->
+        <!--<iterate list-name="counter"  entry-name="currentRow">--> 
+        <field name="TransId" title="${uiLabelMap.AccountingAccountTransactionId}">
+            <display description="${AcctgTransId}"/>
+        </field>
+         <field name="TransactionDate" title="${uiLabelMap.FormFieldTitle_transactionDate}">
+            <display description="${TransactionDate}"/>
+        </field>
+         <field name="Description"  title="${uiLabelMap.AcctgGlJrnlDescLabel}">
+            <display description="${Description}"/>
+        </field>
+         <field name="DR" title="${uiLabelMap.AccountingDebitFlag}">
+            <display description="${DR}"/>
+        </field>
+         <field name="CR" title="${uiLabelMap.AccountingCreditFlag}">
+            <display description="${CR}"/>
+        </field>
+          <field name="Balance" title="${uiLabelMap.Balance}">
+            <display description="${Balance}"/>
+        </field>
+<!--        <field name="TRANSACTION_DATE" title="TRANSACTION DATE ">
+            <display />
+        </field>
+        <field name="DESCRIPTION" title="DESCRIPTION">
+            <display />
+        </field>
+        <field name="CR" title="CR">
+            <display />
+        </field>
+        <field name="DR" title="DR">
+            <display />
+        </field>
+        <field name="balance" title="balance">
+            <display />
+        </field>-->
+        
+        
+        <!--</loop>-->  
+        <!--</iterate>--> 
+             
+        <!--             <field name="TRANSACTIONDATE" title="TRANSACTION DATE"><display description="${TRANSACTIONDATE}"/></field>
+        <field name="DESCRIPTION" title="DESCRIPTION"><display description="${DESCRIPTION}"/></field>
+        <field name="CR" title="CR"><display description="${CR}"/></field>
+        <field name="DR" title="DR"><display description="${DR}"/></field>-->
+        <!--             <field name="TRANSACTIONDATE" title="TRANSACTION DATE"><display/></field>
+        <field name="DESCRIPTION" title="DESCRIPTION"><display/></field>
+        <field name="CR" title="CR"><display/></field>
+        <field name="DR" title="DR"><display/></field>-->
+        <!--        <field name="accountCode">
+            <hyperlink description="${accountCode}" target="FindAcctgTransEntries">
+                <parameter param-name="glAccountId"/>
+                <parameter param-name="organizationPartyId"/>
+            </hyperlink>
+        </field>
+        <field name="accountName" title-area-style="tableheadwide"><display description="${accountName}"/></field>
+        <field name="openingBalance" title="${uiLabelMap.AccountingOpeningBalance}" widget-style="tabletextright"><display description="${openingBalance}" type="currency" currency="${currencyUomId}"/></field>
+        <field name="postedDebits" title="${uiLabelMap.AccountingDebitFlag}" widget-style="tabletextright"><display description="${postedDebits}" type="currency" currency="${currencyUomId}"/></field>
+        <field name="postedCredits" title="${uiLabelMap.AccountingCreditFlag}" widget-style="tabletextright"><display description="${postedCredits}" type="currency" currency="${currencyUomId}"/></field>
+        <field name="endingBalance" title="${uiLabelMap.AccountingEndingBalance}" widget-style="tabletextright"><display description="${endingBalance}" type="currency" currency="${currencyUomId}"/></field>-->
+    </form>
+    
+    <!--..................-->
+    <form name="FindApPayments" type="single" target="FindApPayments" extends="FindPayments" extends-resource="component://accounting/widget/PaymentForms.xml">
+        <field name="parentTypeId"><hidden value="DISBURSEMENT"/></field>
+        <field name="paymentTypeId" position="1">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="PaymentType">
+                    <entity-constraint name="parentTypeId" value="DISBURSEMENT"/>
+                </entity-options>
+            </drop-down>
+        </field>
+    </form>
+    <form name="FindApPaymentGroups" target="FindApPaymentGroups" extends="FindPaymentGroup" extends-resource="component://accounting/widget/PaymentGroupForms.xml">
+        <field name="paymentGroupTypeId"><hidden value="CHECK_RUN"/></field>
+    </form>
+</forms>

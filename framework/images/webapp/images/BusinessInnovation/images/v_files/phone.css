@@ -1,0 +1,308 @@
+@charset "utf-8";
+#header,#footer,#content{
+	width: 96%;
+	height: auto;
+	padding-right: 2%;
+	padding-left: 2%;
+	position: static;
+}
+#content{
+	margin-top: 30px;
+}
+#header .header,#footer .footer,#content .content {
+	float: left;
+	height: auto;
+	width: 100%;
+}
+.footer .webinfo {
+	width: 96%;
+	padding-right: 2%;
+	padding-left: 2%;
+	height: auto;
+}
+.footer .weblink {
+	display: none;
+}
+.footer .subscribe {
+	height: 250px;
+	width: 96%;
+	padding-right: 2%;
+	padding-left: 2%;
+	margin-top: 20px;
+	border-top-width: medium;
+	border-bottom-width: medium;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-color: #333;
+	border-bottom-color: #333;
+}
+.footer .copyright {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+#footer .top:before {
+	margin-top: 8px;
+}
+
+#bDiv .upgradevip,#bDiv .demobox,#bDiv .detailsbox,#bDiv .downfonts {
+	height: auto;
+	width: 100%;
+	padding-bottom: 0px;
+}
+#bDiv .upgradevip .ut,#bDiv .demobox .demotitle,#bDiv .detailsbox .detailstitle,#bDiv .downfonts .ut {
+	width: 100%;
+	font-weight: bold;
+	font-size: 14px;
+	text-transform: capitalize;
+	line-height: 50px;
+	height: 50px;
+}
+#bDiv .upgradevip .utxt {
+	height: auto;
+	padding-bottom: 20px;
+}
+#bDiv .upgradevip .log {
+	margin-left: 30%;
+	margin-top: 20px;
+	width: 40%;
+	margin-bottom: 0px;
+}
+#bDiv .upgradevip .copylink {
+	width: 96%;
+	margin-left: 2%;
+	height: auto;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #FFF;
+	margin-top: 20px;
+	padding: 0px;
+}
+#bDiv .upgradevip .txt {
+	padding-top: 0px;
+	margin-top: 20px;
+}
+#bDiv .upgradevip .donating {
+	width: 100%;
+	margin: 0px;
+	line-height: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 0px;
+	padding-left: 0px;
+}#bDiv .upgradevip .ut.t {
+	font-weight: normal;
+	text-transform: uppercase;
+	font-size: 18px;
+}
+#header .menu {
+	float: right;
+	width: 70px;
+}
+#header .menu #menu {
+	margin-left: 0px;
+	float: right;
+}
+#header .search {
+	margin-left: 0px;
+	width: 100%;
+}
+#header .box {
+	width: 100%;
+}
+#header .downloadbox {
+	float: left;
+	margin-right: 0px;
+}
+#header .menu .menu_list {
+	right: 0px;
+	left: -245px;
+}
+#header .menu .menu_list::before {
+	margin-right: 20px;
+}
+#header .downloadbox .download_list {
+	left: -7px;
+}
+#header .downloadbox .download_list::before {
+	margin-right: 208px;
+}
+#content .latesticon ul li,#content .latestfonts ul li,.view .left .menu_list_svg ul li {
+	margin-right: 1%;
+	margin-left: 1%;
+	display: inline-block;
+	float: none;
+}
+#content .latesticon ul .x,#content .latestfonts ul .x {
+	margin-right: 1%;
+}
+#share {
+	display: none;
+}.view .left {
+	float: left;
+	width: 100%;
+}
+.view .left h2,.view .left h3 {
+	font-size: 14px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.view .right {
+	float: left;
+	width: 100%;
+	margin-top: 30px;
+}
+.view .right .ads {
+	width: 100%;
+	margin-left: 0px;
+}
+.view .right .upload span {
+	font-weight: normal;
+	font-size: 14px;
+	text-transform: capitalize;
+}
+.view .right .uploaded_by .callinfo .a {
+	margin-right: 0px;
+	margin-left: 0px;
+}
+.txtalign {
+	height: 50px;
+	margin-top: -50px;
+}
+.view .left .svg_img .img {
+	float: left;
+	height: auto;
+	width: 100%;
+}
+.view .left .svg_img .img svg {
+	height: auto;
+	width: 90%;
+	margin-left: 5%;
+}
+.view .left .svg_info .clearfix .clearfix_box {
+	width: 100%;
+	height: auto;
+}
+.view .left .svg_info .clearfix .clearfix_box .a {
+	margin: 5px;
+}
+.view .left .svg_info .clearfix .clearfix_box .b {
+	width: 78px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.view .left .svg_info .svg_view .view_svg {
+	width: 100%;
+}
+.view .left .svg_info .svg_view .view_svg .dw {
+	padding-right: 5px;
+	padding-left: 5px;
+}
+.view .left .svg_info .base .base_box .a {
+	float: left;
+	width: 100%;
+	height: auto;
+}
+.view .left .svg_info .base .base_box .a .px {
+	margin-right: 10px;
+	margin-left: 0px;
+	margin-bottom: 10px;
+}
+.view .left .svg_info .base .base_box .a small {
+	margin-right: 10px;
+}
+.view .left .svg_info .base {
+	height: auto;
+	padding-bottom: 10px;
+}
+.view .left .svg_info .svg_download .download_svg {
+	float: left;
+	height: auto;
+	width: 100%;
+}
+.view .left .svg_info .svg_download .download_svg .svg_db {
+	margin: 10px;
+}
+.view .left .svg_info .base .base_box {
+	height: auto;
+}
+#index {
+	background-image: none;
+	background-color: #F1F1F1;
+	margin-top: 0px;
+	height: auto;
+}
+#index h2 {
+	font-size: 14px;
+	color: #000;
+	margin-top: 10px;
+}
+#index .info {
+	font-size: 12px;
+	color: #666;
+}
+#index .search {
+	display: none;
+}
+#index .share_box {
+	margin-top: 20px;
+}
+#index .share_box .share {
+	text-align: center;
+	display: inline-block;
+	font-size: 30px;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+#index .share_box .share i {
+	color: #000;
+}
+.view .left .operating .c {
+	float: left;
+	width: 75%;
+}
+.view .left .operating {
+	height: auto;
+	padding-bottom: 20px;
+}
+#bDiv .downfonts .ut a {
+	margin-top: 9px;
+}
+#content .content .i_free .tags {
+	width: 60%;
+	height: auto;
+	margin-top: 0px;
+	margin-left: 20px;
+}
+#content .content .i_free .tags a {
+	margin-top: 10px;
+}
+#content .index_packs ul li,#content .index_packs ul .x {
+	margin-right: 0px;
+}#content .index_packs ul li .ads {
+	height: auto;
+	padding-top: 0px;
+}
+#content .index_packs ul li {
+	width: 100%;
+	height: auto;
+}
+#content .view .left .pack_info .pack_ads {
+	float: left;
+	height: auto;
+	width: 100%;
+	margin-right: 0px;
+	background-color: #FFF;
+}
+#content .view .left .pack_info .view_pack {
+	width: 97%;
+	margin-left: 3%;
+	padding: 0px;
+	margin-top: 0px;
+}
+.view .left .ads .ads_google,.view .left .ads .ads_google_a {
+	text-align: center;
+	float: left;
+	height: auto;
+	width: 100%;
+}

@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+    <!-- ========================================================= -->
+    <!-- ======================== Defaults ======================= -->
+    <!-- ========================================================= -->
+    <title>Entity of an Apache OFBiz Component</title>
+    <description>None</description>
+    <version>1.0</version>
+    <!--            default-resource-name="Refreneces"-->
+    <entity entity-name="References"
+            title="References">
+        <field name="refId" type="id-ne"/>
+        <field name="description" type="description"/>
+        <field name="refDate" type="date"/>
+        <field name="refNum" type="id-ne"/>
+        <field name="refStartDate" type="date"/>
+        <field name="relatedToId" type="id-ne"/>
+        
+        <prim-key field="refId"/>
+        
+        <relation type="one" fk-name="Reference_RelatedTo" rel-entity-name="RelatedTo">
+            <key-map field-name="relatedToId"/>
+        </relation>          
+    </entity>
+    <entity entity-name="RelatedTo"
+            title="Related To">
+        <field name="relatedToId" type="id-ne"/>        
+        <field name="description" type="id-ne"/>
+        
+        <prim-key field="relatedToId"/>      
+    </entity>
+
+    <entity entity-name="Degree"       
+            title="Degree">
+        <field name="degreeId" type="id-ne"/>
+        <field name="gradeId" type="id-ne"/>
+        <field name="description" type="description"/>
+        <field name="refId" type="id-ne"/>
+        <field name="userLoginId" type="id-vlong-ne"/>
+        <field name="remarks" type="description"/>
+        <field name="basicSalary" type="currency-amount"/> <!--currency-amount-->
+         
+        <prim-key field="degreeId"/>
+        <relation type="one" fk-name="Degree_References" rel-entity-name="References">
+            <key-map field-name="refId"/>
+        </relation>
+        <relation type="one" fk-name="Degree_Grade" rel-entity-name="Grade">
+            <key-map field-name="gradeId"/>
+        </relation>
+        <relation type="one" fk-name="Degree_UserLogin" rel-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relation>     
+    </entity>
+     
+    <entity entity-name="Grade"        
+            title="Grade">
+        <field name="gradeId" type="id-ne"/>   
+        <field name="description" type="description"/>
+        <field name="jobGroupId" type="id-ne"/>       
+        <field name="refId" type="id-ne"/>
+        <field name="userLoginId" type="id-vlong-ne"/>
+       
+       
+        <prim-key field="gradeId"/>
+        <relation type="one" fk-name="Grade_References" rel-entity-name="References">
+            <key-map field-name="refId"/>
+        </relation>
+        
+         <relation type="one" fk-name="Grade_jobGroupId" rel-entity-name="JobGroup">
+            <key-map field-name="jobGroupId"/>
+        </relation>
+        
+        <relation type="one" fk-name="Grade_UserLogin" rel-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relation>    
+    </entity>
+    
+    
+      <entity entity-name="PaymentTypeBi"  title="Payment Type Bi">
+         <field name="paymentTypeId" type="id-ne"/>  
+         <field name="description" type="id-ne"/>
+
+         <prim-key field="paymentTypeId"/>
+    </entity>
+    
+    
+    <entity entity-name="Allowences"        
+           title="Allowences">
+        <field name="allowenceId" type="id-ne"/> 
+        <field name="relatedToId" type="id-ne"/>   
+        <field name="allowenceTypeId" type="id-ne"/>  <!--allowenceTypeId-->
+        <field name="description" type="description"/>
+        <field name="paymentTypeId" type="id-ne"/>
+        <field name="factorId" type="id-ne"/>   
+        <field name="remark" type="description"/>
+        <field name="glAccountIdEmp" type="id-ne"></field>
+        <field name="glAccountIdComp" type="id-ne"></field>
+        <field name="debitCreditFlagEmp" type="indicator"></field>
+        <field name="debitCreditFlagComp" type="indicator"></field>
+        <field name="effectOnTax" type="indicator"></field>
+        <field name="userLoginId" type="id-vlong-ne"/>
+        
+        <prim-key field="allowenceId"/>
+        <relation type="one" fk-name="Allowences_AllowenceType" rel-entity-name="AllowenceType">
+            <key-map field-name="allowenceTypeId"/>
+        </relation>
+        <relation type="one" fk-name="Allowences_RelatedTo" rel-entity-name="RelatedTo">
+            <key-map field-name="relatedToId"/>
+        </relation>   
+         <relation type="one" fk-name="Allowences_PaymentType" rel-entity-name="PaymentTypeBi">
+            <key-map field-name="paymentTypeId"/>
+        </relation>  
+        
+         <relation type="one" fk-name="Allowences_AllowenceFactor" rel-entity-name="AllowenceFactor">
+            <key-map field-name="factorId"/>
+        </relation>
+        <relation type="one" fk-name="Allowences_Emp_GlAccount" rel-entity-name="GlAccount">
+            <key-map field-name="glAccountIdEmp" rel-field-name="glAccountId"/>
+        </relation>  
+        <relation type="one" fk-name="Allowences_Comp_GlAccount" rel-entity-name="GlAccount">
+            <key-map field-name="glAccountIdComp" rel-field-name="glAccountId"/>
+        </relation>  
+        <relation type="one" fk-name="Allowences_UserLogin" rel-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relation>    
+    </entity>
+     
+    <entity entity-name="AllowenceType"        
+            title="Allowence Type">
+        <field name="allowenceTypeId" type="id-ne"/>  
+        <field name="description" type="id-ne"/>
+       
+               
+        <prim-key field="allowenceTypeId"/>
+    </entity>
+    
+     <entity entity-name="AllowenceFactor"        
+            title="Allowence Factor">
+        <field name="factorId" type="id-ne"/>  
+        <field name="description" type="id-ne"/>
+        
+               
+        <prim-key field="factorId"/>
+    </entity>
+    
+   
+    <entity entity-name="Stability"  title="Stability ">
+         <field name="stabilityId" type="id-ne"/>  
+         <field name="description" type="id-ne"/>
+
+         <prim-key field="stabilityId"/>
+    </entity>
+    
+<!--    
+    <entity entity-name="EmployeeSalaryGrade">
+           <field name="EmployeeSalaryGradeId" type="id-ne"/>  
+        <field name="partyId" type="id-ne"/>
+        <field name="transDate" type="date"/>    
+        <field name="jobId" type="id-ne"/> 
+        <field name="gradeId" type="id-ne"/>
+        <field name="degreeId" type="id-ne"/> 
+        <field name="transType" type="id-ne"/>
+        <field name="transStatus" type="id-ne"/>  
+        <field name="partyId" type="id-ne"/>
+         <field name="userLoginId" type="id-ne"/>
+    
+        
+    </entity>-->
+   
+
+
+    <entity entity-name="AllowenceGrade"        
+
+            title=" Grade">
+        <field name="allowenceGradeId" type="id-ne"/>  
+        <field name="allowenceId" type="id-ne"/>
+        <field name="gradeId" type="id-ne"/>
+        <field name="amount" type="currency-amount"/>
+        <field name="refId" type="id-ne"/>
+        <field name="userLoginId" type="id-vlong-ne"/>
+        <field name="status" type="id-ne"/> 
+        <field name="startDate" type="date"/>       
+        <field name="endDate" type="date"/>
+       
+        <prim-key field="allowenceGradeId"/>
+        
+        <relation type="one" fk-name="ALLOWNCEGRADE_ALLOWENCES" rel-entity-name="Allowences">
+            <key-map field-name="allowenceId"/>
+        </relation>
+        <relation type="one" fk-name="ALLOWNCEGRADE_PREFRENCES" rel-entity-name="References">
+            <key-map field-name="refId"/>
+        </relation>
+        <relation type="one" fk-name="ALLOWNCEGRADE_USERLOGIN" rel-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relation>        
+        <relation type="one" fk-name="ALLOWNCEGRADE_GRADE" rel-entity-name="Grade">
+            <key-map field-name="gradeId"/>        
+        </relation>
+      
+    </entity>
+    
+    
+    <entity entity-name="JobGroup"        
+            title="Job Group">
+        <field name="jobGroupId" type="id-ne"/>  
+        <field name="description" type="description"/>
+        
+        <prim-key field="jobGroupId"/>
+    </entity>
+    
+    <entity entity-name="JobStatus"  title="Job Status">
+        <field name="jobStatusId" type="id-ne"/>  
+        <field name="description" type="id-ne"/>
+        
+        <prim-key field="jobStatusId"/>
+    </entity>
+    
+    <entity entity-name="CalculationType"  title="calculation Type">
+        <field name="calculationId" type="id-ne"/>  
+        <field name="description" type="id-ne"/>
+        
+        <prim-key field="calculationId"/>
+    </entity>
+    
+    <entity entity-name="GlobalPayrollSettingsType"  title="Global Payroll Settings Type">
+        <field name="globalKey" type="id-vlong"/>  
+        <field name="description" type="description"/>
+        <prim-key field="globalKey"/>
+    </entity>
+    
+    <entity entity-name="GlobalPayrollSettings"  title="Global Payroll Settings">
+        <field name="Key" type="id-vlong"/>  
+        <field name="Value" type="id-vlong"/>
+        <field name="globalKey" type="id-vlong"/>
+        
+        <prim-key field="Key"/>
+        
+        <relation type="one" fk-name="GlobalPayrollSettings_global_Key" rel-entity-name="GlobalPayrollSettingsType">
+            <key-map field-name="globalKey"/>        
+        </relation>
+    </entity>
+    
+<!--    <entity entity-name="AllowenceEmp"        
+
+             title="Allowences Employee">
+        <field name="allowenceEmpId" type="id-ne"/>  
+        <field name="allowenceId" type="id-ne"/>
+        <field name="TransDate" type="date"/>    
+        <field name="calculationId" type="id-ne"/>
+        <field name="percentageAmount" type="currency-amount"/> 
+        <field name="calculationAmount" type="currency-amount"/> 
+        <field name="amount" type="currency-amount"/>
+        <field name="startDate" type="date"/> 
+        <field name="endDate" type="date"/>
+        <field name="stabilityId" type="id-ne"/>  
+        <field name="partyId" type="id-ne"/>
+        <field name="isDeleted" type="indicator"/> 
+        <field name="userLoginId" type="id-vlong-ne"/>
+
+        <field name="percentageAmountCom" type="currency-amount"/> 
+        <field name="calculationAmountCom" type="currency-amount"/> 
+        <field name="amountCom" type="currency-amount"/>
+        
+        <prim-key field="allowenceEmpId"/>
+       
+        <relation type="one" fk-name="AllowenceEmp_Allowences" rel-entity-name="Allowences">
+            <key-map field-name="allowenceId"/>
+        </relation>
+        <relation type="one" fk-name="AllowenceEmp_CalculationType" rel-entity-name="CalculationType">
+            <key-map field-name="calculationId"/>
+        </relation>
+        <relation type="one" fk-name="AllowenceEmp_StabilityIndex" rel-entity-name="Stability">
+            <key-map field-name="stabilityId"/>
+        </relation>
+        <relation type="one" fk-name="AllowenceEmp_Person" rel-entity-name="Person">
+            <key-map field-name="partyId"/>
+        </relation>
+        <relation type="one" fk-name="AllowenceEmp_UserLogin" rel-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relation>  
+     
+    </entity>-->
+    
+    <entity entity-name="CompanyEmployeeAllowences"        
+            title="Allowences Company and employee">
+        <field name="Id" type="id-ne"/>  
+        <field name="typeId" type="id-ne"/>
+        <field name="allowenceId" type="id-ne"/>
+        <field name="partyId" type="id-ne"/>
+        <field name="TransDate" type="date"/>    
+        <field name="calculationId" type="id-ne"/>
+        <field name="percentageAmount" type="currency-amount"/> 
+        <field name="calculationAmount" type="currency-amount"/> 
+        <field name="amount" type="currency-amount"/>
+        <!--<field name="percentageAmountCom" type="currency-amount"/>--> 
+        <!--<field name="calculationAmountCom" type="currency-amount"/>--> 
+        <!--<field name="amountCom" type="currency-amount"/>-->
+        <field name="startDate" type="date"/> 
+        <field name="endDate" type="date"/>
+        <field name="stabilityId" type="id-ne"/>  
+        <field name="userLoginId" type="id-vlong-ne"/>
+
+        <prim-key field="Id"/>
+        <prim-key field="typeId"/>
+        
+        <!--        <index name="CompanyEmployeeAllowencesConstraint" unique="true">
+             <index-field name="Id"></index-field>
+             <index-field name="typeId"></index-field>
+         </index>
+        -->
+        <relation type="one" fk-name="AllowencesCompanyExpenses_Allowences" rel-entity-name="Allowences">
+            <key-map field-name="allowenceId"/>
+        </relation>
+        <relation type="one" fk-name="AllowencesCompanyExpenses_CalculationType" rel-entity-name="CalculationType">
+            <key-map field-name="calculationId"/>
+        </relation>
+        <relation type="one" fk-name="AllowencesCompanyExpenses_StabilityIndex" rel-entity-name="Stability">
+            <key-map field-name="stabilityId"/>
+        </relation>
+        <relation type="one" fk-name="AllowencesCompanyExpenses_Person" rel-entity-name="Person">
+            <key-map field-name="partyId"/>
+        </relation>
+        <relation type="one" fk-name="AllowencesCompanyExpenses_UserLogin" rel-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relation>  
+     
+    </entity>
+    
+    
+    <entity entity-name="IncomTax"  title="IncomTax">
+        <field name="IncomTaxId" type="id-ne"/>  
+        <field name="singleAmount" type="currency-amount"/>
+        <field name="marriedAmount" type="currency-amount"/>
+        <field name="startDate" type="date"/>
+        <field name="endDate" type="date"/>
+        <field name="active" type="id-ne"/>
+        <field name="userLoginId" type="id-vlong-ne"/>
+        
+        <prim-key field="IncomTaxId"/>
+        
+        <relation type="one" fk-name="IncomTax_UserLogin" rel-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relation>  
+    </entity>
+    
+    <entity entity-name="IncomTaxDetails"  title="IncomTaxDetails">
+        <field name="IncomTaxDetailsId" type="id-ne"/>  
+        <field name="IncomTaxId" type="id-ne"/>
+        <field name="amount" type="currency-amount"/>
+        <field name="percentageCalculation" type="currency-amount"/>
+        <field name="userLoginId" type="id-vlong-ne"/>
+        
+        <prim-key field="IncomTaxDetailsId"/>
+        <prim-key field="IncomTaxId"/>
+        
+        <index name="IncomTaxDetailsConstraint" unique="true">
+            <index-field name="IncomTaxDetailsId"></index-field>
+            <index-field name="IncomTaxId"></index-field>
+        </index>
+       
+        <relation type="one" fk-name="IncomTaxDetails_IncomTaxId" rel-entity-name="IncomTax">
+            <key-map field-name="IncomTaxId"/>        
+        </relation>
+        
+        <relation type="one" fk-name="IncomTaxDetails_UserLogin" rel-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relation>  
+    </entity>
+    
+    <entity entity-name="EmplSalary"       
+            title="EmplSalary">
+        
+        <field name="emplSalaryId" type="id-ne"/>  
+        <field name="partyId" type="id-ne"/> 
+        <field name="jobGroupId" type="id-ne"/> 
+        <field name="organizationPartyId" type="id-ne"/> 
+        <field name="allowenceId" type="id-ne"/> 
+        <field name="gradeId" type="id-ne"/>
+        <field name="degreeId" type="id-ne"/>
+        <!-- here amount define floating-point in java equal Double --> 
+        <field name="amount" type="floating-point"/> 
+        <field name="year" type="numeric"/>
+        <field name="month" type="numeric"/>
+        <field name="nomDay" type="numeric"/>
+        <field name="positionId" type="id-ne"/>
+        <field name="amountType" type="id-ne"/>
+        <field name="isCompany" type="indicator"/>
+        <!--        <field name="calculationAmount" type="id-ne"/>
+        <field name="newAmount" type="floating-point"/>
+        <field name="remainingAmount" type="id-ne"/>-->
+        <field name="debitCreditFlag" type="indicator"></field>
+        <field name="isPosted" type="indicator"/>
+        <field name="postedType" type="id-ne"/>
+        <field name="glAccountId" type="id-ne"/>
+        <field name="expenseId" type="id-ne"/> 
+        <field name="expenseType" type="id-ne"/> 
+        <field name="paymentTypeId" type="id-ne"/>
+        <field name="urlAttachment" type="id-vlong-ne"/>
+        <field name="userLoginId" type="id-vlong-ne"/>
+         
+        <prim-key field="emplSalaryId"/>
+        <relation type="one" fk-name="EmplSalary_STTS_STTS" rel-entity-name="StatusItem">
+          <key-map field-name="statusId"/>
+         </relation>
+        <relation type="one" fk-name="EmplSalary_PaymentType" rel-entity-name="PaymentTypeBi">
+            <key-map field-name="paymentTypeId"/>
+        </relation> 
+        <relation type="one" fk-name="EmplSalary_UserLogin" rel-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relation>  
+    </entity>
+    
+    
+    
+    
+    <entity entity-name="EmplSalaryPartialy"       
+            title="EmplSalaryPartialy">
+        
+        <field name="emplPartailyId" type="id-ne"/> 
+        <field name="partyId" type="id-ne"/> 
+        <field name="jobGroupId" type="id-ne"/> 
+        <field name="organizationPartyId" type="id-ne"/> 
+        <field name="allowenceId" type="id-ne"/> 
+        <field name="gradeId" type="id-ne"/>
+        <field name="degreeId" type="id-ne"/>
+        <!-- here amount define floating-point in java equal Double --> 
+        <field name="amount" type="floating-point"/> 
+        <field name="year" type="numeric"/>
+        <field name="month" type="numeric"/>
+        <field name="seq" type="numeric"/> 
+        <field name="nomDay" type="numeric"/>
+        <field name="calculationType" type="id-ne"/>
+        <field name="calculationAmount" type="floating-point"/>
+        <field name="newAmount" type="floating-point"/>
+        <field name="remainingAmount" type="floating-point"/>
+        <field name="isPosted" type="indicator"/>
+        <field name="glAccountId" type="id-ne"/>
+        <field name="isCompany" type="indicator"/>
+        <field name="updatedFlag" type="id-ne"/>
+        <field name="userLoginId" type="id-vlong-ne"/>
+       
+         
+        <prim-key field="emplPartailyId"/>
+       
+        <relation type="one" fk-name="EmplSalaryPartialy" rel-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relation>  
+        
+    </entity>
+    
+    
+     <!--For Department Allownces Partaily-->
+    <entity entity-name="deptPartailyAllow"       
+            title="deptPartailyAllow">
+        
+        <field name="deptPartailyAllowId" type="id-ne"/>
+        <field name="allowenceId" type="id-ne"/>
+        <field name="organizationPartyId" type="id-ne"/>
+        <field name="jobGroupId" type="id-ne"/> 
+        <field name="year" type="numeric"/>  
+        <field name="month" type="numeric"/> 
+        <field name="percentageVal" type="floating-point"/>
+        <field name="seq" type="numeric"/> 
+        <field name="userLoginId" type="id-vlong-ne"/>
+        
+        <prim-key field="deptPartailyAllowId"/>
+
+        <relation type="one" fk-name="deptPartailyAllow_UserLogin" rel-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relation>  
+    </entity>
+    
+    <!--For All Allownces Partaily-->
+    <entity entity-name="allPartailyAllow"       
+            title="allPartailyAllow">
+        
+        <field name="allPartailyAllowId" type="id-ne"/>
+        <field name="allowenceId" type="id-ne"/>
+        <field name="organizationPartyId" type="id-ne"/>
+        <field name="jobGroupId" type="id-ne"/> 
+        <field name="year" type="numeric"/>  
+        <field name="month" type="numeric"/> 
+        <field name="percentageVal" type="floating-point"/>
+        <field name="seq" type="numeric"/> 
+        <field name="userLoginId" type="id-vlong-ne"/>
+        
+        <prim-key field="allPartailyAllowId"/>
+
+        <relation type="one" fk-name="allPartailyAllow_UserLogin" rel-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relation>  
+    </entity>
+    <entity entity-name="EmplSalaryAcctgTrans"       
+            title="EmplSalaryAcctgTrans">
+        
+        <field name="emplSalaryAcctgTransId" type="id-ne"/>  
+        <field name="acctgTransId" type="id-ne"></field>
+        <field name="acctgTransCode" type="id-ne"></field>
+        
+        <field name="year" type="numeric"/>
+        <field name="month" type="numeric"/>
+        <field name="jobGroupId" type="id-ne"/> 
+         
+        <prim-key field="emplSalaryAcctgTransId"/>
+        
+        <relation type="one" fk-name="EmplSalaryAcctgTrans_AcctgTrans" rel-entity-name="AcctgTrans">
+            <key-map field-name="acctgTransId"/>
+        </relation>  
+    </entity>
+    
+    
+    <view-entity entity-name="BasicSalaryView"
+                 package-name="org.apache.ofbiz"
+                 title=" ">
+        
+        <member-entity entity-alias="PER" entity-name="Person"/>
+        <member-entity entity-alias="DEG" entity-name="Degree"/>
+        <member-entity entity-alias="EMPLSG" entity-name="EmplSalaryGrade"/>
+   
+                       
+        <alias entity-alias="PER" name="partyId"/>
+        <alias entity-alias="PER" name="EmplStatus"/>
+        
+        <alias entity-alias="EMPLSG"  name="degreeId"/>
+        <alias entity-alias="EMPLSG"   name="gradeId"/>
+        <alias entity-alias="EMPLSG" name="jobGroupId"/>
+        <alias entity-alias="EMPLSG" name="partyIdFrom"/>
+        <alias entity-alias="EMPLSG" name="TransDate"/>
+        <alias entity-alias="DEG"  field="basicSalary" name="amount"/>
+        
+        <alias entity-alias="DEG"  field="basicSalary" name="amount"/>
+        
+            
+        <view-link entity-alias="PER" rel-entity-alias="EMPLSG">
+            <key-map field-name="partyId"/>
+        </view-link>
+        
+        <view-link entity-alias="EMPLSG" rel-entity-alias="DEG">
+            <key-map field-name="degreeId"/>
+        </view-link>
+        
+        <entity-condition>
+            <condition-list>
+                <condition-expr entity-alias="PER" field-name="EmplStatus" operator="equals" value="HIRED"/>
+                <condition-expr entity-alias="EMPLSG" field-name="TransActive" operator="equals" value="1"/>
+            </condition-list>
+        </entity-condition>
+       
+
+    </view-entity>
+    
+    
+    <view-entity entity-name="EmpAllowencesView"
+                 package-name="org.apache.ofbiz"
+                 title=" ">
+        
+        <member-entity entity-alias="PER" entity-name="Person"/>
+        <!--<member-entity entity-alias="DEG" entity-name="Degree"/>-->
+        <member-entity entity-alias="EMPAll" entity-name="CompanyEmployeeAllowences"/>
+        <member-entity entity-alias="AllOW" entity-name="Allowences"/>
+                          
+        <alias entity-alias="PER" name="partyId"/>
+        <alias entity-alias="PER" name="EmplStatus"/>
+                        
+        <alias entity-alias="EMPAll" name="allowenceId"/>
+        <alias entity-alias="EMPAll" name="amount"/>
+        <alias entity-alias="EMPAll" name="endDate"/>
+        <alias entity-alias="EMPAll" name="startDate"/>
+        <alias entity-alias="EMPAll" name="typeId"/>
+
+        <alias entity-alias="AllOW" name="description"/>
+        <alias entity-alias="AllOW" name="factorId"/>
+         
+        <view-link entity-alias="PER" rel-entity-alias="EMPAll">
+            <key-map field-name="partyId"/>
+        </view-link>
+        
+        <view-link entity-alias="EMPAll" rel-entity-alias="AllOW">
+            <key-map field-name="allowenceId"/>
+        </view-link>
+        
+              
+        <entity-condition>
+            <condition-list>
+                <condition-expr entity-alias="PER" field-name="EmplStatus" operator="equals" value="HIRED"/>
+                <!--<condition-expr entity-alias="EMPAll" field-name="typeId" operator="equals" value="EMP"/>-->
+                <!--                <condition-expr entity-alias="EMPLSG" field-name="TransActive" operator="equals" value="1"/>-->
+            </condition-list>
+        </entity-condition>
+        
+
+    </view-entity>
+    
+
+    
+    <view-entity entity-name="EmplSalEmplSalPartialyView"
+                 package-name="org.apache.ofbiz"
+                 title=" ">
+        
+        <member-entity entity-alias="EMPLSAL" entity-name="EmplSalary"/>
+        <member-entity entity-alias="EMPLSALPAR" entity-name="EmplSalaryPartialy"/>
+
+
+        <alias-all entity-alias="EMPLSAL"/>
+        <alias-all entity-alias="EMPLSALPAR"/>
+        
+  
+        <view-link entity-alias="EMPLSAL" rel-entity-alias="EMPLSALPAR">
+            <key-map field-name="emplSalaryId"/>
+        </view-link>
+    </view-entity>
+
+
+
+    <entity entity-name="ExpLoan"  title="ExpLoan">
+        <field name="expenseId" type="id-ne"/>
+        <field name="partyId" type="id-ne"/>
+        <field name="description" type="description"/>
+        <field name="amount" type="currency-amount"/>
+        <field name="loanDate" type="date"/>
+        <field name="startDate" type="date"/>
+        <field name="endDate" type="date"/>
+        <field name="userLoginId" type="id-vlong-ne"/>
+
+        <prim-key field="expenseId"/>
+
+        <relation type="one" fk-name="ExpLoan_Person" rel-entity-name="Person">
+            <key-map field-name="partyId"/>
+        </relation>
+
+        <relation type="one" fk-name="ExpLoan_UserLogin" rel-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relation>
+    </entity>
+
+
+    <entity entity-name="LoanSchedule"  title="LoanSchedule">
+        <field name="loanScheduleId" type="id-ne"/>
+        <field name="expenseId" type="id-ne"/>
+        <field name="year" type="id-ne"/>
+        <field name="month" type="id-ne"/>
+        <field name="amount" type="currency-amount"/>
+        <field name="status" type="id-ne"/>
+        <!--<field name="cashId" type="date"/>-->
+        <field name="userLoginId" type="id-vlong-ne"/>
+
+        <prim-key field="loanScheduleId"/>
+
+        <relation type="one" fk-name="ExpLoan_LoanSchedule" rel-entity-name="ExpLoan">
+            <key-map field-name="expenseId"/>
+        </relation>
+
+        <relation type="one" fk-name="ExpLoan_UserLogin" rel-entity-name="UserLogin">
+            <key-map field-name="userLoginId"/>
+        </relation>
+    </entity>
+
+
+
+    <entity entity-name="LoanCash"  title="LoanCash">
+        <field name="loanCashId" type="id-ne"/>
+        <field name="loanCashDate" type="date"/>
+        <field name="amount" type="currency-amount"/>
+
+        <prim-key field="loanCashId"/>
+    </entity>
+
+
+<!--............ for Vacation balance ....-->
+
+    <entity entity-name="PartyVacationContract"  title="PartyVacationContract">
+        <field name="partyVacationContractId" type="id-ne"/>
+        <field name="partyId" type="id-ne"/>
+        <field name="fromDate" type="date"/>
+        <field name="toDate" type="date"/>
+        <field name="value" type="id-ne"/>
+
+        <prim-key field="partyVacationContractId"/>
+
+        <relation type="one" fk-name="PartyVacationContract_Person" rel-entity-name="Person">
+            <key-map field-name="partyId"/>
+        </relation>
+
+    </entity>
+
+
+    <entity entity-name="PartyVacationTransaction"  title="PartyVacationTransaction">
+        <field name="partyVacationTransactionId" type="id-ne"/>
+        <field name="partyId" type="id-ne"/>
+        <field name="noDays" type="id-ne"/>
+        <field name="action" type="id-ne"/>
+        <field name="transDate" type="date"/>
+        <field name="description" type="description"/>
+
+        <prim-key field="partyVacationTransactionId"/>
+
+        <relation type="one" fk-name="PartyVacationTransaction_Person" rel-entity-name="Person">
+            <key-map field-name="partyId"/>
+        </relation>
+
+    </entity>
+
+
+</entitymodel>

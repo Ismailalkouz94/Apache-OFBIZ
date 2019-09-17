@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/ofbiz-properties.xsd">
+    <property key="HumanResRequiredFieldMissingTrainingClassTypeId">
+        <value xml:lang="en">Required Field Missing : Training Class Type Id.</value>
+    </property>
+    
+    <property key="passwordmustbe5chracters">
+        <value xml:lang="ar">يجب ان يحتوي الرقم السري على الاقل 5 خانات</value>
+        <value xml:lang="en">Your password must be contains at least  5 chracters</value>
+       
+    </property>
+    
+    <property key="PasswordChangedSuccessfully">
+        <value xml:lang="ar">تم تغيير الرقم السري بنجاح</value>
+        <value xml:lang="en">Password Changed Successfully</value>
+       
+    </property>
+    
+    <property key="YourPasswordDosentMatch">
+        <value xml:lang="ar">الرقم السري غير متطابق</value>
+        <value xml:lang="en">Your password and confirm password doesn't match</value>
+       
+    </property>
+    
+    <property key="lastBonus">
+        <value xml:lang="ar">العلاوة ليست اخر حركة </value>
+        <value xml:lang="en">The BONUS is not last action</value>
+       
+    </property>
+    
+    
+    <property key="calculatedSuccessFully">
+        <value xml:lang="ar">تم احتساب راتب الشهر بنجاح</value>
+        <value xml:lang="en">Salary calculation  done </value>
+       
+    </property>
+    
+    <property key="Posted">
+        <value xml:lang="ar">الراتب تم تثبيته لا تستطيع   احتسابه مره اخرى</value>
+        <value xml:lang="en">Salary calculation faild: this month was posted can't calculated it again</value>
+    </property>
+    
+    <property key="PostedDelete">
+        <value xml:lang="ar">الراتب تم تثبيته لا تستطيع حذفة </value>
+        <value xml:lang="en">Salary calculation faild: this month was posted can't delete</value>
+    </property>
+    
+    <property key="deleteSuccess">
+        <value xml:lang="ar">تم الحدف بنجاح </value>
+        <value xml:lang="en">Deleted Successfully</value>
+       
+    </property>
+    
+    <property key="notCalculated">
+        <value xml:lang="ar">راتب هذا الشهر غير محسوب</value>
+        <value xml:lang="en">Salary calculation of this month not calculated</value>
+       
+    </property>
+    
+    <property key="terminated">
+        <value xml:lang="ar">تم انهاء خدمات الموظف بنجاح</value>
+        <value xml:lang="en">Employee terminated successfully</value>
+       
+    </property>
+
+
+    <property key="updateSuccessfully">
+        <value xml:lang="ar">تم التعديل بنجاح</value>
+        <value xml:lang="en">Updated Successfully </value>
+       
+    </property>
+    
+    
+    <property key="selectCalculationWay">
+        <value xml:lang="ar">الرجاء اختيار طريقة الاحتساب للرواتب من شاشة اعدادات الرواتب</value>
+        <value xml:lang="en">kindly select the calculation salary way from payroll setting screen </value>
+       
+    </property>
+    
+    <property key="ExpenseNotFound">
+        <value xml:lang="ar">رقم النفقات غير موجود </value>
+        <value xml:lang="en">Expense Id Not Found</value>
+    </property>
+    <property key="FileExtensionNotFound">
+        <value xml:lang="ar">ملحق الملف غير موجود</value>
+        <value xml:lang="en">File Extension Not Found</value>
+    </property>
+    <property key="AllowEndofServicePosted">
+        <value xml:lang="ar">البدل ${allowencesId} في نهاية الخدمة مثبت</value>
+        <value xml:lang="en">Allowences Id ${allowencesId} End of Service Posted</value>
+    </property>
+    <property key="addAllowEndofServiceSuccessFully">
+        <value xml:lang="ar">تم اضافة البدل بنجاح</value>
+        <value xml:lang="en">add Allowences SuccessFully</value>
+    </property>
+    
+        <property key="closeHold">
+        <value xml:lang="ar">الرجاء الانتباه الموظف في اجازة لا تستطيع عمل الحركة الرجاء اغلاق الحركة السابقة   </value>
+        <value xml:lang="en">Kindly close the end Date in last transaction hold</value>
+    </property>
+    
+      <property key="alreadyHold">
+        <value xml:lang="ar">الرجاء التأكد من تاريخ الحركة </value>
+        <value xml:lang="en">The employee in this date already holded</value>
+    </property>
+
+    <property key="NumberOfDecimal">
+        <value xml:lang="ar">الرجاء التأكد اختيار عدد الفواصل العشرية التقريبة لحسبة الرواتب   </value>
+        <value xml:lang="en">Please fill the number of decimal separators to calculate the salary </value>
+    </property>
+
+</resource>

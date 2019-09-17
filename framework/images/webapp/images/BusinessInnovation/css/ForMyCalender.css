@@ -1,0 +1,49 @@
+.calenderOf .fc-content{
+    background-color: #57889c!important;
+    border-left: 6px solid rgba(0,0,0,.15);
+    padding: 10px;
+   display: -webkit-inline-box;
+   color: #fff;
+}
+.calenderOf .fc-content a{
+    color: #fff;
+}
+.calenderOf .current-period {
+    background-image: repeating-linear-gradient(-45deg, #ffffff00, #ffffff00 5px, #00000008 5px, #00000005 10px);
+    background-color: #FAFCFD;
+}
+.btn-group{
+    float: right;
+    margin: 0 10px 10px 10px;
+}
+.btn-group > button{
+    padding: 5px 20px 5px 20px;
+}
+.calenderOf thead{
+    background-image: -webkit-linear-gradient(top,#f2f2f2 0,#fafafa 100%) !important;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.fc-content i{
+   margin-left: 112px;
+}
+.fc-content.theOne{
+   width: 128px;
+}
+.fc-content.theTwo{
+   background-color: #a90329!important
+}
+.active-period{
+    background-image: repeating-linear-gradient(-45deg, #ffffff00, #ffffff00 5px, #00000008 5px, #00000005 10px);
+    background-color: #FAFCFD;
+}
+
+.btn-group.two{
+    float: left;
+    margin: 0;
+}
+.btn-group.two a{
+    padding: 5px 20px 5px 20px; 
+    font-weight: bold;
+}

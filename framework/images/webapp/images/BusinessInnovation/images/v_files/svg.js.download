@@ -1,0 +1,765 @@
+$(function() {
+    svg_list();
+	$(".view_pack .download div").click(function() {
+	var te = $(this).parent().attr('data-title');
+	var id = $(this).attr('data-id');
+	var t = $(this).attr('data');
+
+	loading();
+        $.ajax({
+            type: 'get',
+            url: '//cdn.onlinewebfonts.com/svg/pack_ajax.html?type='+t+'&id='+id+'&t='+te,
+            dataType: 'jsonp',
+            jsonp: "jsoncallback",
+            success: function(data) {
+                if (data.data == '1') {
+                    c_loading();
+if(t == 'link'){
+base(te+' : '+t+'<a href="http://cdn.onlinewebfonts.com/'+data.url+'pack_demo.html" target="_blank">Demo</a>',"<link rel=\"stylesheet\" href=\"//cdn.onlinewebfonts.com/"+data.url+"icon.css\" type=\"text/css\" />\n\n More please view demo",2);
+}else{
+downfonts(te+' '+t+' Download',data.url);
+}
+} else {
+                    c_loading();
+                    sAlert(data.data);
+                }
+            },
+            error: function() {
+                c_loading();
+                sAlert('Download error ...');
+            }
+        });
+		
+
+	});	
+	
+    $("#convert").click(function() {
+        var fileName = $('#tosvg').val();
+        var toformat = $('#toformat').val();
+        var file = $('#tosvg').get(0).files[0];
+
+        var Exte = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+        if ($('#tosvg').val() == "") {
+            sAlert('Please Pick Font File!');
+            return (false);
+        } else if (toformat == '0') {
+            sAlert('Please Pick convert format!');
+            return (false);
+        } else if (toformat == Exte) {
+            sAlert('Error : Same File format!');
+            return (false);
+        } else if (Exte != 'png' && Exte != 'svg') {
+            sAlert('Unsupported format ' + Exte);
+            return (false);
+        } else if (file.size > 50000) {
+            sAlert('File Only support Size 50KB');
+            return (false);
+        }
+
+        if (toformat == 'base' && Exte == 'png') {
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(e) {
+                base('512', this.result,1);
+            }
+            return (false);
+        }
+
+        loading();
+        $.ajaxFileUpload({
+            url: '//cdn.onlinewebfonts.com/svg/convert.html?id=' + toformat + '',
+            secureuri: false,
+            fileElementId: 'tosvg',
+            dataType: 'json',
+            success: function(data, status) {
+                if (data.e == '1') {
+                    c_loading();
+                    sAlert(data.data);
+                } else {
+                    c_loading();
+                    downfonts('Package Download', data.data);
+                }
+            },
+            error: function(data, status, e) {
+                c_loading();
+                sAlert(e);
+            }
+        });
+        return false;
+
+    });
+
+    $("#logout").live('click',
+    function() {
+        dCookie('user_mail');
+        dCookie('user_name');
+        dCookie('user_img');
+        dCookie('user_key');
+        sAlert('logout Success!', window.location.href);
+    });
+
+    $("#header .loginsubmit").click(function() {
+        var semail = $('#header #email').val();
+        var password = $('#header #password').val();
+        strReg = /^\w+((-\w+)|(\.\w+))*\@{1}\w+\.{1}\w{2,4}(\.{0,1}\w{2}){0,1}/ig;
+        smail = semail.search(strReg);
+        if (semail == "" | smail == -1) {
+            sAlert('Enter your Email Address!');
+            return (false);
+        } else if (password == "") {
+            sAlert('Enter your password!');
+            return (false);
+        }
+        loading();
+        var geturl = 'mail=' + semail + '&passwd=' + password;
+        $.ajax({
+            type: 'get',
+            url: '/ajax.html?type=login&' + geturl + '',
+            dataType: 'jsonp',
+            jsonp: "jsoncallback",
+            success: function(data) {
+                if (data.data == '1') {
+                    c_loading();
+                    sAlert(data.error);
+                } else {
+                    c_loading();
+                    sAlert(data.data, window.location.href);
+                }
+            },
+            error: function() {
+                c_loading();
+                sAlert('We couldn\'t log you in. Please check what you\'ve entered.');
+            }
+        });
+        return (false);
+    });
+
+    $(".clearfix_box .b").click(function() {
+        $(this).bigColorpicker('d');
+    });
+
+    $(".project li .del").live('click',
+    function() {
+        $.get('/icon/ajax.html?type=projectdel&id=' + $(this).attr('data'));
+        $(this).parent().remove();
+        return (false);
+    });
+
+    $(".follow").click(function() {
+        if (!login()) {
+            novip();
+            return (false);
+        }
+        $(this).css('background-color', '#000');
+        return (false);
+    });
+
+    $("#all_add_box").click(function() {
+        var data = $(this).attr('data');
+        if (data == '') {
+            return (false);
+        }
+        setCookie('project_box', "" + data + "");
+
+        loading();
+
+        $.ajax({
+            type: 'get',
+            url: '//cdn.onlinewebfonts.com/svg/ajax.html?format=1',
+            dataType: 'jsonp',
+            jsonp: "jsoncallback",
+            success: function(data) {
+                c_loading();
+                if (data.data == '1') {
+                    sAlert('' + data.error + '');
+                } else {
+                    downfonts('Icons Package Download', data.data);
+                }
+            },
+            error: function() {
+                c_loading();
+                sAlert('Download Error...!');
+            }
+        });
+    });
+
+    $("#user_delete").live('click',
+    function() {
+        var box = $('#all_add_box');
+		var p_id = $('#get_link').attr('data');
+		var box_txt = box.attr('data');
+		var id_prev = $(this).prev().prev();
+		var id_txt = "@@@@" + id_prev.attr('data-id') + "###" + id_prev.attr('data-title') + "";
+		box_txt = box_txt.replace(''+id_txt+'','');
+		box.attr('data',box_txt);
+		var x_txt = box.attr('data');
+		if(x_txt == ''){$('#get_link').remove();$('#get_link').remove();$('#all_add_box').remove();$('#user_all_del').remove();}
+        $(this).parent().remove();
+		$.get('/icon/ajax.html?type=delprojectid&id='+id_prev.attr('data-id')+'&p='+p_id+'');
+        return (false);
+    });
+
+    $("#user_all_del").click(function() {
+        $(".menu_list_svg ul").html('<div class="itagb">Nothing to show!<br/>You have to select some icons.</div>');
+        $(".list_page .page").html('');
+        $.get('/icon/ajax.html?type=clear&id=' + $(this).attr('data'));
+        return (false);
+    });
+
+    $(".download_svg a").click(function() {
+        downfonts($(this).attr('title'), $(this).attr('href'));
+        return (false);
+    });
+
+    $(".base_box .px").click(function() {
+        var px = $(this).attr('data');
+        var svgXml = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent($('.svg_img .img').html())));
+        base(px, svgXml,1);
+    });
+
+    $(".clearfix_box #clear").click(function() {
+        var ytxt = $(this).attr('data');
+        $('.clearfix_box .b').text('#' + ytxt);
+        $(".svg_img .img path").attr('style', 'fill:#' + ytxt + '');
+    });
+
+    $("#menu").click(function() {
+        $(".download_list").hide();
+        $(".userbox").hide();
+        $(".menu_list").toggle();
+    });
+
+    $("#openuser").click(function() {
+        $('body,html').animate({
+            scrollTop: 0
+        },
+        500);
+        $(".download_list").hide();
+        $(".menu_list").hide();
+        $(".userbox").toggle();
+    });
+
+    $(".box_title").click(function() {
+        $(".userbox").hide();
+        $(".menu_list").hide();
+        svg_list();
+        $(".download_list").toggle();
+    });
+
+    $(".save_as small").click(function() {
+        if (!login()) {
+            $("#openuser").click();
+            return (false);
+        }
+        var save_txt = $("#saveas");
+
+        if ($(".download_list ul li").length == '0') {
+            sAlert('You have to select some icons!');
+            return (false);
+        }
+        loading();
+
+        var get_txt = 'id=' + save_txt.val();
+
+        $.ajax({
+            type: 'get',
+            url: '/icon/ajax.html?type=savesvg&' + get_txt + '',
+            dataType: 'jsonp',
+            jsonp: "jsoncallback",
+            success: function(data) {
+                c_loading();
+                if (data.data == '1') {
+                    sAlert(data.error);
+                } else {
+                    $(".download_list").hide();
+                    $(".as_txt").hide();
+                    sAlert('Save Success',data.url);
+                }
+            },
+            error: function() {
+                c_loading();
+                sAlert('Ajax Error');
+            }
+        });
+
+    });
+
+$("#get_link").live('click',function(){
+var data = $('#all_add_box').attr('data');
+if (data == '') {
+return (false);
+}
+setCookie('project_box', "" + data + "");
+var t = $(this).attr('t');
+var get_txt = 'p='+$(this).attr('p')+'&u='+$(this).attr('u')+'&data='+$(this).attr('data')+'&t='+t+'';
+loading();
+$.ajax({
+            type: 'get',
+            url: '//cdn.onlinewebfonts.com/svg/ajax.html?format=link&' + get_txt + '',
+            dataType: 'jsonp',
+            jsonp: "jsoncallback",
+            success: function(data) {
+                c_loading();
+                if (data.data == '1') {
+                    sAlert(data.error);
+                } else {
+base('Project : '+t+'<a href="http://cdn.onlinewebfonts.com/'+data.data+'/demo.html" target="_blank">Demo</a>',"\n\n<link rel=\"stylesheet\" href=\"//cdn.onlinewebfonts.com/"+data.data+"/icon.css\" type=\"text/css\" />\n\n More please view demo",2);
+                }
+            },
+            error: function() {
+                c_loading();
+                sAlert('Ajax Error');
+            }
+        });
+});
+
+    $(".download_list .format").click(function() {
+        if (login()) {
+            return (true);
+        }
+        novip();
+        return (false);
+    });
+
+    $(".as_txt .add_as").live('click',
+    function() {
+        $("#saveas").val($(this).text());
+        $(".as_txt").hide();
+    });
+
+    $("#saveas").click(function() {
+        if (!login()) {
+            $("#openuser").click();
+            return (false);
+        }
+        $(".as_txt").show();
+    });
+
+    $(".download_list ul li").live('click',
+    function() {
+        var data = getCookie('svg_box');
+        var aid = "@@@@" + $(this).attr("data-id") + "###" + $(this).attr("data-title") + "";
+        var data = data.replace('' + aid + '', "");
+        setCookie('svg_box', "" + data + "");
+        $(this).remove();
+        svg_list();
+    });
+
+    $(".removeall i").click(function() {
+        delCookie('svg_box');
+        $(".download_list ul").html('<div class="itagb">Nothing to show!<br/>You have to select some <strong>icons</strong>.</div>');
+        $('.box_title span').text('0');
+    });
+
+    $("#footer .top").click(function() {
+        $('body,html').animate({
+            scrollTop: 0
+        },
+        500);
+        return (false);
+    });
+
+    $(".search .submit").click(function() {
+        if ($(".keywords").val() == "") {
+            sAlert('Enter your Search keywords!');
+            return (false);
+        }
+        return (true);
+    });
+
+    $(".alldb").click(function() {
+        if ($(".download_list ul li").length == '0') {
+            sAlert('You have to select some icons!');
+            return (false);
+        }
+        var checkbox = '';
+        $(".downloadbox .format .ck input[type=checkbox]:checked").each(function() {
+            checkbox = checkbox + '' + $(this).attr("id") + '|';
+        });
+        if (checkbox == '') {
+            sAlert('Please select a icon format!');
+            return (false);
+        }
+
+        loading();
+        $.ajax({
+            type: 'get',
+            url: '//cdn.onlinewebfonts.com/svg/ajax.html?format=' + checkbox + '',
+            dataType: 'jsonp',
+            jsonp: "jsoncallback",
+            success: function(data) {
+                c_loading();
+                if (data.data == '1') {
+                    sAlert('' + data.error + '');
+                } else {
+                    downfonts('Icons Package Download', data.data);
+                    //window.location.href = data.data;
+                }
+            },
+            error: function() {
+                c_loading();
+                sAlert('Download Error...!');
+            }
+        });
+
+    });
+
+    $(window).scroll(function() {
+        if ($(document).scrollTop() > 500) {
+            $("#footer .top").fadeIn();
+        } else {
+            $("#footer .top").fadeOut();
+        }
+    });
+
+    $(".vifonts").live('click',
+    function() {
+        var thistxt = $(this).children('.font_info');
+        if (thistxt.html() == '') {
+            return (false);
+        }
+        var thistxts = thistxt.html().replace(/<b>(.*)<\/b>/g, "");
+        sBlert('<div class="detailsbox"><div class="detailstitle">' + thistxt.attr("title") + ' Details</div>' + thistxts + '</div>');
+    });
+
+    $('#bDiv .upgradevip .log').live('click',
+    function() {
+        closeDiv();
+        $("#openuser").click();
+        $('body,html').animate({
+            scrollTop: 0
+        },
+        500);
+    });
+
+    $('.dbicon,.download_svg .svg_add').live('click',
+    function() {
+
+        if (login()) {
+            var downid = '160';
+        } else {
+            var downid = '80';
+        }
+
+        var boxs = $('.box_title span');
+        if (parseInt(boxs.text()) >= downid & !login()) {
+            novip();
+            return (false);
+        } else if (parseInt(boxs.text()) >= downid & login()) {
+            yesvip();
+            return (false);
+        }
+
+        svg_add_box($(this).attr('data-id'), $(this).attr('data-title'));
+
+        if ($('#header .download_list').css('display') != 'none') {
+            svg_list();
+        }
+        if ($(this).attr('data') != 'add') {
+            $(this).parent().addClass('k');
+            $(this).removeClass('dbicon').addClass('delicon');
+        }
+        svg_animate($(this));
+    });
+
+    $('.k .delicon').live('click',
+    function() {
+        var data = getCookie('svg_box');
+        var aid = "@@@@" + $(this).attr("data-id") + "###" + $(this).attr("data-title") + "";
+        var data = data.replace('' + aid + '', "");
+        setCookie('svg_box', "" + data + "");
+        $(this).parent().removeClass('k');
+        $(this).removeClass('delicon').addClass('dbicon');
+        svg_list();
+    });
+
+    $(".share").click(function() {
+        var gettitle = $(document).attr("title").replace(/[ ]/g, "+");
+        switch ($(this).attr("data")) {
+        case 'google':
+            openurl('https://plus.google.com/share?url=' + encodeURIComponent(String(window.location.href)) + '&t=' + gettitle);
+            break;
+        case 'facebook':
+            openurl('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(String(window.location.href)));
+            break;
+        case 'twitter':
+            openurl('https://twitter.com/intent/tweet?url=' + encodeURIComponent(String(window.location.href)) + '&text=' + gettitle);
+            break;
+        case 'linkedin':
+            openurl('https://www.linkedin.com/shareArticle?ro=false&mini=true&url=' + encodeURIComponent(String(window.location.href)));
+            break;
+        case 'stumbleupon':
+            openurl('http://www.stumbleupon.com/submit?url=' + encodeURIComponent(String(window.location.href)) + '&title=' + gettitle);
+            break;
+        }
+    });
+
+    $("#footer .mailsubmit").click(function() {
+        var semail = $('#footer .box input').val();
+        strReg = /^\w+((-\w+)|(\.\w+))*\@{1}\w+\.{1}\w{2,4}(\.{0,1}\w{2}){0,1}/ig;
+        smail = semail.search(strReg);
+        if (semail == "" | smail == -1) {
+            sAlert('Enter your Email Address!');
+            return (false);
+        }
+        $.get("/ajax.html?type=subscribe&mail=" + semail + "");
+        sAlert('E-mail Subscriptions success!');
+    });
+
+    if (navigator.userAgent.indexOf("Mobile") < 0) {
+        $('i').darkTooltip({
+            size: 'small'
+        });
+    }
+});
+
+function login() {
+    if (getCookie('user_key') != null) {
+        if (getCookie('user_key').length == '36') {
+            return (true);
+        } else {
+            return (false);
+        }
+    } else {
+        return (false);
+    }
+}
+
+function svg_add_box(id, te) {
+    var data = '';
+    if (getCookie('svg_box')) {
+        if (getCookie('svg_box').indexOf("@@" + id + "##") > 0) {
+            svg_list();
+            return (false);
+        }
+        var data = getCookie('svg_box') + "@@@@" + id + "###" + te + "";
+    } else {
+        var data = "@@@@" + id + "###" + te + "";
+    }
+    setCookie('svg_box', "" + data + "");
+    svg_list();
+}
+
+function base(px, svgXml,n) {
+if(n != '1'){
+var te = px;
+var txe = '<textarea class="baes" onclick="this.select();" style="font-size: 16px;color: #000;">'+svgXml+'</textarea>';
+}else{
+var te = 'Base64 ( ' + px + 'px )';
+var txe = '<textarea class="baes" onclick="this.select();">&lt;!-- iCon by oNlineWebFonts.Com --&gt; &lt;img src="' + svgXml + '" width="' + px + '" height="' + px + '"&gt;</textarea>';
+}
+    sBlert('<div class="downfonts"><div class="ut">'+te+'</div>'+txe+'<div class="dbinfos">You must credit the author Copy this link on your web <br/><font>&lt;div&gt;Icon made from &lt;a href=&quot;http://www.onlinewebfonts.com/icon&quot;&gt;Icon Fonts&lt;/a&gt; is licensed by CC BY 3.0&lt;/div&gt;</font><br/><div class="or">OR</div><br/><br/><font>&lt;a href=&quot;http://www.onlinewebfonts.com&quot;&gt;oNline Web Fonts&lt;/a&gt;</font></div></div>');
+}
+
+function svg_animate(t) {
+    var img = t;
+    var flyElm = img.clone();
+    $('body').append(flyElm);
+    flyElm.css({
+        'z-index': 10000,
+        'display': 'block',
+        'float': 'none',
+        'position': 'absolute',
+        'top': img.offset().top + 'px',
+        'left': img.offset().left + 'px',
+        'width': img.width() + 'px',
+        'height': img.height() + 'px',
+        'background-color': '#4D5D6E',
+        'border-radius': '' + img.height() / 2 + 'px'
+    });
+    flyElm.animate({
+        top: $('.box_title span').offset().top,
+        left: $('.box_title span').offset().left,
+        width: 5,
+        height: 5
+    },
+    'slow', 'linear',
+    function() {
+        flyElm.remove();
+    });
+}
+
+function openurl(url) {
+    if (!url) {
+        return (false);
+    }
+    if (url == undefined) {
+        url = 'http://www.onlinewebfonts.com';
+    }
+    if (window.open) {
+        window.open('' + url + '', '_blank');
+    } else {
+        window.location.href = '' + url + '';
+    }
+}
+
+function sAlert(t, u) {
+    if (u == null) {
+        var u = '';
+    }
+    var tall = '<div class="txet">' + t + '</div>';
+    sBlert(tall, u);
+}
+
+function sBlert(t, u) {
+    if (u == null) {
+        var u = '';
+    }
+    aDiv();
+    var ww = $(window).width();
+    var wh = $(window).height();
+    $("body").append('<div id="bDiv"></div>');
+    var b = $("#bDiv");
+    b.html('<div class="close" onclick="closeDiv(\'' + u + '\');">×</div>' + t);
+    var w = b.children(0).eq(1).width();
+    b.css('width', '' + w + 'px');
+    var aWidth = (ww - w) / 2;
+    b.css('left', '' + aWidth + 'px');
+    b.css('height', 'auto');
+    var aHeight = (wh - b.height()) / 2;
+    if (aHeight < 0) {
+        aHeight = 0;
+    }
+    b.css('top', '' + aHeight + 'px');
+}
+
+function aDiv() {
+    $("body").append('<div id="aDiv"></div>');
+    $("#aDiv").css('height', '' + ($(window).height() + 100) + 'px');
+}
+
+function closeDiv(url) {
+    $("#aDiv").remove();
+    $("#bDiv").remove();
+    if (url == null) {
+        var url = '';
+    }
+    if (url != '') {
+        window.location.href = '' + url + '';
+    }
+}
+
+function loading() {
+    $("#aDiv").remove();
+    $("#bDiv").remove();
+    $("#loading").remove();
+    aDiv();
+    $("body").append('<div id="loading"><div id="caseBlanche"><div id="rond"><div id="test"></div></div><div id="progress" data="0"></div><div id="load">loading</div></div></div>');
+    var timer = setInterval(function() {
+        vid = $('#loading #progress');
+        swidth = parseInt(vid.attr('data'));
+        if (swidth < 101) {
+            vid.css('width', (swidth) + '%');
+            vid.attr('data', swidth + 1);
+        } else {
+            vid.attr('data', '0');
+        };
+    },
+    100);
+}
+
+function c_loading() {
+    $("#aDiv").remove();
+    $("#loading").remove();
+}
+
+function svg_list() {
+    if (login()) {
+        var downid = '160';
+    } else {
+        var downid = '80';
+    }
+    if (!getCookie('svg_box')) {
+        $('.box_title span').text(0);
+        $(".download_list ul").html('<div class="itagb">Nothing to show!<br/>You have to select some <strong>icons</strong>.</div>');
+        return (false);
+    }
+    if (getCookie('svg_box').indexOf("@@@@") > 0) {
+        return (false);
+    }
+    var data = getCookie('svg_box').split("@@@@");
+    var x = '';
+    var l = '0';
+    for (var i = data.length; i--;) {
+        if (i != '0') {
+            var key = data[i].split("###");
+            if (!isNaN(key[0]) && l < downid) {
+                x = x + "<li data-id='" + key[0] + "' data-title='" + key[1] + "'><img src='//cdn.onlinewebfonts.com/svg/thumbnails_60_" + key[0] + ".png' width='30' height='30'><div class='ico_del'><i class='i-close'></i></div></li>";
+                l++;
+            }
+        }
+    }
+
+    if (x != '') {
+        $(".download_list ul").html(x);
+    } else {
+        $(".download_list ul").html('<div class="itagb">Nothing to show!<br/>You have to select some <strong>icons</strong>.</div>');
+    }
+    $('.box_title span').text(parseInt($(".download_list ul li").length));
+}
+
+function downfonts(u, t) {
+    if (u == null | t == null) {
+        return (false);
+    }
+    var ads = '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-2876400707570643" data-ad-slot="1608634818"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
+    sBlert('<div class="downfonts"><div class="ut">' + u + '</div><div class="openurls"><div class="downtul"><a href="' + t + '" target="_blank"><i class="i-download1"></i><font>Download</font></a><a href="' + t + '" target="_blank"><i class="i-download1"></i><font>Download</font></a><a href="' + t + '" target="_blank"><i class="i-download1"></i><font>Download</font></a></div><div class="ads">' + ads + '</div></div><div class="dbinfos">You must credit the author Copy this link on your web <br/><font>&lt;div&gt;Icon made from &lt;a href=&quot;http://www.onlinewebfonts.com/icon&quot;&gt;Icon Fonts&lt;/a&gt; is licensed by CC BY 3.0&lt;/div&gt;</font><br/><div class="or">OR</div><br/><br/><font>&lt;a href=&quot;http://www.onlinewebfonts.com&quot;&gt;oNline Web Fonts&lt;/a&gt;</font></div></div>');
+}
+
+function novip() {
+    sBlert('<div class="upgradevip"><div class="ut">In order to continue , you must log in!</div><div class="utxt"><div class="log">Log in</div><div class="copylink"><div class="txt">Free download<br/>You must credit the author<br/>Copy this link (right-click + \'copy\') on your web</div><input class="attrArea" onclick="this.select();" type="text" value="&lt;div&gt;Font made from &lt;a href=&quot;http://www.onlinewebfonts.com&quot;&gt;Online Web Fonts&lt;/a&gt; is licensed by CC BY 3.0&lt;/div&gt;"></div></div><div class="donating"><font>Most of the public domain fonts have font-face hosting enabled. You can use this for free. To keep this free service running please consider donating.</font><a href="#" target="_blank"><img src="/style/btn_cc_lg.gif" width="147" height="47"></a></div></div>');
+}
+function yesvip() {
+    sBlert('<div class="upgradevip"><div class="ut t">Upgrade to VIP</div><div class="donatingvip"><font>To keep this service running please donation to get more number of downloads.</font><a href="#" target="_blank"><img src="/style/btn_cc_lg.gif" width="147" height="47"></a> </div></div>');
+}
+
+function setCookie(name, value) {
+    var d = new Date();
+    d.setHours(d.getHours() + (24 * 30));
+    document.cookie = name + '=' + value + '; domain=onlinewebfonts.com; expires=' + d.toGMTString() + '; path=/';
+}
+function getCookie(name) {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+    if (arr = document.cookie.match(reg)) {
+        return unescape(arr[2]);
+    } else {
+        return null;
+    }
+}
+function delCookie(name) {
+    var cval = getCookie(name);
+    if (cval != null) {
+        var d = new Date();
+        d.setHours(d.getHours() - (24 * 30));
+        document.cookie = name + '=0; domain=onlinewebfonts.com; expires=' + d.toGMTString() + '; path=/';
+    }
+}
+function dCookie(name) {
+    var cval = getCookie(name);
+    if (cval != null) {
+        var d = new Date();
+        d.setHours(d.getHours() - (24 * 30));
+        document.cookie = name + '=0; expires=' + d.toGMTString() + '; path=/';
+    }
+}
+function clearCookie() {
+    var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+    if (keys) {
+        var d = new Date();
+        d.setHours(d.getHours() - (24 * 30));
+        for (var i = keys.length; i--;) {
+            if (keys[i].length == '32') {
+                document.cookie = keys[i] + '=0; domain=onlinewebfonts.com; expires=' + d.toGMTString() + '; path=/';
+            }
+        }
+    }
+}
+
+(function($){function DarkTooltip(element,options){this.bearer=element;this.options=options;this.delay}DarkTooltip.prototype={show:function(){$('ins.data-title').hide();window.clearTimeout(this.delay);this.tooltip.css('display','block')},hide:function(){this.tooltip.hide()},toggle:function(){if(this.tooltip.is(":visible")){this.hide()}else{this.show()}},setContent:function(){if(this.options.content){this.content=this.options.content}else if(this.bearer.attr("data-title")){this.content=this.bearer.attr("data-title")}else{console.log("No content for tooltip: "+this.bearer.selector);return}if(this.content.charAt(0)=='#'){$(this.content).hide();this.content=$(this.content).html();this.contentType='html'}else{this.contentType='text'}this.tooltip=$("<ins class = 'data-title "+this.options.theme+" "+this.options.size+" "+this.options.gravity+"'><div>"+this.content+"</div><div class = 'tip'></div></ins>");this.tip=this.tooltip.find(".tip");$(this.bearer).append(this.tooltip);if(this.contentType=='html'){this.tooltip.css('max-width','none')}this.tooltip.css('opacity',this.options.opacity);if(this.options.confirm){this.addConfirm()}},setPositions:function(){var leftPos=0;var topPos=0;var bearerTop=this.bearer.offset().top-10;var bearerLeft=this.bearer.offset().left;if(this.bearer.css('position')=='fixed'||this.bearer.css('position')=='absolute'){bearerTop=0;bearerLeft=0}leftPos=bearerLeft+this.bearer.outerWidth()/2-this.tooltip.outerWidth()/2;topPos=bearerTop-this.tooltip.outerHeight()-this.tip.outerHeight()/2;this.tooltip.css('left',leftPos);this.tooltip.css('top',topPos)},setEvents:function(){var dt=this;if(this.options.trigger=="hover"||this.options.trigger=="mouseover"||this.options.trigger=="onmouseover"){this.bearer.mouseover(function(){dt.setPositions();dt.show()}).mouseout(function(){dt.hide()})}else if(this.options.trigger=="click"||this.options.trigger=="onclik"){this.tooltip.click(function(e){e.stopPropagation()});this.bearer.click(function(e){e.preventDefault();dt.setPositions();dt.toggle();e.stopPropagation()});$('html').click(function(){dt.hide()})}},activate:function(){this.setContent();if(this.content){this.setEvents()}},addConfirm:function(){this.tooltip.append("<ul class = 'confirm'><li class = 'darktooltip-yes'>"+this.options.yes+"</li><li class = 'darktooltip-no'>"+this.options.no+"</li></ul>");this.setConfirmEvents()},setConfirmEvents:function(){var t=this;this.tooltip.find('li.darktooltip-yes').click(function(e){t.onYes();e.stopPropagation()});this.tooltip.find('li.darktooltip-no').click(function(e){t.onNo();e.stopPropagation()})},finalMessage:function(){if(this.options.finalMessage){var t=this;t.tooltip.find('div:first').html(this.options.finalMessage);t.tooltip.find('ul').remove();t.setPositions();setTimeout(function(){t.hide();t.setContent()},t.options.finalMessageDuration)}else{this.hide()}},onYes:function(){this.options.onYes(this.bearer);this.finalMessage()},onNo:function(){this.options.onNo(this.bearer);this.hide()}}
+$.fn.darkTooltip = function(options) {this.each(function(){options = $.extend({}, $.fn.darkTooltip.defaults, options);var tooltip = new DarkTooltip($(this), options);tooltip.activate();});}
+$.fn.darkTooltip.defaults={opacity:0.9,content:'',size:'medium',gravity:'south',theme:'dark',trigger:'hover',animation:'none',confirm:false,yes:'Yes',no:'No',finalMessage:'',finalMessageDuration:1000,onYes:function(){},onNo:function(){}};})(jQuery);
+
+(function(a){var f=new function(){function p(h){var a=h.offset(),b=document.compatMode=="CSS1Compat",e=b?document.documentElement.clientWidth:document.body.clientWidth,b=b?document.documentElement.clientHeight:document.body.clientHeight,i={left:a.left,top:a.top+h.height()+7};if(a.left+227>e&&(i.left=a.left-227-7,i.left<0))i.left=0;if(a.top+h.height()+7+163>b&&(i.top=a.top-163-7,i.top<0))i.top=0;return i}function n(a){var d=Array(2);d[0]=[new g(a,0,0),new g(a,255,0)];d[1]=[new g(a,0,255),new g(a,255,255)];return d}function o(a,d){var b=[];b[0]=a;b[e-1]=d;for(var t=Math.round((d.r-a.r)/ e), i = Math.round((d.g - a.g) /e),f=Math.round((d.b-a.b)/e),j=1;j<e-1;j++)b[j]=new g(a.r+j*t,a.g+j*i,a.b+j*f);return b}function g(a,d,b){this.r=Math.max(Math.min(a,255),0);this.g=Math.max(Math.min(d,255),0);this.b=Math.max(Math.min(b,255),0)}function u(mid){for(var h=[],d=0;d<e*3+2;d++){h.push("<ul>");for(var b=0;b<e*2;b++)h.push("<li data-color='"+k[d][b]+"' style='background-color: "+k[d][b]+";' ></li>");h.push("</ul>")}a("#bigSections").html(h.join(""));h=(e*3+2)*11+1;h<128?(a("#bigSections li,#bigLayout").width(128/ (e * 3 + 2) - 2).height(61 /(e*2)-1),a("#bigpicker").height(90).width(129),a("#bigSections").height(61).width(128)):(a("#bigSections").width(h).height(e*22),a("#bigpicker").width(h+5).height(e*22+29));a("#bigSections li").hover(function(){var b=a(this);a("#bigLayout").css({left:b.position().left,top:b.position().top}).show();b=b.attr("data-color");a("#bigBgshowDiv").css("backgroundColor",b);mid.text(b);$(".svg_img .img path").attr('style','fill:'+b+'');a("#bigHexColorText").val(b)},function(){a("#bigLayout").hide()})}this.init=function(){e=this.sideLength;k=Array(e*3);for(var a=[],d=o(new g(0,0,0),new g(255,255,255)),b=0;b<d.length;b++)a[b]=d[b];b=[new g(255,0,0),new g(0,255,0),new g(0,0,255),new g(255,255,0),new g(0,255,255),new g(255,0,255),new g(204,255,0),new g(153,0,255),new g(102,255,255),new g(51,0,0)];a=a.concat(b.slice(0,e));k[0]=a;a=Array(e*2);for(b=0;b<a.length;b++)a[b]=new g(0,0,0);k[1]=a;d=[];d.push(n(0),n(51),n(102),n(153),n(204),n(255));for(var f=0,i=[],m=[],b=0;b<d.length;b++)for(var j=o(d[b][0][0],d[b][0][1]),s=o(d[b][1][0],d[b][1][1]),a=0;a<e;a++)b<3?i[f]=o(j[a],s[a]):m[f-e*3]=o(j[a],s[a]),f++;for(b=0;b<i.length;b++)k[b+2]=i[b].concat(m[b]);for(b=0;b<k.length;b++)for(a=0;a<k[b].length;a++){d=k[b];f=a;i=k[b][a];m="#";for(c in i)j=i[c].toString(16).toUpperCase(),m+=j.length==1?"0"+j:j;d[f]=m}};this.showPicker=function(hwid){var ckereq=a("#bigpicker").length;if(ckereq>0){if(a("#bigpicker").css('display')!='none'){a("#bigpicker").hide();return(false)}}var mid=this;if(ckereq<=0){h='c5';d='A';b='3';b=parseInt(b,10);f.sideLength=d=="L"&&!isNaN(b)&&b>=2&&b<=10?b:6;f.init();a(document.body).append('<div id="bigpicker" class="bigpicker"><ul class="bigpicker-bgview-text" ><li><div id="bigBgshowDiv"></div></li><li><input id="bigHexColorText" size="7" maxlength="7" value="#000000" /></li></ul><div id="bigSections" class="bigpicker-sections-color"></div><div id="bigLayout" class="biglayout" ></div></div>')}else{a("#bigpicker").show()}a("#bigSections").unbind("mousemove").unbind("mouseout").unbind("click"),u(mid);b=p(mid);if(!hwid){wbh=b.top;a("#bigpicker").css('position','absolute')}else{a("#bigpicker").css('position','fixed');var ida=mid.parent().parent().offset().top;var idb=mid.offset().top;var idc=idb-ida;var idd=((a(window).height()-mid.parent().parent().height())/2)+idc+40;wbh=idd}a("#bigpicker").css({left:b.left+"px",top:wbh+"px"}).fadeIn(300);a("#bigHexColorText").val("#000000");a("#bigBgshowDiv").css("backgroundColor","#000000");mid.css('background-image','none');a("#bigLayout").unbind("hover").unbind("click").hover(function(){a(this).show()},function(){a(this).hide()}).live('click',function(){a("#bigpicker").hide()})}};a.fn.bigColorpicker=f.showPicker})(jQuery);
+
+jQuery.extend({createUploadIframe:function(id,uri){var frameId='jUploadFrame'+id;var iframeHtml='<iframe id="'+frameId+'" name="'+frameId+'" style="position:absolute; top:-9999px; left:-9999px"';if(window.ActiveXObject){if(typeof uri=='boolean'){iframeHtml+=' src="'+'javascript:false'+'"'}else if(typeof uri=='string'){iframeHtml+=' src="'+uri+'"'}}iframeHtml+=' />';jQuery(iframeHtml).appendTo(document.body);return jQuery('#'+frameId).get(0)},createUploadForm:function(id,fileElementId,data,fileElement){var formId='jUploadForm'+id;var fileId='jUploadFile'+id;var form=jQuery('<form  action="" method="POST" name="'+formId+'" id="'+formId+'" enctype="multipart/form-data"></form>');if(data){for(var i in data){jQuery('<input type="hidden" name="'+i+'" value="'+data[i]+'" />').appendTo(form)}}var oldElement;if(fileElement==null)oldElement=jQuery('#'+fileElementId);else oldElement=fileElement;var newElement=jQuery(oldElement).clone();jQuery(oldElement).attr('id',fileId);jQuery(oldElement).before(newElement);jQuery(oldElement).appendTo(form);jQuery(form).css('position','absolute');jQuery(form).css('top','-1200px');jQuery(form).css('left','-1200px');jQuery(form).appendTo('body');return form},ajaxFileUpload:function(s){s=jQuery.extend({},jQuery.ajaxSettings,s);var id=new Date().getTime();var form=jQuery.createUploadForm(id,s.fileElementId,(typeof(s.data)=='undefined'?false:s.data),s.fileElement);var io=jQuery.createUploadIframe(id,s.secureuri);var frameId='jUploadFrame'+id;var formId='jUploadForm'+id;if(s.global&&!jQuery.active++){jQuery.event.trigger("ajaxStart")}var requestDone=false;var xml={};if(s.global)jQuery.event.trigger("ajaxSend",[xml,s]);var uploadCallback=function(isTimeout){var io=document.getElementById(frameId);try{if(io.contentWindow){xml.responseText=io.contentWindow.document.body?io.contentWindow.document.body.innerHTML:null;xml.responseXML=io.contentWindow.document.XMLDocument?io.contentWindow.document.XMLDocument:io.contentWindow.document}else if(io.contentDocument){xml.responseText=io.contentDocument.document.body?io.contentDocument.document.body.innerHTML:null;xml.responseXML=io.contentDocument.document.XMLDocument?io.contentDocument.document.XMLDocument:io.contentDocument.document}}catch(e){jQuery.handleError(s,xml,null,e)}if(xml||isTimeout=="timeout"){requestDone=true;var status;try{status=isTimeout!="timeout"?"success":"error";if(status!="error"){var data=jQuery.uploadHttpData(xml,s.dataType);if(s.success)s.success(data,status);if(s.global)jQuery.event.trigger("ajaxSuccess",[xml,s])}else jQuery.handleError(s,xml,status)}catch(e){status="error";jQuery.handleError(s,xml,status,e)}if(s.global)jQuery.event.trigger("ajaxComplete",[xml,s]);if(s.global&&!--jQuery.active)jQuery.event.trigger("ajaxStop");if(s.complete)s.complete(xml,status);jQuery(io).unbind();setTimeout(function(){try{jQuery(io).remove();jQuery(form).remove()}catch(e){jQuery.handleError(s,xml,null,e)}},100);xml=null}};if(s.timeout>0){setTimeout(function(){if(!requestDone)uploadCallback("timeout")},s.timeout)}try{var form=jQuery('#'+formId);jQuery(form).attr('action',s.url);jQuery(form).attr('method','POST');jQuery(form).attr('target',frameId);if(form.encoding){jQuery(form).attr('encoding','multipart/form-data')}else{jQuery(form).attr('enctype','multipart/form-data')}jQuery(form).submit()}catch(e){jQuery.handleError(s,xml,null,e)}jQuery('#'+frameId).load(uploadCallback);return{abort:function(){try{jQuery('#'+frameId).remove();jQuery(form).remove()}catch(e){}}}},uploadHttpData:function(r,type){var data=!type;data=type=="xml"||data?r.responseXML:r.responseText;if(type=="script")jQuery.globalEval(data);if(type=="json")eval("data = "+data);if(type=="html")jQuery("<div>").html(data).evalScripts();return data},handleError:function(s,xml,status,e){if(s.error)s.error(xml,status,e);if(s.global)jQuery.event.trigger("ajaxError",[xml,s,e])}});
+

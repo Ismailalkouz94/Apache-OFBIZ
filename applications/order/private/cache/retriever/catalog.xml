@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://ofbiz.apache.org/dtds/widget-form.xsd" uri="ofbiz.apache.org/dtds/widget-form.xsd"/>
+    <system systemId="http://ofbiz.apache.org/dtds/widget-screen.xsd" uri="ofbiz.apache.org/dtds/widget-screen.xsd"/>
+    <system systemId="http://ofbiz.apache.org/dtds/widget-menu.xsd" uri="ofbiz.apache.org/dtds/widget-menu.xsd"/>
+    <system systemId="http://ofbiz.apache.org/dtds/widget-common.xsd" uri="ofbiz.apache.org/dtds/widget-common.xsd"/>
+</catalog>

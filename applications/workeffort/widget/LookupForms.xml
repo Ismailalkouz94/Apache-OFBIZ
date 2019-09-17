@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+    <!-- WorkEffort Lookup forms -->
+    <form name="LookupWorkEffort" target="LookupWorkEffort" title="" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="WorkEffort" default-field-type="find"/>
+        <field name="workEffortId" widget-style="form-control" title="${uiLabelMap.WorkEffortWorkEffortId}"><text-find/></field>
+        <field name="workEffortParentId" widget-style="form-control"><text-find/></field>
+        <field name="workEffortName" widget-style="form-control"><text-find/></field>
+        <field name="workEffortTypeId" widget-style="form-control">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="WorkEffortType" key-field-name="workEffortTypeId">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="workEffortPurposeTypeId" widget-style="form-control" >
+            <drop-down allow-empty="true">
+                <entity-options entity-name="WorkEffortPurposeType" key-field-name="workEffortPurposeTypeId">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+
+        <field name="currentStatusId" title="${uiLabelMap.CommonStatus}" widget-style="form-control">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="StatusItem" key-field-name="statusId" description="[General] ${description}">
+                    <entity-constraint name="statusTypeId" value="CALENDAR_STATUS"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+                <entity-options entity-name="StatusItem" key-field-name="statusId" description="[Task] ${description}">
+                    <entity-constraint name="statusTypeId" value="TASK_STATUS"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+                <entity-options entity-name="StatusItem" key-field-name="statusId" description="[Event] ${description}">
+                    <entity-constraint name="statusTypeId" value="EVENT_STATUS"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="workEffortParentId" widget-style="form-control"><lookup target-form-name="LookupWorkEffort"/></field>
+        <field name="facilityId" widget-style="form-control"><lookup target-form-name="LookupFacility"/></field>
+        <field name="fixedAssetId" widget-style="form-control"><lookup target-form-name="LookupFixedAsset"/></field>
+        <field name="scopeEnumId" widget-style="form-control">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="Enumeration" key-field-name="enumId">
+                    <entity-constraint name="enumTypeId" value="WORK_EFF_SCOPE"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="moneyUomId" widget-style="form-control" title="${uiLabelMap.CommonCurrency}">
+            <drop-down allow-empty="true">
+                <entity-options key-field-name="uomId" description="${abbreviation} - ${description}" entity-name="Uom">
+                    <entity-constraint name="uomTypeId" operator="equals" value="CURRENCY_MEASURE"/>
+                    <entity-order-by field-name="abbreviation"/>
+                </entity-options>
+            </drop-down>
+        </field>
+       <field name="workEffortId" widget-style="form-control" type="id-ne"></field>
+      <field name="workEffortTypeId" widget-style="form-control" type="id"></field>
+      <field name="currentStatusId" widget-style="form-control" type="id"></field>
+      <field name="lastStatusUpdate" widget-style="form-control" type="date-time"></field>
+      <field name="workEffortPurposeTypeId" widget-style="form-control" type="id"></field>
+      <field name="workEffortParentId" widget-style="form-control" type="id"></field>
+      <field name="scopeEnumId" widget-style="form-control" type="id"></field>
+      <field name="priority" widget-style="form-control" type="numeric"></field>
+      <field name="percentComplete" widget-style="form-control" type="numeric"></field>
+      <field name="workEffortName" widget-style="form-control" type="name"></field>
+      <field name="showAsEnumId" widget-style="form-control" type="id"></field>
+      <field name="sendNotificationEmail" widget-style="form-control" type="indicator"></field>
+      <field name="description" widget-style="form-control" type="description"></field>
+      <field name="locationDesc" widget-style="form-control" type="description"></field>
+      <field name="estimatedStartDate" widget-style="form-control" type="date-time"></field>
+      <field name="estimatedCompletionDate" widget-style="form-control" type="date-time"></field>
+      <field name="actualStartDate" widget-style="form-control" type="date-time"></field>
+      <field name="actualCompletionDate" widget-style="form-control" type="date-time"></field>
+      <field name="estimatedMilliSeconds" widget-style="form-control" type="floating-point"></field>
+      <field name="estimatedSetupMillis" widget-style="form-control" type="floating-point"></field>
+      <field name="estimateCalcMethod" widget-style="form-control" type="id"></field>
+      <field name="actualMilliSeconds" widget-style="form-control" type="floating-point"></field>
+      <field name="actualSetupMillis" widget-style="form-control" type="floating-point"></field>
+      <field name="totalMilliSecondsAllowed" widget-style="form-control" type="floating-point"></field>
+      <field name="totalMoneyAllowed" widget-style="form-control" type="currency-amount"></field>
+      <field name="moneyUomId" widget-style="form-control" type="id"></field>
+      <field name="specialTerms" widget-style="form-control" type="long-varchar"></field>
+      <field name="timeTransparency" widget-style="form-control" type="numeric"></field>
+      <field name="universalId" widget-style="form-control" type="short-varchar"></field>
+      <field name="sourceReferenceId" widget-style="form-control" type="id-long"></field>
+      <field name="fixedAssetId" widget-style="form-control" type="id"></field>
+      <field name="facilityId" widget-style="form-control" type="id"></field>
+      <field name="infoUrl" widget-style="form-control" type="long-varchar"></field>
+      <field name="recurrenceInfoId" widget-style="form-control" type="id"></field>
+      <field name="tempExprId" widget-style="form-control" type="id"></field>
+      <field name="runtimeDataId" widget-style="form-control" type="id"></field>
+      <field name="noteId" widget-style="form-control" type="id"></field>
+      <field name="serviceLoaderName" widget-style="form-control" type="name"></field>
+      <field name="quantityToProduce" widget-style="form-control" type="fixed-point"></field>
+      <field name="quantityProduced" widget-style="form-control" type="fixed-point"></field>
+      <field name="quantityRejected" widget-style="form-control" type="fixed-point"></field>
+      <field name="reservPersons" widget-style="form-control" type="fixed-point"></field>
+      <field name="reserv2ndPPPerc" widget-style="form-control" type="fixed-point"></field>
+      <field name="reservNthPPPerc" widget-style="form-control" type="fixed-point"></field>
+      <field name="accommodationMapId" widget-style="form-control" type="id"/>
+      <field name="accommodationSpotId" widget-style="form-control" type="id"/>
+      <field name="revisionNumber" widget-style="form-control" type="numeric"></field>
+      <field name="createdDate" widget-style="form-control" type="date-time"></field>
+      <field name="createdByUserLogin" widget-style="form-control" type="id-vlong"></field>
+      <field name="lastModifiedDate" widget-style="form-control" type="date-time"></field>
+      <field name="lastModifiedByUserLogin" widget-style="form-control" type="id-vlong"></field>
+      <field name="sequenceNum" widget-style="form-control" type="numeric"></field>
+      
+        <field name="workflowPackageId" widget-style="form-control"><ignored/></field>
+        <field name="workflowPackageVersion" widget-style="form-control"><ignored/></field>
+        <field name="workflowProcessId" widget-style="form-control"><ignored/></field>
+        <field name="workflowProcessVersion" widget-style="form-control"><ignored/></field>
+        <field name="workflowActivityId" widget-style="form-control"><ignored/></field>
+        <field name="recurrenceInfoId" widget-style="form-control"><ignored/></field>
+        <field name="runtimeDataId" widget-style="form-control"><ignored/></field>
+        <field name="noteId" widget-style="form-control"><ignored/></field>
+
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="buttontext"><submit button-type="button"/></field>
+    </form>
+    <form name="LookupWorkEffortShort" target="LookupWorkEffortShort" title="" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="workEffortId" widget-style="form-control" title="${uiLabelMap.WorkEffortWorkEffortId}"><text-find/></field>
+        <field name="workEffortParentId" widget-style="form-control"><text-find/></field>
+        <field name="workEffortName" widget-style="form-control"><text-find/></field>
+        <field name="workEffortTypeId" widget-style="form-control">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="WorkEffortType" key-field-name="workEffortTypeId">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="workEffortPurposeTypeId"  widget-style="form-control">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="WorkEffortPurposeType" key-field-name="workEffortPurposeTypeId">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+
+        <field name="currentStatusId" widget-style="form-control" title="${uiLabelMap.CommonStatus}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="StatusItem" key-field-name="statusId" description="[General] ${description}">
+                    <entity-constraint name="statusTypeId" value="CALENDAR_STATUS"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+                <entity-options entity-name="StatusItem" key-field-name="statusId" description="[Task] ${description}">
+                    <entity-constraint name="statusTypeId" value="TASK_STATUS"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+                <entity-options entity-name="StatusItem" key-field-name="statusId" description="[Event] ${description}">
+                    <entity-constraint name="statusTypeId" value="EVENT_STATUS"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="workEffortParentId" widget-style="form-control"><lookup target-form-name="LookupWorkEffort"/></field>
+        <field name="facilityId" widget-style="form-control"><lookup  target-form-name="LookupFacility"/></field>
+        <field name="fixedAssetId" widget-style="form-control"><lookup  target-form-name="LookupFixedAsset"/></field>
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="buttontext"><submit button-type="text-link"/></field>
+    </form>
+    <form name="ListLookupWorkEffort" list-name="listIt" target="" title="" type="list" paginate-target="LookupWorkEffort"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="WorkEffort"/>
+                <field-map field-name="orderBy" value="workEffortId"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="workEffortId" title="${uiLabelMap.WorkEffortWorkEffortId}" widget-style="buttontext">
+            <hyperlink description="${workEffortId}" target="javascript:set_value('${workEffortId}')" also-hidden="false" target-type="plain"/>
+        </field>
+        <field name="workEffortName"><display/></field>
+        <field name="workEffortTypeId"><display-entity entity-name="WorkEffortType"/></field>
+        <field name="contactMechTypeId"><display-entity entity-name="ContactMechType"/></field>
+        <field name="marketingCampaignId"><display-entity description="${campaignName}" entity-name="MarketingCampaign"/></field>
+    </form>
+
+    <!-- Timesheet Lookup forms -->
+    <form name="LookupTimesheet" target="LookupTimesheet" title="" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="Timesheet" default-field-type="find"/>
+        <field name="timesheetId" widget-style="form-control" title="${uiLabelMap.WorkEffortTimesheetTimesheetId}"><text-find/></field>
+        <field name="partyId" widget-style="form-control"><lookup  target-form-name="LookupPartyName"/></field>
+        <field name="clientPartyId" widget-style="form-control"><lookup  target-form-name="LookupPartyName"/></field>
+
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="buttontext"><submit button-type="button"/></field>
+    </form>
+    <form name="ListLookupTimesheet" list-name="listIt" target="" title="" type="list" paginate-target="LookupPerson"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="Timesheet"/>
+                <field-map field-name="orderBy" value="timesheetId"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="timesheetId" title="${uiLabelMap.WorkEffortTimesheetTimesheetId}" widget-style="buttontext">
+            <hyperlink description="${timesheetId}" target="javascript:set_value('${timesheetId}')" also-hidden="false" target-type="plain"/>
+        </field>
+        <field name="partyId"><display-entity entity-name="PartyNameView" description="${firstName} ${middleName} ${lastName} ${groupName} [${partyId}]"/></field>
+        <field name="clientPartyId"><display-entity entity-name="PartyNameView" key-field-name="partyId" description="${firstName} ${middleName} ${lastName} ${groupName} [${partyId}]"/></field>
+    </form>
+</forms>

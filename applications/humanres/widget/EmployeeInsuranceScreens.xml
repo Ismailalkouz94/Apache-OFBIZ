@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="InsuranceList">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="InsuranceList"/>
+                <set field="layoutSettings.javaScripts[]" value="/images/jgridTable/jgridGlobal.js" global="true"/>  
+                <set field="layoutSettings.javaScripts[]" value="/images/BusinessInnovation/js/plugin/jqgrid/grid.locale-en.min.js" global="true"/>  
+                <set field="layoutSettings.javaScripts[]" value="/images/BusinessInnovation/js/plugin/jqgrid/jquery.jqGrid.min.js" global="true"/>  
+ 
+            </actions>            
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body"> 
+	             <label style="h2" text="Insurance List"/> 
+                     <include-menu name="EmployeeInsuranceMenus" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <!--<screenlet id="AddTrainingTypePanel" title="${uiLabelMap.CommonAdd} ${uiLabelMap.HumanResTrainingTypes}" collapsible="true">-->
+                      <platform-specific>                           
+                            <html>
+                                <html-template location="component://humanres/widget/forms/Insurance/InsuranceList.ftl"/>
+
+                            </html>
+                        </platform-specific> 
+                        <!--</screenlet>-->
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>
+    
+    
+     <screen name="InsuranceClassCatogery">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="InsuranceClassCatogery"/>
+            </actions>            
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">  
+                     <include-menu name="EmployeeInsuranceMenus" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <!--<screenlet id="AddTrainingTypePanel" title="${uiLabelMap.CommonAdd} ${uiLabelMap.HumanResTrainingTypes}" collapsible="true">-->
+                      <platform-specific>
+                            
+
+                            <html>
+                                <html-template location="component://humanres/widget/forms/Insurance/InsuranceClassCatogery.ftl"/>
+
+                            </html>
+                        </platform-specific> 
+                        <!--</screenlet>-->
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>
+    
+    
+     <screen name="CompanyInsuranceContract">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="CompanyInsuranceContract"/>
+            </actions>            
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body"> 
+		     <label style="h2" text="Company Insurance Contract"/> 
+                     <include-menu name="EmployeeInsuranceMenus" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <!--<screenlet id="AddTrainingTypePanel" title="${uiLabelMap.CommonAdd} ${uiLabelMap.HumanResTrainingTypes}" collapsible="true">-->
+                      <platform-specific>                         
+                            <html>
+                                <html-template location="component://humanres/widget/forms/Insurance/CompanyInsuranceContract.ftl"/>
+                            </html>
+                        </platform-specific> 
+                        <!--</screenlet>-->
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>
+    
+     <screen name="CompanyInsuranceContractDet">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="CompanyInsuranceContractDet"/>
+            </actions>            
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">  
+                     <include-menu name="EmployeeInsuranceMenus" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <!--<screenlet id="AddTrainingTypePanel" title="${uiLabelMap.CommonAdd} ${uiLabelMap.HumanResTrainingTypes}" collapsible="true">-->
+                      <platform-specific>
+                            
+
+                            <html>
+                                <html-template location="component://humanres/widget/forms/Insurance/CompanyInsuranceContractDet.ftl"/>
+
+                            </html>
+                        </platform-specific> 
+                        <!--</screenlet>-->
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>
+    
+    
+    
+    <screen name="InsuranceEmpDetails">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="InsuranceEmpDetails"/>
+            </actions>            
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+	             <label style="h2" text="Insurance Employee Details"/>  
+                     <include-menu name="EmployeeInsuranceMenus" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <!--<screenlet id="AddTrainingTypePanel" title="${uiLabelMap.CommonAdd} ${uiLabelMap.HumanResTrainingTypes}" collapsible="true">-->
+                      <platform-specific>
+                            <html>
+                                <html-template location="component://humanres/widget/forms/Insurance/InsuranceEmpDetails.ftl"/>
+                            </html>
+                        </platform-specific> 
+                        <!--</screenlet>-->
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>
+    
+     <screen name="InsuranceContarctExt">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="InsuranceContarctExt"/>
+            </actions>            
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">  
+	             <label style="h2" text="Insurance Contarct Extention"/>
+                     <include-menu name="EmployeeInsuranceMenus" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <!--<screenlet id="AddTrainingTypePanel" title="${uiLabelMap.CommonAdd} ${uiLabelMap.HumanResTrainingTypes}" collapsible="true">-->
+                      <platform-specific>                          
+                            <html>
+                                <html-template location="component://humanres/widget/forms/Insurance/InsuranceContarctExtention.ftl"/>
+                            </html>
+                        </platform-specific> 
+                        <!--</screenlet>-->
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>
+    
+    
+</screens>

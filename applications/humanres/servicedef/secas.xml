@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<service-eca xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/service-eca.xsd">
+    
+    <!--    <eca service="updateEmployment" event="commit">
+        <set field-name="partyIdTo" from-field="partyIdTo"/>
+        <set field-name="thruDate" from-field="thruDate"/>
+        <set field-name="userLoginId" value="ismail"/>
+        <set field-name="currentPassword" value="12345"/>
+        <action service="EcaUpdateInsuranceEndDate" mode="sync"/>
+    </eca>-->
+   
+    <!-- Change status in Empl Position to OCCUPIED on add Empl Position Fulfillment-->
+    <eca service="createEmplPositionFulfillment" event="commit">
+        <action service="updateEmplPositionToOccupied" mode="sync"/>
+    </eca>
+    <eca service="createEmplPositionFulfillment" event="commit">
+        <action service="createEmployment" mode="sync"/>
+    </eca>
+    <eca service="createEmplPositionFulfillment" event="commit">
+        <set field-name="degreeId" from-field="degreeId"/>
+        <set field-name="partyId" from-field="partyId"/>
+        <set field-name="emplPositionId" from-field="emplPositionId"/>
+        <action service="createEmplSalaryGrade" mode="sync"/>
+    </eca> 
+    <eca service="createEmplPositionFulfillment" event="commit">
+        <action service="updateEmplStatusToHired" mode="sync"/>
+    </eca>
+
+    <!-- Change status in Empl Position to Active on delete Empl Position Fulfillment-->
+    <eca service="deleteEmplPositionFulfillment" event="commit">
+        <action service="updateEmplPositionToActive" mode="sync"/>
+    </eca>
+    
+    <eca service="createBonus_Validation" event="commit">
+      
+        <action service="createEmplSalaryGradeBounseAndPromotion" mode="sync"/>
+    </eca>
+    
+    
+    <eca service="updateEmplSalaryGradePromotion" event="commit">
+        <set field-name="currentPositionId" from-field="currentPositionId"/>
+        <action service="updateEmplPostionStatus" mode="sync"/>
+        <action service="createEmplSalaryGradeBounseAndPromotion" mode="sync"/>
+   
+    </eca>
+    
+    <eca service="updateEmplSalaryGradePromotion" event="commit">
+        <set field-name="currentPositionId" from-field="currentPositionId"/>
+        <set field-name="fromDate" from-field="fromDate"/>
+        <set field-name="thruDateUpdate" from-field="thruDate"/>
+        <action service="updateThruDateEmplPosition" mode="sync"/>
+           
+    </eca>
+    
+    <eca service="updateEmplSalaryGradePromotion" event="commit">
+        <set field-name="fromDate" from-field="fromDate"/>
+        <set field-name="thruDate" from-field="thruNull"/>
+        <action service="createEmplPositionFulfillmentFromPromotion" mode="sync"/>
+    
+    </eca>
+    <eca service="updateEmplPositionStatus_DeletePromotion" event="commit">
+        <set field-name="transDate" from-field="transDate"/>
+        <set field-name="partyId" from-field="partyId"/>
+        <set field-name="rowSeq" from-field="rowSeq"/>
+   
+        <action service="deleteEmplSalaryGradeAndFulfillment" mode="sync"/>
+    </eca>
+        
+    <eca service="updateEmplPositionStatus_DeletePromotion" event="commit">
+        <set field-name="partyId" from-field="partyId"/>
+                     
+        <action service="updateThruDateEmplPosition_DeletePromotion" mode="sync"/>
+    </eca>
+        
+   
+   
+    <eca service="updateThruDateEmployment" event="commit">
+        <action service="createEmploymentMoving" mode="sync"/>
+    </eca>
+       
+    <eca service="updateThruDateEmployment" event="commit">
+        <action service="createEmplSalaryGradeBounseAndPromotion" mode="sync"/>
+    </eca>
+ 
+ 
+    <eca service="deletePositionGradation_MOVING" event="commit">
+        <set field-name="transDate" from-field="transDate"/>
+        <set field-name="partyId" from-field="partyId"/>
+        <set field-name="rowSeq" from-field="rowSeq"/>
+   
+        <action service="updateThruDateEmployment_DeleteMoving" mode="sync"/>
+    </eca>
+    
+    
+    
+    <eca service="updateEmplStatusActive_Terminated" event="commit">
+        <set field-name="emplPositionId" from-field="emplPositionId"/>
+        <action service="updateEmplPositionStatusActive_Terminated" mode="sync"/>
+    </eca>
+    
+    <eca service="updateEmplStatusActive_Terminated" event="commit">
+        <set field-name="partyId" from-field="partyId"/>
+        <set field-name="thruDate" from-field="thruDate"/>
+        <set field-name="serviceType" from-field="serviceType"/>
+
+        <action service="updateThruDateEmplFulfillment_Terminated" mode="sync"/>
+    </eca>
+    
+    <eca service="updateEmplStatusActive_Terminated" event="commit">
+        <set field-name="partyId" from-field="partyId"/>
+        <set field-name="thruDate" from-field="thruDate"/>
+        <set field-name="terminationReasonId" from-field="terminationReasonId"/>
+        <set field-name="terminationTypeId" from-field="terminationTypeId"/>
+        <set field-name="serviceType" from-field="serviceType"/>
+
+        <action service="updateEmploymentData_Terminated" mode="sync"/>
+    </eca>
+    
+    <eca service="updateEmplStatusActive_Terminated" event="commit">
+        <action service="createEmplSalaryGradeBounseAndPromotion" mode="sync"/>
+    </eca>
+    
+    
+    <!--Delete Hiring-->
+    
+    <eca service="updateEmplStatusToUnderHiring" event="commit">
+        <set field-name="emplPositionId" from-field="emplPositionId"/>
+        <action service="updateEmplPositionStatusActive_Terminated" mode="sync"/>
+    </eca>
+    
+    
+    <eca service="updateEmplStatusToUnderHiring" event="commit">
+        <set field-name="transDate" from-field="transDate"/>
+        <set field-name="partyId" from-field="partyId"/>
+        <set field-name="rowSeq" from-field="rowSeq"/>
+
+        <action service="deleteEmploymentJAVA" mode="sync"/>
+    </eca>
+    
+    <eca service="updateEmplStatusToUnderHiring" event="commit">
+        <set field-name="transDate" from-field="transDate"/>
+        <set field-name="partyId" from-field="partyId"/>
+        <set field-name="rowSeq" from-field="rowSeq"/>
+        <action service="deleteEmplSalaryGradeAndFulfillment" mode="sync"/>
+    </eca>
+       
+       
+    <!--Holding-->
+       
+    <eca service="updateEmplStatusToHold" event="commit">
+        <action service="createEmplSalaryGradeBounseAndPromotion" mode="sync"/>
+    </eca>
+    
+    
+    <!--    <eca service="deletePositionGradation_Holding" event="commit">
+        <set field-name="partyId" from-field="partyId"/>
+        <action service="updateEmplStatusToHoldAndUNhold" mode="sync"/>
+    </eca>-->
+    
+    
+    <!--    .....vacation.......
+    <eca service="deleteVacationExt" event="commit">
+        <action service="deleteVacationExtFM" mode="sync"/>
+        <action service="deleteVacation" mode="sync"/>
+    </eca>-->
+
+
+
+
+
+    
+    <!--delete Terminated--> 
+            
+    <eca service="updateEmplPositionStatus_DeleteTerminated" event="commit">
+        <set field-name="partyId" from-field="partyId"/>
+        <set field-name="thruDate" from-field="thruDate"/>
+        <set field-name="serviceType" from-field="serviceType"/>
+
+        <action service="updateThruDateEmplFulfillment_Terminated" mode="sync"/>
+    </eca>
+    
+    <eca service="updateEmplPositionStatus_DeleteTerminated" event="commit">
+        <set field-name="partyId" from-field="partyId"/>
+        <set field-name="thruDate" from-field="thruDate"/>
+        <set field-name="terminationReasonId" from-field="terminationReasonId"/>
+        <set field-name="terminationTypeId" from-field="terminationTypeId"/>
+        <set field-name="serviceType" from-field="serviceType"/>
+        <action service="updateEmploymentData_Terminated" mode="sync"/>
+    </eca>
+
+
+    <eca service="createPartyVacationContract" event="commit">
+        <action service="updatePartyVacationContract_EndDate" mode="sync"/>
+    </eca>
+
+    
+    
+</service-eca>

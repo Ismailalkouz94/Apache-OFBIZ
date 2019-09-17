@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<entity-engine-xml>
+    <Party partyId="DemoEmployee" statusId="PARTY_ENABLED"/>
+    <PartyRole partyId="DemoEmployee" roleTypeId="EMPLOYEE"/><!-- data completed by components loaded later -->
+    <PartyStatus partyId="DemoEmployee" statusId="PARTY_ENABLED" statusDate="2001-01-01 12:00:00.0"/>
+
+    <RateAmount rateTypeId="AVERAGE_PAY_RATE" rateCurrencyUomId="USD" periodTypeId="RATE_MONTH" workEffortId="_NA_" partyId="DemoEmployee" emplPositionTypeId="_NA_" fromDate="2000-01-30 17:58:56.038" rateAmount="2300"/>
+    <RateAmount rateTypeId="AVERAGE_PAY_RATE" rateCurrencyUomId="USD" periodTypeId="RATE_MONTH" workEffortId="_NA_" partyId="_NA_" emplPositionTypeId="PROGRAMMER" fromDate="2000-01-30 17:58:56.038" rateAmount="2000"/>
+    <EmplPosition emplPositionId="DEMO100" statusId="EMPL_POS_ACTIVE" partyId="Company" emplPositionTypeId="PROGRAMMER" salaryFlag="Y" exemptFlag="Y" fulltimeFlag="Y" temporaryFlag="Y"/>
+    <EmplPositionFulfillment emplPositionId="DEMO100" partyId="DemoEmployee" fromDate="2009-01-30 17:58:02.745"/>
+    <EmplPositionTypeRate emplPositionTypeId="PROGRAMMER" rateTypeId="AVERAGE_PAY_RATE" fromDate="2009-01-30 17:58:56.038"/>
+    <Employment roleTypeIdFrom="INTERNAL_ORGANIZATIO" roleTypeIdTo="EMPLOYEE" partyIdFrom="Company" partyIdTo="DemoEmployee" fromDate="2000-01-30 17:50:15.767"/>
+
+    <Party partyId="DemoApprover" partyTypeId="PERSON" statusId="PARTY_ENABLED"/>
+    <Person partyId="DemoApprover" firstName="Demo" lastName="Approver"/>
+    <PartyStatus partyId="DemoApprover" statusId="PARTY_ENABLED" statusDate="2001-01-01 12:00:00.0"/>
+
+    <UserLogin userLoginId="demoapprover" currentPassword="{SHA}47b56994cbc2b6d10aa1be30f70165adb305a41a" requirePasswordChange="N" partyId="DemoApprover"/>
+    <UserLoginSecurityGroup groupId="HUMANRES_APPROVER" userLoginId="demoapprover" fromDate="2001-01-01 12:00:00.0"/>
+
+    <UserLogin userLoginId="demoemployee" currentPassword="{SHA}47b56994cbc2b6d10aa1be30f70165adb305a41a" requirePasswordChange="N" partyId="DemoEmployee"/>
+    <SecurityPermission description="Employee can check the status of his requests and trainings assigned to him with this permission." permissionId="EMPLOYEE_VIEW"/>
+    <SecurityGroupPermission groupId="HUMANRES_EMPLOYEE" permissionId="EMPLOYEE_VIEW"/>
+    <UserLoginSecurityGroup groupId="HUMANRES_EMPLOYEE" userLoginId="demoemployee" fromDate="2001-01-01 12:00:00.0"/>
+
+    
+    <!--insurance data-->
+    
+    
+    
+    
+    
+     <InsuranceClassType InsClass="A" Description="A" lastUpdatedStamp="2017-08-22 11:23:42.512" lastUpdatedTxStamp="2017-08-22 11:23:42.51" createdStamp="2017-08-22 11:23:42.512" createdTxStamp="2017-08-22 11:23:42.51"/>
+    <InsuranceClassType InsClass="A+" Description="A+" lastUpdatedStamp="2017-08-22 11:23:10.362" lastUpdatedTxStamp="2017-08-22 11:23:10.359" createdStamp="2017-08-22 11:23:10.362" createdTxStamp="2017-08-22 11:23:10.359"/>
+    <InsuranceClassType InsClass="B" Description="B" lastUpdatedStamp="2017-08-22 11:23:56.569" lastUpdatedTxStamp="2017-08-22 11:23:56.569" createdStamp="2017-08-22 11:23:56.569" createdTxStamp="2017-08-22 11:23:56.569"/>
+    <InsuranceClassType InsClass="C" Description="C" lastUpdatedStamp="2017-08-22 11:24:09.071" lastUpdatedTxStamp="2017-08-22 11:24:09.07" createdStamp="2017-08-22 11:24:09.071" createdTxStamp="2017-08-22 11:24:09.07"/>
+    <InsuranceClassType InsClass="D" Description="D" lastUpdatedStamp="2017-08-22 11:24:18.229" lastUpdatedTxStamp="2017-08-22 11:24:18.229" createdStamp="2017-08-22 11:24:18.229" createdTxStamp="2017-08-22 11:24:18.229"/>
+    <InsuranceClassType InsClass="E" Description="E" lastUpdatedStamp="2017-08-22 11:24:30.564" lastUpdatedTxStamp="2017-08-22 11:24:30.563" createdStamp="2017-08-22 11:24:30.564" createdTxStamp="2017-08-22 11:24:30.563"/>
+    
+    
+    <InsuranceCompanyList insListId="4" companyName="&#1575;&#1604;&#1588;&#1585;&#1602; &#1575;&#1604;&#1593;&#1585;&#1576;&#1610;" remark="test" lastUpdatedStamp="2017-06-29 19:01:27.965" lastUpdatedTxStamp="2017-06-29 19:01:27.962" createdStamp="2017-06-29 19:01:27.965" createdTxStamp="2017-06-29 19:01:27.962"/>
+    <InsuranceCompanyList insListId="5" companyName="MEDNET" lastUpdatedStamp="2017-08-23 10:53:22.159" lastUpdatedTxStamp="2017-08-23 10:53:22.158" createdStamp="2017-06-29 19:02:04.697" createdTxStamp="2017-06-29 19:02:04.694"/>
+    <InsuranceCompanyList insListId="8" companyName="&#1575;&#1604;&#1606;&#1587;&#1585; &#1575;&#1604;&#1593;&#1585;&#1576;&#1610;" remark="test" lastUpdatedStamp="2017-08-10 14:27:55.828" lastUpdatedTxStamp="2017-08-10 14:27:55.822" createdStamp="2017-08-10 14:27:55.828" createdTxStamp="2017-08-10 14:27:55.822"/>
+    
+    
+   
+     <InsuranceType insTypeId="1" description="&#1578;&#1571;&#1605;&#1610;&#1606; &#1591;&#1576;&#1610;" lastUpdatedStamp="2017-06-29 19:02:48.29" lastUpdatedTxStamp="2017-06-29 19:02:48.287" createdStamp="2017-06-29 19:02:48.29" createdTxStamp="2017-06-29 19:02:48.287"/>
+    <InsuranceType insTypeId="2" description="&#1578;&#1571;&#1605;&#1610;&#1606; &#1587;&#1601;&#1585;" lastUpdatedStamp="2017-06-29 19:03:04.223" lastUpdatedTxStamp="2017-06-29 19:03:04.22" createdStamp="2017-06-29 19:03:04.223" createdTxStamp="2017-06-29 19:03:04.22"/>
+    <InsuranceType insTypeId="3" description="&#1578;&#1571;&#1605;&#1610;&#1606; &#1593;&#1604;&#1609; &#1575;&#1604;&#1581;&#1610;&#1575;&#1607;" lastUpdatedStamp="2017-06-29 19:03:17.889" lastUpdatedTxStamp="2017-06-29 19:03:17.888" createdStamp="2017-06-29 19:03:17.889" createdTxStamp="2017-06-29 19:03:17.888"/>
+    
+    <CompanyInsuranceContract comInsContId="13" insListId="4" description="&#1575;&#1604;&#1588;&#1585;&#1602; &#1575;&#1604;&#1593;&#1585;&#1576;&#1610;" insTypeId="1" contarctAmount="10000" covCompanyPer="100" covEmpPer="0" covCompFmPer="100" covFmPer="0" startDate="2017-08-25" endDate="2017-08-25" lastUpdatedStamp="2017-08-28 13:07:17.073" lastUpdatedTxStamp="2017-08-28 13:07:17.072" createdStamp="2017-08-28 12:46:55.453" createdTxStamp="2017-08-28 12:46:55.45"/>
+    <CompanyInsuranceContract comInsContId="14" insListId="8" description="&#1575;&#1604;&#1606;&#1587;&#1585; &#1575;&#1604;&#1593;&#1585;&#1576;&#1610;" insTypeId="1" contarctAmount="20000" covCompanyPer="100" covEmpPer="0" covCompFmPer="100" covFmPer="0" startDate="2017-08-28" endDate="2018-08-27" lastUpdatedStamp="2017-08-28 13:01:52.606" lastUpdatedTxStamp="2017-08-28 13:01:52.602" createdStamp="2017-08-28 13:01:52.606" createdTxStamp="2017-08-28 13:01:52.602"/>
+    <CompanyInsuranceContract comInsContId="15" insListId="4" description="66" insTypeId="1" contarctAmount="999" covCompanyPer="30" covEmpPer="70" covCompFmPer="20" covFmPer="80" startDate="2017-08-01" endDate="2017-08-01" lastUpdatedStamp="2017-08-28 15:53:48.365" lastUpdatedTxStamp="2017-08-28 15:53:48.362" createdStamp="2017-08-28 15:53:48.365" createdTxStamp="2017-08-28 15:53:48.362"/>
+    
+    
+    
+    <InsClassExtAction actionId="0" description="&#1575;&#1602;&#1578;&#1591;&#1575;&#1593;" lastUpdatedStamp="2017-08-22 15:17:06.502" lastUpdatedTxStamp="2017-08-22 15:17:06.499" createdStamp="2017-08-22 15:17:06.502" createdTxStamp="2017-08-22 15:17:06.499"/>
+    <InsClassExtAction actionId="1" description="&#1575;&#1590;&#1575;&#1601;&#1607;" lastUpdatedStamp="2017-08-22 15:17:49.339" lastUpdatedTxStamp="2017-08-22 15:17:49.337" createdStamp="2017-08-22 15:17:49.339" createdTxStamp="2017-08-22 15:17:49.337"/>
+
+
+    <empFamilyMemberType familyMemberType="1" description="Son" gender="M" lastUpdatedStamp="2017-08-22 11:06:58.196" lastUpdatedTxStamp="2017-08-22 11:06:58.193" createdStamp="2017-08-22 11:06:58.196" createdTxStamp="2017-08-22 11:06:58.193"/>
+    <empFamilyMemberType familyMemberType="2" description="Doughter" gender="F" lastUpdatedStamp="2017-08-22 11:07:30.637" lastUpdatedTxStamp="2017-08-22 11:07:30.635" createdStamp="2017-08-22 11:07:30.637" createdTxStamp="2017-08-22 11:07:30.635"/>
+    <empFamilyMemberType familyMemberType="3" description="Wife" gender="F" lastUpdatedStamp="2017-08-22 11:07:48.762" lastUpdatedTxStamp="2017-08-22 11:07:48.761" createdStamp="2017-08-22 11:07:48.762" createdTxStamp="2017-08-22 11:07:48.761"/>
+    <empFamilyMemberType familyMemberType="4" description="Husbend" gender="M" lastUpdatedStamp="2017-08-22 11:08:23.746" lastUpdatedTxStamp="2017-08-22 11:08:23.745" createdStamp="2017-08-22 11:08:23.746" createdTxStamp="2017-08-22 11:08:23.745"/>
+    <empFamilyMemberType familyMemberType="5" description="Mather" gender="F" lastUpdatedStamp="2017-08-22 11:09:28.638" lastUpdatedTxStamp="2017-08-22 11:09:28.637" createdStamp="2017-08-22 11:09:28.638" createdTxStamp="2017-08-22 11:09:28.637"/>
+    <empFamilyMemberType familyMemberType="6" description="Father" gender="M" lastUpdatedStamp="2017-08-22 11:09:51.401" lastUpdatedTxStamp="2017-08-22 11:09:51.4" createdStamp="2017-08-22 11:09:51.401" createdTxStamp="2017-08-22 11:09:51.4"/>
+
+</entity-engine-xml>

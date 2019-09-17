@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<activiti>
+	<server id="1">
+            <protocol>http</protocol>
+		<hostname>localhost</hostname>
+		<port>8088</port>
+		</server>
+	     </activiti>

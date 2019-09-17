@@ -1,0 +1,795 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2018-06-26T17:24:03 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportOneDataSet" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="45f08e55-7f67-41f1-a444-af346d59c4a5">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="year" class="java.lang.String"/>
+	<parameter name="month" class="java.lang.String"/>
+	<parameter name="userLoginId" class="java.lang.String"/>
+	<parameter name="groupName" class="java.lang.String"/>
+	<parameter name="totalCompany" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="totalEmployee" class="java.lang.String"/>
+	<parameter name="imageUrl" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="partyId" class="java.lang.String"/>
+	<field name="organizationPartyId" class="java.lang.String"/>
+	<field name="amountEmployee" class="java.lang.String"/>
+	<field name="amountCompany" class="java.lang.String"/>
+	<field name="basicSalary" class="java.lang.String"/>
+	<field name="addition" class="java.lang.String"/>
+	<field name="deduction" class="java.lang.String"/>
+	<field name="socialSecId" class="java.lang.String"/>
+	<field name="transId" class="java.lang.String"/>
+	<field name="eduId" class="java.lang.String"/>
+	<field name="taxId" class="java.lang.String"/>
+	<field name="fullName" class="java.lang.String"/>
+	<field name="grossBenefits" class="java.lang.String"/>
+	<variable name="sumBasic" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{basicSalary})]]></variableExpression>
+	</variable>
+	<variable name="sumTrans" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{transId})]]></variableExpression>
+	</variable>
+	<variable name="sumEdu" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{eduId})]]></variableExpression>
+	</variable>
+	<variable name="sumAdd" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{addition})]]></variableExpression>
+	</variable>
+	<variable name="sumDed" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{deduction})]]></variableExpression>
+	</variable>
+	<variable name="sumSocial" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{socialSecId})]]></variableExpression>
+	</variable>
+	<variable name="sumTax" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{taxId})]]></variableExpression>
+	</variable>
+	<variable name="sumEmpl" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{amountEmployee})]]></variableExpression>
+	</variable>
+	<variable name="sumGross" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{grossBenefits})]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="136">
+			<staticText>
+				<reportElement x="695" y="10" width="100" height="14" uuid="76a33492-89c6-49c3-a32c-eb4f5f736405">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[شركة]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="695" y="24" width="100" height="14" uuid="ce617cc6-07a8-4488-b110-2531588e3b93">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[اسم المستخدم]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="695" y="38" width="100" height="14" uuid="0f974f3c-1014-451b-8750-361c5a10d644">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[تاريخ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="495" y="10" width="200" height="14" uuid="f9476994-776f-47c5-bf03-b7d39b59ae8b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{groupName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="495" y="24" width="200" height="14" uuid="c570188f-d451-45b3-b5b5-74b2d1da1174">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{userLoginId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="495" y="38" width="200" height="14" uuid="4b73c2b6-78c1-47c8-a397-ca407fadfd9c"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="11" y="10" width="152" height="40" uuid="5a0dccfa-760d-48c9-8736-f467f7071b47">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{imageUrl}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="627" y="70" width="170" height="18" uuid="1af593bb-7c48-46d2-bcae-603c79f14fab">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[كشف راتب]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="719" y="93" width="73" height="14" uuid="7e73ac65-e2ac-4d53-8df1-b0d422b58788">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[السنة]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="719" y="107" width="73" height="14" uuid="1536f7d4-43f9-41f2-9f62-0e3e3be4d20f">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[الشهر]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="619" y="93" width="100" height="14" uuid="0620f5ea-98fa-47f6-acd1-fdd8fcd4998a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{year}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="619" y="107" width="100" height="14" uuid="56b43556-1e61-474a-9a40-a336e54340b1"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{month}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="7" y="125" width="790" height="1" forecolor="#94908F" uuid="3a8d9167-191c-4733-8f70-0953fc3fad77">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="3.0" lineColor="#696666"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="7" y="88" width="790" height="1" forecolor="#94908F" uuid="8cc03805-b5d8-447b-af13-2960bd16f5e4">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="3.0" lineColor="#696666"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="610" y="8" width="151" height="30" forecolor="#000000" backcolor="#E2E1DE" uuid="1d39d936-915b-4ae9-8a45-68ce70cc1d37">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[اسم الموظف]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="495" y="8" width="60" height="30" forecolor="#000000" backcolor="#E2E1DE" uuid="79ff8f20-c82f-46f8-a891-7c215d1eab69">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[الاساسي]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="437" y="8" width="58" height="30" forecolor="#000000" backcolor="#E2E1DE" uuid="d25d1e0f-9712-4ecb-b7a0-902e0ff59169">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[النقل]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="555" y="8" width="55" height="30" forecolor="#000000" backcolor="#E2E1DE" uuid="8ccfa348-db60-4dc0-a169-3d467a44e627">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[القسم]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="5" y="8" width="55" height="30" forecolor="#000000" backcolor="#E2E1DE" uuid="5cbf571a-c84a-4c59-8b42-d0a7bbcdc6ff">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[صافي الراتب]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="377" y="8" width="60" height="30" forecolor="#000000" backcolor="#E2E1DE" uuid="ba836ef2-9b6c-4488-bd45-599334d0902f">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[التعليم]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="60" y="8" width="65" height="30" forecolor="#000000" backcolor="#E2E1DE" uuid="fafc4c5a-2a35-4018-914a-825e04766e3b">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[الاقتطاعات]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="182" y="8" width="68" height="30" forecolor="#000000" backcolor="#E2E1DE" uuid="0178d89c-c03e-4f2c-960d-eb997369e1b9">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[الضمان الاجتماعي]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="125" y="8" width="57" height="30" forecolor="#000000" backcolor="#E2E1DE" uuid="253dfe05-9f5b-4546-9e92-6e21b6f16889">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[الضريبة]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="761" y="8" width="37" height="30" forecolor="#000000" backcolor="#E2E1DE" uuid="40cc099a-fb8d-45ca-b946-d735df84b7f3">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[الرقم]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="250" y="8" width="65" height="30" forecolor="#000000" backcolor="#E2E1DE" uuid="80146b03-3595-4482-92fa-2910baceab69">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[إجمالي الراتب]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="315" y="8" width="62" height="30" forecolor="#000000" backcolor="#E2E1DE" uuid="c6e232b7-3dfd-4b72-8f44-e7ca6aed1df1">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[الاضافات]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="761" y="0" width="37" height="20" uuid="33df0904-dfb9-47c9-ac12-bfebe09ae621">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="4">
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#94908F"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{partyId}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="437" y="0" width="58" height="20" uuid="face05b6-cd3c-45c4-8d1e-350643b2f8c2">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="4">
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#94908F"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat(",##0.000").format(Double.valueOf($F{transId}))]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="555" y="0" width="55" height="20" uuid="486f5614-7c4e-426c-b0c8-f1e997212ef9">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="4">
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#94908F"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{organizationPartyId}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="495" y="0" width="60" height="20" uuid="77fef9e7-69ca-4d12-adb3-8dfa59d47b7a">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box topPadding="4">
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#94908F"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat(",##0.000").format(Double.valueOf($F{basicSalary}))]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="5" y="0" width="55" height="20" uuid="cbbe358c-8b1a-42d8-8069-f3543b977c21">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="4">
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#94908F"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amountEmployee} !=null ? new java.text.DecimalFormat(",##0.000").format(Double.valueOf($F{amountEmployee})) : '0']]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="377" y="0" width="60" height="20" uuid="96141d4c-65b3-4871-bb51-fc5ff514d093">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="4">
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#94908F"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat(",##0.000").format(Double.valueOf($F{eduId}))]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="0" width="65" height="20" uuid="c7b8969a-620e-459a-a4da-f24341018f6e"/>
+				<box topPadding="4">
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#94908F"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat(",##0.000").format(Double.valueOf($F{deduction}))]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="182" y="0" width="68" height="20" uuid="4878b54e-b84d-4f24-a0c1-54777d1b6dff">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box topPadding="4">
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#94908F"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat(",##0.000").format(Double.valueOf($F{socialSecId}))]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="125" y="0" width="57" height="20" uuid="d5594e0e-33f2-471f-9a8c-38acb5c27943">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="4">
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#94908F"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat(",##0.000").format(Double.valueOf($F{taxId}))]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="610" y="0" width="151" height="20" uuid="09374b83-ef2c-4ece-878a-76d5c96f3c3a">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="4">
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#94908F"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fullName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="250" y="0" width="65" height="20" uuid="9754fa9f-b9fb-4968-9d0e-37e60e403f11">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box topPadding="4">
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#94908F"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat(",##0.000").format(Double.valueOf($F{grossBenefits}))]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="315" y="0" width="62" height="20" uuid="e37b5e0f-7cb7-4d4e-84fc-ab4d3795a458">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="4">
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#94908F"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#94908F"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#94908F"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat(",##0.000").format(Double.valueOf($F{addition}))]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45">
+			<line>
+				<reportElement x="5" y="15" width="790" height="3" forecolor="#94908F" uuid="57fa120d-2a89-427c-87e9-2fb448395dbb">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="3.0" lineColor="#696666"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="402" y="28" width="20" height="17" uuid="2d12293c-e347-405c-acc4-900f2454d21e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans Mono"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="422" y="28" width="12" height="17" uuid="00693bf3-64f5-4138-abde-4b78acc22bad">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="434" y="28" width="30" height="17" uuid="211231cb-4eb7-4096-9658-68995fa9fa2e">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans Mono"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<summary>
+		<band height="21">
+			<textField>
+				<reportElement mode="Opaque" x="377" y="1" width="60" height="20" backcolor="#E2E1DE" uuid="f645091b-741b-44da-a2cd-c8c7445e7279">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<topPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+					<bottomPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat(",##0.000").format($V{sumEdu})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="182" y="1" width="68" height="20" backcolor="#E2E1DE" uuid="6e4dd74f-939c-4a31-bcc2-50c5842d94cf">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<topPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+					<bottomPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat(",##0.000").format($V{sumSocial})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="125" y="1" width="57" height="20" backcolor="#E2E1DE" uuid="d7ea3aae-03c6-4d65-aaf7-810986253368">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<topPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+					<bottomPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat(",##0.000").format($V{sumTax})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="60" y="1" width="65" height="20" backcolor="#E2E1DE" uuid="5f6010d4-1cde-4742-8d62-f6d2872fecc0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<topPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+					<bottomPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat(",##0.000").format($V{sumDed})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="5" y="1" width="55" height="20" backcolor="#E2E1DE" uuid="e9723ffc-c81a-461e-9ca4-d732ba3d3734">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<topPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+					<bottomPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat(",##0.000").format($V{sumEmpl})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="437" y="1" width="58" height="20" backcolor="#E2E1DE" uuid="56a13894-2c80-4603-9da7-1e0c6df6f14d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<topPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+					<bottomPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat(",##0.000").format($V{sumTrans})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="495" y="1" width="60" height="20" backcolor="#E2E1DE" uuid="f19b3b91-cb77-4653-b95d-630cb06ed6a9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<topPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+					<bottomPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat(",##0.000").format($V{sumBasic})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="555" y="1" width="241" height="20" backcolor="#E2E1DE" uuid="c0c9538b-4983-4848-a43a-ab6ade819481">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box topPadding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<topPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+					<bottomPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[المجموع]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="250" y="1" width="65" height="20" backcolor="#E2E1DE" uuid="a8328698-22eb-448a-9e02-c5ec08d6573b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<topPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+					<bottomPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat(",##0.000").format($V{sumGross})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="315" y="1" width="62" height="20" backcolor="#E2E1DE" uuid="50025324-3463-4f53-911f-8daca6387b2a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="3">
+					<pen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<topPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+					<bottomPen lineWidth="1.75" lineStyle="Solid" lineColor="#696666"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#696666"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans Mono" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat(",##0.000").format($V{sumAdd})]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

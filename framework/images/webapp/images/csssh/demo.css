@@ -1,0 +1,16 @@
+﻿
+#demo-wrapper
+{
+    width: 600px;
+    margin: 20px;
+}
+#button-less
+{
+    margin-top: 20px;
+}
+#button-less .akordeon-item-head-container
+{
+    left: 0px !important;
+}
+
+

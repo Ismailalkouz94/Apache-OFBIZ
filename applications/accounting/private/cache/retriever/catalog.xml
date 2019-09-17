@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://ofbiz.apache.org/dtds/simple-methods.xsd" uri="ofbiz.apache.org/dtds/simple-methods.xsd"/>
+    <system systemId="http://ofbiz.apache.org/dtds/widget-screen.xsd" uri="ofbiz.apache.org/dtds/widget-screen.xsd"/>
+    <system systemId="http://ofbiz.apache.org/dtds/site-conf.xsd" uri="ofbiz.apache.org/dtds/site-conf.xsd"/>
+    <system systemId="http://ofbiz.apache.org/dtds/widget-menu.xsd" uri="ofbiz.apache.org/dtds/widget-menu.xsd"/>
+    <system systemId="http://ofbiz.apache.org/dtds/ofbiz-properties.xsd" uri="ofbiz.apache.org/dtds/ofbiz-properties.xsd"/>
+    <system systemId="http://www.w3.org/2001/xml.xsd" uri="www.w3.org/2001/xml.xsd"/>
+    <system systemId="http://ofbiz.apache.org/dtds/widget-form.xsd" uri="ofbiz.apache.org/dtds/widget-form.xsd"/>
+    <system systemId="http://ofbiz.apache.org/dtds/widget-common.xsd" uri="ofbiz.apache.org/dtds/widget-common.xsd"/>
+    <system systemId="http://ofbiz.apache.org/dtds/service-eca.xsd" uri="ofbiz.apache.org/dtds/service-eca.xsd"/>
+    <system systemId="http://ofbiz.apache.org/dtds/services.xsd" uri="ofbiz.apache.org/dtds/services.xsd"/>
+    <system systemId="http://ofbiz.apache.org/dtds/service-group.xsd" uri="ofbiz.apache.org/dtds/service-group.xsd"/>
+</catalog>

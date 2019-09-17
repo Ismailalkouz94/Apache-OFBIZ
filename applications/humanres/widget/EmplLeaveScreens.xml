@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="FindEmplLeaves">
+        <section>
+            <actions>
+                <set field="titleProperty" value="HumanResFindEmplLeave"/>
+                <set field="headerItem" value="Leave"/>
+                <set field="tabButtonItem" value="EmployeeLeave"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="leaveTypeId" from-field="parameters.leaveTypeId"/>
+                <set field="fromDate" from-field="parameters.fromDate"/>
+                <set field="emplLeaveCtx" from-field="parameters"/>
+                <service service-name="humanResManagerPermission" result-map="permResult">
+                    <field-map field-name="mainAction" value="ADMIN"/>
+                </service>
+                <set field="hasAdminPermission" from-field="permResult.hasPermission"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="pre-body">
+                        <include-menu name="EmplLeaveTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <if-has-permission permission="HUMANRES" action="_VIEW"/>
+                            </condition>
+                            <widgets>
+                                <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                                    <decorator-section name="menu-bar">
+                                        <section>
+                                            <widgets>
+                                                <container style="button-bar">
+                                                    <link target="EditEmplLeave" text="${uiLabelMap.HumanResNewLeave}" style="buttontext create"/>
+                                                </container>
+                                            </widgets>
+                                        </section>
+                                    </decorator-section>
+                                    <decorator-section name="search-options">
+                                        <include-form name="FindEmplLeaves" location="component://humanres/widget/forms/EmplLeaveForms.xml"/>
+                                    </decorator-section>
+                                    <decorator-section name="search-results">
+                                        <include-form name="ListEmplLeaves" location="component://humanres/widget/forms/EmplLeaveForms.xml"/>
+                                    </decorator-section>
+                                </decorator-screen>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="FindLeaveApprovals">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleFindApprovals"/>
+                <set field="tabButtonItem" value="Approval"/>
+                <set field="headerItem" value="Leave"/>
+                <service service-name="humanResManagerPermission" result-map="permResult">
+                    <field-map field-name="mainAction" value="ADMIN"/>
+                </service>
+                <set field="hasAdminPermission" from-field="permResult.hasPermission"/>
+                <set field="approverPartyId" from-field="parameters.userLogin.partyId"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="pre-body">
+                        <include-menu name="EmplLeaveTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                    </decorator-section>
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <if-has-permission permission="HUMANRES" action="_VIEW"/>
+                            </condition>
+                            <widgets>
+                                <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                                    <decorator-section name="search-options">
+                                        <include-form name="FindLeaveApprovals" location="component://humanres/widget/forms/EmplLeaveForms.xml"/>
+                                    </decorator-section>
+                                    <decorator-section name="search-results">
+                                        <include-form name="ListLeaveApprovals" location="component://humanres/widget/forms/EmplLeaveForms.xml"/>
+                                    </decorator-section>
+                                </decorator-screen>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.HumanResViewPermissionError}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditEmplLeave">
+        <section>
+            <actions>
+                <set field="titleProperty" value="HumanResEditEmplLeave"/>
+                <set field="headerItem" value="Leave"/>
+                <set field="tabButtonItem" value="EmployeeLeave"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="leaveTypeId" from-field="parameters.leaveTypeId"/>
+                <set field="fromDate" from-field="parameters.fromDate"/>
+                <entity-one entity-name="EmplLeave" value-field="leaveApp" auto-field-map="false">
+                    <field-map field-name="partyId" from-field="partyId"/>
+                    <field-map field-name="leaveTypeId" from-field="leaveTypeId"/>
+                    <field-map field-name="fromDate" from-field="fromDate"/>
+                </entity-one>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <include-menu name="EmplLeaveTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <screenlet id="AddEmplLeavePanel" title="${uiLabelMap.HumanResAddEmplLeave}" collapsible="true">
+                            <include-form name="EditEmplLeave" location="component://humanres/widget/forms/EmplLeaveForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditEmplLeaveStatus">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditApprovalStatus"/>
+                <set field="tabButtonItem" value="Approval"/>
+                <set field="partyId" from-field="parameters.partyId"/>
+                <set field="leaveTypeId" from-field="parameters.leaveTypeId"/>
+                <set field="fromDate" from-field="parameters.fromDate"/>
+                <entity-one entity-name="EmplLeave" value-field="leaveApp" auto-field-map="false">
+                    <field-map field-name="partyId" from-field="partyId"/>
+                    <field-map field-name="leaveTypeId" from-field="leaveTypeId"/>
+                    <field-map field-name="fromDate" from-field="fromDate"/>
+                </entity-one>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <include-menu name="EmplLeaveTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <screenlet id="EditEmplLeaveStatus" title="${uiLabelMap.HumanResEditLeaveApprovalStatus}" collapsible="true">
+                            <include-form name="EditEmplLeaveStatus" location="component://humanres/widget/forms/EmplLeaveForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    
+    
+    
+    <screen name="EmplLeaves">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="EmplLeaves"/>
+ 
+            </actions>            
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body"> 
+                        <label style="h2" text="Leaves"/> 
+                        <include-menu name="EmplLeaveTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <!--<screenlet id="AddTrainingTypePanel" title="${uiLabelMap.CommonAdd} ${uiLabelMap.HumanResTrainingTypes}" collapsible="true">-->
+                        <platform-specific>
+                            
+
+                            <html>
+                                <html-template location="component://humanres/widget/forms/leave-and-vacation/leaves/leaves.ftl"/>
+
+                            </html>
+                        </platform-specific> 
+                        <!--</screenlet>-->
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>
+    
+    <screen name="EmplVacation">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="EmplVacation"/>
+            </actions>            
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body"> 
+                        <label style="h2" text="Create Vacation"/> 
+                        <include-menu name="EmplLeaveTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <!--<screenlet id="AddTrainingTypePanel" title="${uiLabelMap.CommonAdd} ${uiLabelMap.HumanResTrainingTypes}" collapsible="true">-->
+                        <platform-specific>
+                            <html>
+                                <html-template location="component://humanres/widget/forms/leave-and-vacation/vacations/vacationForm/vacations.ftl"/>
+                            </html>
+                        </platform-specific> 
+                        <!--</screenlet>-->
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>
+    <screen name="VacationResponse">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="EmplVacation"/>
+            </actions>            
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body"> 
+                        <label style="h2" text="Vacation Response"/> 
+                        <platform-specific>                            
+                            <html>
+                                <html-template location="component://humanres/widget/forms/leave-and-vacation/vacations/workflow/vacationResponse.ftl"/>
+                            </html>
+                        </platform-specific> 
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>    
+    
+    
+    
+    
+     <screen name="LeaveResponse">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="LeaveResponse"/>
+            </actions>            
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body"> 
+                        <label style="h2" text="Vacation Response"/> 
+                        <platform-specific>                            
+                            <html>
+                                <html-template location="component://humanres/widget/forms/leave-and-vacation/leaves/workflow/leaveResponse.ftl"/>
+                            </html>
+                        </platform-specific> 
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>    
+    
+    
+    
+        <screen name="LeaveCompletedDetails">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="LeaveCompletedDetails"/>
+            </actions>            
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body"> 
+                        <label style="h2" text="Vacation Response"/> 
+                        <platform-specific>                            
+                            <html>
+                                <html-template location="component://humanres/widget/forms/leave-and-vacation/leaves/workflow/leaveCompletedDetails.ftl"/>
+                            </html>
+                        </platform-specific> 
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>    
+    
+        <screen name="VacationCompletedDetails">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="VacationCompletedDetails"/>
+            </actions>            
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body"> 
+                        <label style="h2" text="Vacation Response"/> 
+                        <platform-specific>                            
+                            <html>
+                                <html-template location="component://humanres/widget/forms/leave-and-vacation/vacations/workflow/vacationCompletedDetails.ftl"/>
+                            </html>
+                        </platform-specific> 
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>    
+    
+    
+    
+    
+    
+      <screen name="vacationsView">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="EmplVacation"/>
+            </actions>            
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body"> 
+                        <label style="h2" text="Find Vacation"/> 
+                        <include-menu name="EmplLeaveTabBar" location="component://humanres/widget/HumanresMenus.xml"/>
+                        <!--<screenlet id="AddTrainingTypePanel" title="${uiLabelMap.CommonAdd} ${uiLabelMap.HumanResTrainingTypes}" collapsible="true">-->
+                        <platform-specific>
+                            <html>
+                                <html-template location="component://humanres/widget/forms/leave-and-vacation/vacations/vacationView/vacationsView.ftl"/>
+                            </html>
+                        </platform-specific> 
+                        <!--</screenlet>-->
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>
+    
+       <screen name="EditVacation">
+        <section>                        
+            <actions>
+                <set field="tabButtonItem" value="EmplVacation"/>
+            </actions>            
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body"> 
+                        <label style="h2" text="Vacation Response"/> 
+                        <platform-specific>                            
+                            <html>
+                                <html-template location="component://humanres/widget/forms/leave-and-vacation/vacations/workflow/editVacation.ftl"/>
+                            </html>
+                        </platform-specific> 
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>            
+        </section>
+    </screen>
+
+
+    <screen name="PartyVacationContract">
+        <section>
+            <actions>
+                <set field="tabButtonItem" value="PartyVacationContract"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <label style="h2" text="Party Vacation Contract"/>
+                        <platform-specific>
+                            <html>
+                                <html-template location="component://humanres/widget/forms/leave-and-vacation/partyvacationcontract/PartyVacationContract.ftl"/>
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="PartyVacationTransaction">
+        <section>
+            <actions>
+                <set field="tabButtonItem" value="PartyVacationTransaction"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <label style="h2" text="Party Vacation Transaction"/>
+                        <platform-specific>
+                            <html>
+                                <html-template location="component://humanres/widget/forms/leave-and-vacation/partyvacationtransaction/PartyVacationTransaction.ftl"/>
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+
+    <screen name="VacationBalance">
+        <section>
+            <actions>
+                <set field="tabButtonItem" value="VacationBalance"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <label style="h2" text="Vacation Balance"/>
+                        <platform-specific>
+                            <html>
+                                <html-template location="component://humanres/widget/forms/leave-and-vacation/vacationbalance/VacationBalance.ftl"/>
+                            </html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+
+</screens>

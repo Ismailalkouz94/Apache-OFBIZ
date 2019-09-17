@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns="http://ofbiz.apache.org/Simple-Method" xsi:schemaLocation="http://ofbiz.apache.org/Simple-Method http://ofbiz.apache.org/dtds/simple-methods.xsd">
+
+    <!-- Employment Group -->
+    <simple-method method-name="createEmployment" short-description="Create Employment"><!--entity-auto-->
+      
+        <log level="info" message="--- Create Employment ---"/>
+        <entity-condition entity-name="Employment" list="employments" order-by="fromDate">
+            <condition-list combine="and"> 
+                <condition-expr field-name="roleTypeIdFrom" operator="equals" value="INTERNAL_ORGANIZATIO"/>
+                <condition-expr field-name="roleTypeIdTo" operator="equals" value="EMPLOYEE"/>
+                <condition-expr field-name="partyIdTo"  from-field="parameters.partyIdTo"/>  
+            </condition-list>
+        </entity-condition>
+        <if-empty field="employments">
+            <make-value entity-name="Employment" value-field="newEntity"/>
+            <set-pk-fields value-field="newEntity" map="parameters"/>
+            <!-- parameters.empall -->
+            <set-nonpk-fields map="parameters" value-field="newEntity"/>
+            <!-- <make-next-seq-id value-field="newEntity" seq-field-name="employmentId"/>  this finds the next sub-sequence ID -->
+            <sequenced-id sequence-name="Employment" field="newEntity.employmentId"/>
+            <field-to-result field="newEntity.employmentId" result-name="employmentId"/>
+            <create-value value-field="newEntity"/>
+            <set field="successMessage" value="Employment updated successfully"/>
+            <field-to-result field="successMessage" result-name="successMessage"/>
+        </if-empty>
+        <iterate list="employments" entry="employment">
+            <if-empty field="employment.partyIdFrom">
+                <make-value entity-name="Employment" value-field="newEntity"/>
+                <set-pk-fields value-field="newEntity" map="parameters"/>
+                <set-nonpk-fields map="parameters" value-field="newEntity"/>
+                <!--<make-next-seq-id value-field="newEntity" seq-field-name="employmentId"/>  this finds the next sub-sequence ID -->
+                <sequenced-id sequence-name="Employment" field="newEntity.employmentId"/>
+                <field-to-result field="newEntity.employmentId" result-name="employmentId"/>
+                <create-value value-field="newEntity"/>
+                <set field="successMessage" value="Employment updated successfully"/>
+                <field-to-result field="successMessage" result-name="successMessage"/>
+            </if-empty>
+            <if-empty field="employment.thruDate">
+                <set field="errorMessage" value="Cont add Employment ,Is  already Employment"/>
+                <field-to-result field="errorMessage" result-name="errorMessage"/>
+                <check-errors/>
+            </if-empty>
+            <if-not-empty field="employment.thruDate">
+                <if-compare-field field="employment.thruDate" operator="less" to-field="parameters.fromDate" type="Date">
+                    <make-value entity-name="Employment" value-field="newEntity"/>
+                    <set-pk-fields value-field="newEntity" map="parameters"/>
+                    <set-nonpk-fields map="parameters" value-field="newEntity"/>
+                    <!--<make-next-seq-id value-field="newEntity" seq-field-name="employmentId"/>  this finds the next sub-sequence ID -->
+                    <sequenced-id sequence-name="Employment" field="newEntity.employmentId"/>
+                    <field-to-result field="newEntity.employmentId" result-name="employmentId"/>
+                    <create-value value-field="newEntity"/>
+                    <set field="successMessage" value="Employment updated successfully"/>
+                    <field-to-result field="successMessage" result-name="successMessage"/>
+                </if-compare-field>
+                <if-compare-field field="employment.thruDate" operator="greater-equals" to-field="parameters.fromDate" type="Date">
+                    <set field="errorMessage" value="Cont add Employment , Is Termination after From Date"/>
+                    <field-to-result field="errorMessage" result-name="errorMessage"/>
+                    <check-errors/>
+                </if-compare-field>
+            </if-not-empty>
+        </iterate>
+    </simple-method>
+
+    <simple-method method-name="deletePayHistory" short-description="Delete Pay History">
+        <now-timestamp field="nowTimeStamp"/>
+        <entity-one entity-name="PayHistory" value-field="lookedUpValue"/>
+        <set field="lookedUpValue.thruDate" from-field="nowTimeStamp"/>
+        <store-value value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+    </simple-method>
+
+    <simple-method method-name="createEmplPositionReportingStruct" short-description="Create a Employee Position Reporting Structure">
+        <make-value entity-name="EmplPositionReportingStruct" value-field="newEntity"/>
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <log level="info" message="*** ${newEntity.fromDate} createEmplPositionReportingStruct ***"/>      
+        <log level="info" message="*** ${newEntity.thruDate} createEmplPositionReportingStruct ***"/>     
+        <if-empty field="newEntity.fromDate">
+            <now-timestamp field="nowTimeStamp"/>
+            <set field="newEntity.fromDate" from-field="nowTimeStamp"/>
+        </if-empty>
+        <if>
+            <condition>
+                <if-compare-field field="parameters.emplPositionIdManagedBy" to-field="parameters.emplPositionIdReportingTo" operator="not-equals"/>
+            </condition>
+            <then>
+                <create-value value-field="newEntity"/>
+                <check-errors/>
+                <property-to-field resource="HumanResUiLabels" property="HumanResCreateEmplPositionReportingStruct" field="successMessage"/>
+                <field-to-result field="responseMessage" result-name="successMessage"/>
+<!--                <set field="successMessage" value="updated successfully"/>
+                <field-to-result field="successMessage" result-name="successMessage"/>-->
+            </then>
+            <else>
+                <add-error>
+                    <fail-property resource="HumanResUiLabels" property="HumanResEmplPostitionIdReportingToAndEmplPositionIdManagedByMustBeDiff"/>
+                </add-error>
+                <check-errors/>
+            </else>
+        </if>
+    </simple-method>
+
+    <simple-method method-name="createEmployee" short-description="Create New Employee">
+        <set field="parameters.roleTypeId" value="EMPLOYEE"/>
+        <call-simple-method method-name="createPersonRoleAndContactMechs" xml-resource="component://party/minilang/party/PartySimpleMethods.xml"/>
+        <if-not-empty field="parameters.partyIdFrom">
+            <set field="partyRelationshipCtx.partyId" from-field="partyId"/>
+            <set field="partyRelationshipCtx.partyIdFrom" from-field="parameters.partyIdFrom"/>
+            <set field="partyRelationshipCtx.partyIdTo" from-field="partyId"/>
+            <set field="partyRelationshipCtx.roleTypeIdFrom" value="INTERNAL_ORGANIZATIO"/>
+            <set field="partyRelationshipCtx.roleTypeIdTo" value="EMPLOYEE"/>
+            <set field="partyRelationshipCtx.relationshipName" value="EMPLOYMENT"/>
+            <set field="partyRelationshipCtx.fromDate" from-field="parameters.fromDate"/>
+            <now-timestamp field="nowTimestamp"/>
+            <if-empty field="partyRelationshipCtx.fromDate">
+                <set field="partyRelationshipCtx.fromDate" from-field="nowTimestamp"/>
+            </if-empty>
+            <call-service service-name="createPartyRelationship" in-map-name="partyRelationshipCtx"/>
+        </if-not-empty>
+        <field-to-result field="partyId"/>
+    </simple-method>
+
+    <simple-method method-name="updateEmplPositionTypeRate" short-description="Update/create EmplPositionTypeRate">
+        <entity-one entity-name="EmplPositionTypeRate" value-field="lookedUpValue"/>
+        <!-- check if already exist is so expire current record -->
+        <entity-and entity-name="EmplPositionTypeRate" list="emplPositionTypeRates" filter-by-date="true">
+            <field-map field-name="emplPositionTypeId" from-field="parameters.emplPositionTypeId"/>
+            <field-map field-name="rateTypeId" from-field="parameters.rateTypeId"/>
+        </entity-and>
+        <if-not-empty field="emplPositionTypeRates">
+            <first-from-list list="emplPositionTypeRates" entry="emplPositionTypeRate"/>
+            <now-timestamp field="emplPositionTypeRate.thruDate"/>
+            <store-value value-field="emplPositionTypeRate"/>
+        </if-not-empty>
+
+        <make-value value-field="newEntity" entity-name="EmplPositionTypeRate"/>
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+        <if-empty field="newEntity.fromDate">
+            <now-timestamp field="newEntity.fromDate"/>
+        </if-empty>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <create-value value-field="newEntity"/>
+
+        <if-not-empty field="parameters.rateAmount">
+            <set-service-fields service-name="updateRateAmount" map="parameters" to-map="updRate"/>
+            <call-service service-name="updateRateAmount" in-map-name="updRate"/>
+        </if-not-empty>
+    </simple-method>
+
+    <simple-method method-name="deleteEmplPositionTypeRate" short-description="Delete EmplPositionTypeRate">
+        <entity-one entity-name="EmplPositionTypeRate" value-field="lookedUpValue"/>
+        <now-timestamp field="lookedUpValue.thruDate"/>
+        <store-value value-field="lookedUpValue"/>
+
+        <set-service-fields service-name="deleteRateAmount" map="parameters" to-map="delRateAmount"/>
+        <set field="delRateAmount.fromDate" from-field="parameters.rateAmountFromDate"/>
+        <call-service service-name="deleteRateAmount" in-map-name="delRateAmount"/>
+    </simple-method>
+
+    <simple-method method-name="createEmplLeave" short-description="Create Employee Leave">
+        <make-value entity-name="EmplLeave" value-field="newEntity"  />
+        <set-pk-fields value-field="newEntity" map="parameters"/>
+       
+        <!--to create sequence id number-->
+<!--        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <sequenced-id sequence-name="leaveId" field="newEntity.leaveId" />
+        <field-to-result field="newEntity.leaveId" result-name="leaveId" />   
+        <create-value value-field="newEntity" />-->
+        <check-errors/>
+        <property-to-field resource="HumanResUiLabels" property="HumanResLeaveCreationSuccess" field="successMessage"/>
+        <field-to-result field="responseMessage" result-name="successMessage"/>
+    </simple-method>
+
+    <simple-method method-name="getCurrentPartyEmploymentData" short-description="Get all current employment information for a certain partyId">
+        <!-- party benefit -->
+        <entity-and entity-name="BenefitTypeAndParty" list="partyBenefitTypes" filter-by-date="true">
+            <field-map field-name="partyIdTo" from-field="parameters.partyId"/>
+        </entity-and>
+        <field-to-result field="partyBenefitTypes"/>
+        <!-- employment --> 
+        <!--        <entity-and entity-name="Employment" list="employments" order-by="fromDate">  filter-by-date="true" 
+            <field-map field-name="partyIdTo" from-field="parameters.partyId"/>
+        </entity-and>-->
+        <entity-condition entity-name="Employment" list="employments">
+            <field-map field-name="partyIdTo" from-field="parameters.partyId"/>
+        </entity-condition> 
+        <log level="info" message="--- getCurrentPartyEmploymentData ---"/>
+        <iterate list="employments" entry="employment">
+            <field-to-result field="employment"/>
+        </iterate>
+        <log level="info" message="*** ${employments} ${parameters.partyId} getCurrentPartyEmploymentData ***"/>
+        
+        <!--<first-from-list list="employments" entry="employment"/>-->
+        <!--<field-to-result field="employment"/>-->
+        <!-- position -->
+        <entity-and entity-name="EmplPositionAndFulfillment" list="emplPositionAndFulfillments" > <!--filter-by-date="true" -->
+            <field-map field-name="employeePartyId" from-field="parameters.partyId"/>
+            <!--<field-map field-name="partyId" from-field="employment.partyIdFrom"/>-->
+        </entity-and>
+        <first-from-list list="emplPositionAndFulfillments" entry="emplPositionAndFulfillment"/>
+        <field-to-result field="emplPositionAndFulfillment" result-name="emplPosition"/>
+        <!-- position type -->
+        <if-not-empty field="emplPositionAndFulfillment">
+            <get-related-one value-field="emplPositionAndFulfillment" relation-name="EmplPositionType" to-value-field="emplPositionType"/>
+            <field-to-result field="emplPositionType"/>
+        </if-not-empty>
+        <!-- rate amount -->
+        <entity-one entity-name="PartyAcctgPreference" value-field="partyAcctgPreference">
+            <field-map field-name="partyId" from-field="employment.partyIdFrom"/>
+        </entity-one>
+        <entity-and entity-name="RateAmount" list="rateAmounts" filter-by-date="true">
+            <field-map field-name="emplPositionTypeId" from-field="emplPositionType.emplPositionTypeId"/>
+            <field-map field-name="rateCurrencyUomId" from-field="partyAcctgPreference.baseCurrencyUomId"/>
+        </entity-and>
+        <first-from-list list="rateAmounts" entry="rateAmount"/>
+        <field-to-result field="rateAmount" result-name="emplPositionRateAmount"/>
+    </simple-method>
+
+    <simple-method method-name="applyTraining" short-description="Apply Training">
+        <make-value entity-name="TrainingRequest" value-field="trainingRequest"/>
+        <make-next-seq-id value-field="trainingRequest" seq-field-name="trainingRequestId"/>
+        <create-value value-field="trainingRequest"/>
+        <make-value entity-name="PersonTraining" value-field="personTraining"/>
+        <set-pk-fields map="parameters" value-field="personTraining"/>
+        <set-nonpk-fields map="parameters" value-field="personTraining"/>
+        <set from-field="trainingRequest.trainingRequestId" field="personTraining.trainingRequestId"/>
+        <set field="personTraining.fromDate" from-field="parameters.fromDate"/>
+        <set field="personTraining.thruDate" from-field="parameters.thruDate"/>
+        <set field="personTraining.trainingClassTypeId" from-field="parameters.workEffortName"/>
+        <create-value value-field="personTraining"/>
+        <check-errors/>
+    </simple-method>
+
+    <simple-method method-name="assignTraining" short-description="Assign Training">
+        <make-value entity-name="TrainingRequest" value-field="trainingRequest"/>
+        <make-next-seq-id value-field="trainingRequest" seq-field-name="trainingRequestId"/>
+        <create-value value-field="trainingRequest"/>
+        <make-value entity-name="PersonTraining" value-field="personTraining"/>
+        <set-pk-fields map="parameters" value-field="personTraining"/>
+        <set-nonpk-fields map="parameters" value-field="personTraining"/>
+        <set from-field="trainingRequest.trainingRequestId" field="personTraining.trainingRequestId"/>
+        <set field="personTraining.fromDate" from-field="parameters.fromDate"/>
+        <set field="personTraining.thruDate" from-field="parameters.thruDate"/>
+        <create-value value-field="personTraining"/>
+        <check-errors/>
+    </simple-method>
+    
+    <simple-method method-name="createSalaryStep" short-description="Create a Salary Step">
+        <make-value entity-name="SalaryStep" value-field="newEntity"/>
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <set field="newEntity.createdByUserLogin" from-field="parameters.userLogin.userLoginId"/>
+        <sequenced-id sequence-name="SalaryStep" field="newEntity.salaryStepSeqId"/>
+        <field-to-result field="salaryStepSeqId" result-name="salaryStepSeqId"/>
+        <create-value value-field="newEntity"/>
+    </simple-method>
+    
+    <simple-method method-name="updateSalaryStep" short-description="Update Salary Step">
+        <entity-one entity-name="SalaryStep" value-field="lookedUpValue"/>
+        <set-nonpk-fields map="parameters" value-field="lookedUpValue"/>
+        <set field="lookedUpValue.lastModifiedByUserLogin" from-field="parameters.userLogin.userLoginId"/>
+        <now field="fromDate"/>
+        <set field="lookedUpValue.dateModified" from-field="fromDate"/>
+        <store-value value-field="lookedUpValue"/>
+    </simple-method>
+    
+    <simple-method method-name="updateEmplPosition" short-description="Update Empl Position">
+        <log level="info" message="--- Update Empl Position ---"/>
+        <!--<log level="info" message=" emplPosition.statusIdNew   ${parameters.statusId}"/>-->
+        <entity-one entity-name="EmplPosition" value-field="emplPosition"/>
+        <!--<log level="info" message=" emplPosition.statusIdOld ${emplPosition.emplPositionId} ${emplPosition.statusId} "/>-->
+        
+        <if-compare-field field="emplPosition.statusId" to-field="parameters.statusId" operator="not-equals">
+            <entity-one entity-name="StatusValidChange" value-field="statusChange" auto-field-map="false">
+                <field-map field-name="statusId" from-field="emplPosition.statusId"/>
+                <field-map field-name="statusIdTo" from-field="parameters.statusId"/>
+            </entity-one>  
+            <!--<log level="error" message="StatusValidChange ${statusChange.statusIdTo}"/>-->
+            <if-empty field="statusChange">
+                <log level="info" message="--- ********* 1 ---"/>
+                <!--              <add-error error-list-name="errorMessageList">
+                 <fail-property resource="HumanResUiLabels" property="InvalidStatusChange"/>
+                </add-error>-->
+                <property-to-field resource="HumanResUiLabels" property="InvalidStatusChange" field="errorMessage"/>
+                <field-to-result field="errorMessage" result-name="errorMessage"/>
+             
+                <!--            <property-to-field field="tempErrorMessage" resource="HumanResUiLabels" property="InvalidStatusChange"/>
+                <field-to-list field="tempErrorMessage" list="error_list"/>-->
+
+                <!--            <set field="errMsg" value="Invoice should have the status 'in progress', the status is however"/>
+                <log level="error" message="${errMsg}"/>
+                <add-error error-list-name="errorMessageList">
+                    <fail-property resource="HumanResUiLabels" property="InvalidStatusChange"/>
+                </add-error>
+                <return response-code="error"/>-->
+           
+                <!--              <add-error>
+                    <fail-property resource="HumanResUiLabels" property="InvalidStatusChange"/>
+                </add-error>
+                <log level="error" message="Cannot change from ${emplPosition.statusId} to ${parameters.statusId}"/>
+                <log level="info" message="Cannot change from ${emplPosition.statusId} to ${parameters.statusId}"/>-->
+                <check-errors/>
+             
+                <else>
+                    <log level="info" message="--- ********* 2 ---"/>
+                    <!--<log level="info" message="Can change from ${emplPosition.statusId} to ${parameters.statusId}"/>-->
+                    <!--                   <entity-one entity-name="EmplPosition" value-field="lookedUpValue"/>
+                    <set-nonpk-fields map="parameters" value-field="lookedUpValue"/>
+                    <store-value value-field="lookedUpValue"/>-->
+                    <entity-one entity-name="EmplPosition" value-field="lookedUpValue"/>
+                    <set-nonpk-fields map="parameters" value-field="lookedUpValue"/>
+                    <store-value value-field="lookedUpValue"/>
+
+                    <set field="successMessage" value="updated successfully"/>
+                    <field-to-result field="successMessage" result-name="successMessage"/>
+                </else>
+            </if-empty>
+        </if-compare-field> 
+        <if-compare-field field="emplPosition.statusId" to-field="parameters.statusId" operator="equals">
+            <entity-one entity-name="EmplPosition" value-field="lookedUpValue"/>
+            <set-nonpk-fields map="parameters" value-field="lookedUpValue"/>
+            <store-value value-field="lookedUpValue"/>
+           
+            <!--<property-to-field resource="HumanResUiLabels" property="InvalidStatusChange" field="successMessage"/>-->
+            <set field="successMessage" value="updated successfully"/>
+            <field-to-result field="successMessage" result-name="successMessage"/>
+        </if-compare-field>
+        
+        
+    </simple-method>
+    
+    <simple-method method-name="updateEmplPositionToOccupied" short-description="Update Empl Position Trigger to Occupied">
+        <log level="info" message="updateEmplPositionToOccupied  ${parameters.emplPositionId} ${parameters.partyId}"/>
+        <entity-one entity-name="EmplPosition" value-field="lookedUpValue"/>
+        <set field="lookedUpValue.statusId" value="EMPL_POS_OCCUPIED"/>
+        <store-value value-field="lookedUpValue"/>
+    </simple-method>
+    <simple-method method-name="updateEmplPositionToActive" short-description="Update Empl Position Trigger Active">
+        
+        <entity-one entity-name="EmplPosition" value-field="lookedUpValue"/>
+        <set field="lookedUpValue.statusId" value="EMPL_POS_ACTIVE"/>
+        <store-value value-field="lookedUpValue"/>
+    </simple-method>
+    
+     
+    
+    
+    <simple-method method-name="updateEmplPositionInEmployment" short-description="update Empl Position In Employment">
+         
+        <!--        <entity-condition entity-name="Employment" list="employments" order-by="fromDate">
+          <condition-list combine="and"> 
+            <condition-expr field-name="roleTypeIdFrom" operator="equals" value="INTERNAL_ORGANIZATIO"/>
+            <condition-expr field-name="roleTypeIdTo" operator="equals" value="EMPLOYEE"/>
+            <condition-expr field-name="partyIdTo"  from-field="parameters.partyId"/>  
+          </condition-list>
+        </entity-condition>-->
+        <!--            <entity-and entity-name="Employment" value-field="lookedUpValue">
+            <field-map field-name="partyIdTo" from-field="parameters.partyId"/>
+        </entity-and>-->
+        <!--            <entity-one entity-name="Employment" value-field="lookedUpValue"/>
+        <set field="lookedUpValue.emplPositionId"  from-field="parameters.partyId"/>
+        <store-value value-field="lookedUpValue"/>-->
+        <log level="info" message=" ********* "/>
+        <log level="info" message="${parameters.emplPositionId} ${parameters.fromDate}  ${parameters.partyId}   ${parameters.partyIdTo}"/>
+        <!--<set field="lookedUpValue.emplPositionId" value="EMPL_POS_ACTIVE"/>-->
+        <!--<store-value value-field="lookedUpValue"/>-->
+    </simple-method>
+
+    <simple-method method-name="updateEmplStatusToHired" short-description="update Empl Status To Hired">
+        <log level="info" message="*** updateEmplStatusToHired ***"/>
+        <log level="info" message="*** ${parameters.partyId} ***"/>
+        <entity-one entity-name="Person" value-field="lookedUpValue"/>
+        <log level="info" message="*** ${lookedUpValue} ***"/>
+        <set field="lookedUpValue.EmplStatus" value="HIRED"/>
+        <store-value value-field="lookedUpValue"/>
+    </simple-method>
+   
+    <!-- create Empl Salary Grade when Add Empl Position Fulfillment  -->
+    <simple-method method-name="createEmplSalaryGrade" short-description="create Empl Salary Grade"><!--entity-auto-->
+       
+        <log level="info" message="*** createEmplSalaryGrade  ***"/>
+        <!--<log level="info" message=" ${parameters.partyId} ** ${parameters.fromDate} **${parameters.emplPositionId}**  ${parameters.gradeId}"/>-->
+            
+        <make-value entity-name="EmplSalaryGrade" value-field="newEntity"/>
+        <!--            <set-pk-fields    map="parameters" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>-->
+        <make-next-seq-id value-field="newEntity" seq-field-name="emplSalaryGrade"/>  <!-- this finds the next sequence ID -->
+        <field-to-result field="newEntity.emplSalaryGrade" result-name="emplSalaryGrade"/>
+        <set field="newEntity.partyId" value-field="parameters.partyId"/>
+        <log level="info" message="*** parameters.partyId ${parameters.partyId}  ***"/>
+        <set field="newEntity.emplPositionId" value-field="parameters.emplPositionId"/>
+        <set field="newEntity.userLoginId" from-field="parameters.userLogin.userLoginId"/>
+        <set field="newEntity.degreeId" from-field="parameters.degreeId"/>  
+                   
+        <entity-condition entity-name="EmplPositionEmplFulfillment" list="emplPositionEmplFulfillments" >  
+            <condition-list combine="and"> 
+                <!--                <condition-expr field-name="roleTypeIdFrom" operator="equals" value="INTERNAL_ORGANIZATIO"/>
+                <condition-expr field-name="roleTypeIdTo" operator="equals" value="EMPLOYEE"/>-->
+                <condition-expr field-name="partyId" operator="equals"  from-field="parameters.partyId"/>  
+            </condition-list>
+        </entity-condition>
+           
+        <iterate list="emplPositionEmplFulfillments" entry="emplPositionEmplFulfillment"> 
+            <!--<field-to-result field="emplPositionEmplFulfillment" result-name="emplPositionEmplFulfillment"/>-->
+                    
+            <set-pk-fields    map="emplPositionEmplFulfillment" value-field="newEntity"/>
+            <set-nonpk-fields map="emplPositionEmplFulfillment" value-field="newEntity"/>
+            <log level="info" message="*${emplPositionEmplFulfillment}*"/>
+                   
+                   
+                   
+            <set field="newEntity.TransDate" from-field="emplPositionEmplFulfillment.fromDate"/> 
+            <!--<set field="newEntity.gradeId" value-field="emplPositionEmplFulfillment.gradeId"/>-->  
+            <!--<set field="newEntity.degreeId" value-field="emplPositionEmplFulfillment.degreeId"/>--> 
+            <set field="newEntity.partyIdFrom" from-field="emplPositionEmplFulfillment.organizationPartyId"/>
+            <set field="newEntity.jobGroupId" value-field="emplPositionEmplFulfillment.jobGroupId"/> 
+                   
+            <log level="info" message="*${newEntity.TransDate}*${newEntity.partyIdFrom}*"/> 
+            <log level="info" message="*${emplPositionEmplFulfillment.fromDate}* ${emplPositionEmplFulfillment.organizationPartyId}"/> 
+            <set field="newEntity.TransType" value="HIRING"/> 
+            <set field="newEntity.TransActive" value="1"/> 
+                   
+        </iterate>
+            
+        <create-value value-field="newEntity"/>
+            
+        <!--<set field="newEntity.partyIdFrom" value-field="parameters.partyIdFrom"/>-->
+            
+           
+    </simple-method>
+
+    <simple-method method-name="createEmplSalaryGradeBounseAndPromotion" short-description="create Empl Salary Grade"><!--entity-auto-->
+       
+        <log level="info" message="*** createEmplSalaryGrade Bounse ***"/>
+        <!--<log level="info" message=" ${parameters.partyId} ** ${parameters.fromDate} **${parameters.emplPositionId}**  ${parameters.gradeId}"/>-->
+            
+        <make-value entity-name="EmplSalaryGrade" value-field="newEntity"/>
+        <set-pk-fields    map="parameters" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <make-next-seq-id value-field="newEntity" seq-field-name="emplSalaryGrade"/>  <!-- this finds the next sequence ID -->
+        <field-to-result field="newEntity.emplSalaryGrade" result-name="emplSalaryGrade"/>
+        <set field="newEntity.userLoginId" from-field="parameters.userLogin.userLoginId"/>
+              <create-value value-field="newEntity"/>
+            
+        <!--<set field="newEntity.partyIdFrom" value-field="parameters.partyIdFrom"/>-->
+            
+           
+    </simple-method>
+
+</simple-methods>

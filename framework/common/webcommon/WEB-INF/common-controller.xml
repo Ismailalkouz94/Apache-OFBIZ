@@ -1,0 +1,896 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://ofbiz.apache.org/Site-Conf"
+           xsi:schemaLocation="http://ofbiz.apache.org/Site-Conf http://ofbiz.apache.org/dtds/site-conf.xsd">
+    <include location="component://common/webcommon/WEB-INF/handlers-controller.xml"/>
+    <description>Common ControlServlet Configuration File</description>
+
+    <errorpage>/error/error.jsp</errorpage>
+
+    <preprocessor>
+        <!-- Events to run on every request before security (chains exempt) -->
+        <event name="check509CertLogin" type="java" path="org.apache.ofbiz.webapp.control.LoginWorker"
+               invoke="check509CertLogin"/>
+        <event name="checkRequestHeaderLogin" type="java" path="org.apache.ofbiz.webapp.control.LoginWorker"
+               invoke="checkRequestHeaderLogin"/>
+        <event name="checkServletRequestRemoteUserLogin" type="java" path="org.apache.ofbiz.webapp.control.LoginWorker"
+               invoke="checkServletRequestRemoteUserLogin"/>
+        <event name="checkExternalLoginKey" type="java" path="org.apache.ofbiz.webapp.control.ExternalLoginKeysManager"
+               invoke="checkExternalLoginKey"/>
+        <event name="checkProtectedView" type="java" path="org.apache.ofbiz.webapp.control.ProtectViewWorker"
+               invoke="checkProtectedView"/>
+        <event name="extensionConnectLogin" type="java" path="org.apache.ofbiz.webapp.control.LoginWorker"
+               invoke="extensionConnectLogin"/>
+    </preprocessor>
+    <postprocessor>
+        <!-- Events to run on every request after all other processing (chains exempt) -->
+    </postprocessor>
+    <request-map uri="changepassword">
+        <security https="true" auth="true"/>
+        <!--<event type="java" path="org.apache.ofbiz.webapp.control.LoginWorker" invoke="login"/>-->
+        <response name="success" type="view" value="changePass"/>
+        <response name="error" type="view" value="changePass"/>
+    </request-map>
+    <!-- Security Mappings -->
+    <request-map uri="checkLogin" edit="false">
+        <description>Verify a user is logged in.</description>
+        <security https="true" auth="false"/>
+        <event type="java" path="org.apache.ofbiz.webapp.control.LoginWorker" invoke="extensionCheckLogin"/>
+        <response name="success" type="view" value="main"/>
+        <response name="error" type="view" value="login"/>
+    </request-map>
+    <request-map uri="ajaxCheckLogin" edit="false">
+        <description>Verify a user is logged in.</description>
+        <security https="true" auth="false"/>
+        <event type="java" path="org.apache.ofbiz.webapp.control.LoginWorker" invoke="extensionCheckLogin"/>
+        <response name="success" type="view" value="main"/>
+        <response name="error" type="view" value="ajaxLogin"/>
+    </request-map>
+
+    <request-map uri="sound">
+        <security https="true" auth="false"/>
+        <!--<event type="java" path="org.apache.ofbiz.webapp.control.LoginWorker" invoke="login"/>-->
+        <response name="success" type="none" value="none"/>
+
+        <!--<event type="java" path="org.apache.ofbiz.webapp.control.LoginWorker" invoke="login"/>-->
+    </request-map>
+
+
+    <request-map uri="main2">
+        <security https="true" auth="false"/>
+        <!--<event type="java" path="org.apache.ofbiz.webapp.control.LoginWorker" invoke="login"/>-->
+        <response name="success" type="cross-redirect" value="/humanres/control/login"/>
+        <response name="requirePasswordChange" type="view" value="requirePasswordChange"/>
+        <response name="error" type="cross-redirect" value="/humanres/control/login"/>
+        <!--<event type="java" path="org.apache.ofbiz.webapp.control.LoginWorker" invoke="login"/>-->
+    </request-map>
+    <request-map uri="login">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.apache.ofbiz.webapp.control.LoginWorker" invoke="login"/>
+        <response name="success" type="view" value="main"/>
+        <response name="requirePasswordChange" type="view" value="requirePasswordChange"/>
+        <response name="error" type="view" value="login"/>
+    </request-map>
+    <request-map uri="logout">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.apache.ofbiz.webapp.control.LoginWorker" invoke="logout"/>
+        <response name="success" type="request-redirect" value="logout"/>
+        <response name="error" type="view" value="main"/>
+    </request-map>
+
+    <request-map uri="forgotPassword">
+        <security https="true" auth="false"/>
+        <event type="java" path="org.apache.ofbiz.securityext.login.LoginEvents" invoke="forgotPassword"/>
+        <response name="success" type="view" value="forgotPassword"/>
+        <response name="error" type="view" value="forgotPassword"/>
+    </request-map>
+    <request-map uri="forgotPassword_step1">
+        <security https="true" auth="false"/>
+        <response name="success" type="view" value="forgotPassword_step1"/>
+    </request-map>
+    <request-map uri="forgotPassword_step2">
+        <security auth="false" https="true"></security>
+        <response name="success" type="view" value="forgotPassword_step2"/>
+    </request-map>
+    <request-map uri="forgotPassword_step3">
+        <security https="true" auth="false"/>
+        <event type="java" path="org.apache.ofbiz.securityext.login.LoginEvents" invoke="forgotPassword"/>
+        <response name="success" type="view" value="login"/>
+        <response name="error" type="view" value="forgotPassword_step2"/>
+    </request-map>
+    <request-map uri="passwordChange">
+        <security https="true" auth="false"/>
+        <response name="success" type="view" value="requirePasswordChange"/>
+    </request-map>
+    <request-map uri="view">
+        <security https="false" auth="false"/>
+        <response name="success" type="request" value="main"/>
+    </request-map>
+    <request-map uri="views">
+        <security https="true" auth="false"/>
+        <response name="success" type="request" value="main"/>
+    </request-map>
+
+    <!-- Common Mappings used for locales and timezones -->
+    <request-map uri="ListLocales">
+        <security https="true" auth="false"/>
+        <response name="success" type="view" value="ListLocales" save-last-view="true"/>
+    </request-map>
+    <request-map uri="setSessionLocale">
+        <security https="true" auth="false"/>
+        <event type="java" path="org.apache.ofbiz.common.CommonEvents" invoke="setSessionLocale"/>
+        <response name="success" type="view-last" value="main"/>
+        <response name="error" type="request" value="main"/>
+    </request-map>
+    <request-map uri="ListTimezones">
+        <security https="true" auth="false"/>
+        <response name="success" type="view" value="ListTimezones" save-last-view="true"/>
+    </request-map>
+    <request-map uri="setSessionTimeZone">
+        <security https="true" auth="false"/>
+        <event type="java" path="org.apache.ofbiz.common.CommonEvents" invoke="setSessionTimeZone"/>
+        <response name="success" type="view-last" value="main"/>
+        <response name="error" type="request" value="main"/>
+    </request-map>
+
+    <!-- Common Mappings used for Set user organization -->
+    <request-map uri="ListSetCompanies">
+        <security https="true" auth="false"/>
+        <response name="success" type="view" value="ListSetCompanies" save-last-view="true"/>
+    </request-map>
+
+    <!-- User preference mapping -->
+    <request-map uri="setUserPreference">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="setUserPreference"/>
+        <response name="success" type="view-last" value="main"/>
+        <response name="error" type="request" value="main"/>
+    </request-map>
+
+    <request-map uri="setUserPreferenceImage">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="setUserPreferenceImage"/>
+        <response name="success" type="view" value="main"/>
+        <response name="error" type="view" value="main"/>
+    </request-map>
+
+    <request-map uri="getUserPrf">
+        <security https="true" auth="true"/>
+        <event type="java" invoke="GetUserPref" path="org.apache.ofbiz.common.preferences.PreferenceServices"/>
+        <!--<event type="service" invoke="getUserPreference"/>-->
+        <response name="success" type="none"></response>
+    </request-map>
+
+    <request-map uri="getUserPref_JSON">
+        <security https="false" auth="false"/>
+        <event type="java" invoke="getUserPref_JSON" path="org.apache.ofbiz.common.preferences.PreferenceServices"/>
+        <!--<event type="service" invoke="getUserPreference"/>-->
+        <response name="success" type="none"></response>
+    </request-map>
+
+
+    <request-map uri="setPortalUserPreference">
+        <security https="false" auth="false"/>
+        <event type="java" invoke="setPortalUserPreference"
+               path="org.apache.ofbiz.common.preferences.PreferenceServices"/>
+        <!--<event type="service" invoke="getUserPreference"/>-->
+        <response name="success" type="none"></response>
+    </request-map>
+
+
+    <request-map uri="setCompany">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="setUserPreference"/>
+        <response name="success" type="view-last-noparam" value="main"/>
+        <response name="error" type="request" value="main"/>
+    </request-map>
+
+    <request-map uri="ajaxSetUserPreference">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="setUserPreference"/>
+        <response name="success" type="none"/>
+    </request-map>
+
+    <request-map uri="ajaxAutocompleteOptions">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ajaxAutocompleteOptions"/>
+    </request-map>
+
+    <!-- Online help system mapping -->
+    <request-map uri="help">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="help"/>
+    </request-map>
+
+    <!-- Visual theme mapping -->
+    <request-map uri="ListVisualThemes">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="ListVisualThemes" save-last-view="true"/>
+    </request-map>
+
+    <request-map uri="main">
+        <response name="success" type="view" value="main"/>
+    </request-map>
+
+    <request-map uri="viewBlocked">
+        <response name="success" type="view" value="viewBlocked"/>
+    </request-map>
+
+    <request-map uri="LookupTimeDuration">
+        <response name="success" type="view" value="LookupTimeDuration"/>
+    </request-map>
+
+    <!-- home/last/current mappings -->
+    <request-map uri="backHome">
+        <security https="true" auth="true"/>
+        <response name="success" type="view-home"/>
+    </request-map>
+    <request-map uri="backLast">
+        <security https="true" auth="true"/>
+        <response name="success" type="view-last"/>
+    </request-map>
+
+    <!-- Common json response events, chain these after events to send json responses -->
+    <!-- Standard json response, For security reason (OFBIZ-5409) tries to keep only the initially called service attributes -->
+    <request-map uri="json">
+        <security direct-request="false"/>
+        <event type="java" path="org.apache.ofbiz.common.CommonEvents" invoke="jsonResponseFromRequestAttributes"/>
+        <response name="success" type="none"/>
+    </request-map>
+
+    <request-map uri="showHelp">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="showHelp"/>
+    </request-map>
+
+    <request-map uri="showHelpPublic">
+        <security https="false" auth="false"/>
+        <response name="success" type="view" value="showHelp"/>
+    </request-map>
+
+    <request-map uri="authview">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="main"/>
+    </request-map>
+
+    <!-- Common captcha image request, the captcha code is stored in the session using _CAPTCHA_CODE_ as the key -->
+    <request-map uri="captcha.jpg">
+        <security https="false" auth="false"/>
+        <event type="java" path="org.apache.ofbiz.common.CommonEvents" invoke="getCaptcha"/>
+        <response name="success" type="none"/>
+    </request-map>
+
+
+    <!-- Lookup requests -->
+    <request-map uri="LookupGeo">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="LookupGeo"/>
+    </request-map>
+    <request-map uri="LookupGeoName">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="LookupGeoName"/>
+    </request-map>
+    <request-map uri="LookupLocale">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="LookupLocale"/>
+    </request-map>
+
+    <!--========================== AJAX events =====================-->
+    <!-- Get states related to a country -->
+    <request-map uri="getAssociatedStateList">
+        <security https="true" auth="false"/>
+        <event type="service" invoke="getAssociatedStateList"/>
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+
+    <request-map uri="getFileUploadProgressStatus">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="getFileUploadProgressStatus"/>
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+
+    <!-- Common JavaScript uiLabel Request, to receive uiLabels within regular JS Code -->
+    <request-map uri="getJSONuiLabelArray">
+        <security https="true" auth="false"/>
+        <event type="java" path="org.apache.ofbiz.common.CommonEvents" invoke="getJSONuiLabelArray"/>
+        <response name="success" type="none"/>
+        <response name="error" type="none"/>
+    </request-map>
+    <request-map uri="getJSONuiLabel">
+        <security https="true" auth="false"/>
+        <event type="java" path="org.apache.ofbiz.common.CommonEvents" invoke="getJSONuiLabel"/>
+        <response name="success" type="none"/>
+        <response name="error" type="none"/>
+    </request-map>
+
+    <!-- Check if an UomConversion exists -->
+    <request-map uri="checkUomConversion">
+        <security https="true" auth="false"/>
+        <event type="service" invoke="checkUomConversion"/>
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+
+    <request-map uri="getRelatedGeos">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="getRelatedGeos"/>
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+
+    <request-map uri="getServerTimestamp">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="getServerTimestamp"/>
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+
+    <request-map uri="getServerTimeZone">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="getServerTimeZone"/>
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+
+    <request-map uri="getServerTimestampAsLong">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="getServerTimestampAsLong"/>
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+
+    <request-map uri="qrcode">
+        <security auth="true" https="false"/>
+        <event type="java" path="org.apache.ofbiz.common.qrcode.QRCodeEvents" invoke="serveQRCodeImage"/>
+        <response name="success" type="none"/>
+        <response name="error" type="none"/>
+    </request-map>
+
+    <!-- Set local from user's browser -->
+    <request-map uri="setLocaleFromBrowser">
+        <security https="false" auth="false"/>
+        <event type="service" invoke="setLocaleFromBrowser"/>
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+
+
+    <!--========================== AJAX events =====================-->
+
+    <!-- View Mappings -->
+    <view-map name="error" page="/error/error.jsp"/>
+    <view-map name="main" type="none"/>
+    <view-map name="login" type="screen" page="component://common/widget/CommonScreens.xml#login"/>
+    <view-map name="ajaxLogin" type="screen" page="component://common/widget/CommonScreens.xml#ajaxNotLoggedIn"/>
+    <view-map name="requirePasswordChange" type="screen"
+              page="component://common/widget/CommonScreens.xml#requirePasswordChange"/>
+    <view-map name="forgotPassword" type="screen" page="component://common/widget/CommonScreens.xml#forgotPassword"/>
+    <view-map name="EventMessages" type="screen" page="component://common/widget/CommonScreens.xml#EventMessages"/>
+
+    <view-map name="ListLocales" type="screen" page="component://common/widget/LookupScreens.xml#ListLocales"/>
+    <view-map name="ListSetCompanies" type="screen"
+              page="component://common/widget/LookupScreens.xml#ListSetCompanies"/>
+    <view-map name="LookupTimeDuration" type="screen" page="component://common/widget/LookupScreens.xml#TimeDuration"/>
+    <view-map name="ListTimezones" type="screen" page="component://common/widget/LookupScreens.xml#ListTimezones"/>
+    <view-map name="ListVisualThemes" type="screen"
+              page="component://common/widget/LookupScreens.xml#ListVisualThemes"/>
+
+    <view-map name="ajaxAutocompleteOptions" type="screen"
+              page="component://common/widget/CommonScreens.xml#ajaxAutocompleteOptions"/>
+
+    <view-map name="help" type="screen" page="component://common/widget/CommonScreens.xml#help"/>
+    <view-map name="showHelp" type="screen" page="component://common/widget/HelpScreens.xml#ShowHelp"/>
+    <view-map name="ShowDocument" type="screen" page="component://common/widget/HelpScreens.xml#showDocument"/>
+
+    <view-map name="viewBlocked" type="screen" page="component://common/widget/CommonScreens.xml#viewBlocked"/>
+
+    <view-map name="LookupGeo" type="screen" page="component://common/widget/LookupScreens.xml#LookupGeo"/>
+    <view-map name="LookupGeoName" type="screen" page="component://common/widget/LookupScreens.xml#LookupGeoName"/>
+    <view-map name="LookupLocale" type="screen" page="component://common/widget/LookupScreens.xml#LookupLocale"/>
+    <view-map name="forgotPassword_step1" type="screen"
+              page="component://common/widget/CommonScreens.xml#forgotPassword_step1"/>
+    <view-map name="forgotPassword_step2" type="screen"
+              page="component://common/widget/CommonScreens.xml#forgotPassword_step2"/>
+
+    <view-map name="changePass" type="screen" page="component://common/widget/CommonScreens.xml#changePass"/>
+    <request-map uri="getUserLogin">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getUserLogin" path="org.apache.ofbiz.humanres.PayrollServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+
+    <request-map uri="ProcessStarted">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="response"/>
+    </request-map>
+
+    <view-map name="response" type="screen" page="component://accounting/widget/ap/ApScreens.xml#response"/>
+
+    <request-map uri="ActivitiResponse">
+        <security https="true" auth="true"/>
+        <event type="java" invoke="ActivitiResponse" path="org.apache.ofbiz.common.activitiServices.WorkFlowServices"/>
+
+        <response name="success" type="none" value=""/>
+    </request-map>
+    <request-map uri="ApproverResponse">
+        <security https="true" auth="true"/>
+        <event type="java" invoke="ApproverResponse" path="org.apache.ofbiz.common.activitiServices.WorkFlowServices"/>
+
+        <response name="success" type="none" value=""/>
+    </request-map>
+
+    <request-map uri="getAmountDue">
+
+        <security https="true" auth="true"/>
+        <event type="java" invoke="getAmountDue" path="org.apache.ofbiz.accounting.workFlow.AccountingWorkflow"/>
+        <response name="success" type="none"/>
+    </request-map>
+
+    <request-map uri="getTotal">
+
+        <security https="true" auth="true"/>
+        <event type="java" invoke="getTotal" path="org.apache.ofbiz.accounting.workFlow.AccountingWorkflow"/>
+
+        <response name="success" type="none"/>
+    </request-map>
+
+    <request-map uri="getPartyName">
+
+        <security https="true" auth="true"/>
+        <event type="java" invoke="getPartyName" path="org.apache.ofbiz.common.activitiServices.WorkFlowServices"/>
+
+        <response name="success" type="none" value="none"/>
+    </request-map>
+
+
+    <request-map uri="completeTask">
+        <security https="true" auth="true"/>
+        <event type="java" invoke="completeTask" path="org.apache.ofbiz.common.activitiServices.WorkFlowServices"/>
+        <response name="success" type="request-redirect" value="MyInbox"/>
+        <response name="error" type="request-redirect" value="MyInbox"/>
+    </request-map>
+
+
+    <request-map uri="MyInbox">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="MyInbox"/>
+    </request-map>
+    <view-map name="MyInbox" type="screen" page="component://myportal/widget/PortalAdmScreens.xml#MyInbox"/>
+
+
+    <request-map uri="JsonTest">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="JsonTest"/>
+    </request-map>
+    <view-map name="JsonTest" type="screen" page="component://accounting/widget/CommonScreens.xml#JsonTest"/>
+
+
+    <view-map name="paymentOverview" type="screen"
+              page="component://accounting/widget/PaymentScreens.xml#PaymentOverview"/>
+
+    <request-map uri="getAmountApplied">
+
+        <security https="true" auth="true"/>
+        <event type="java" invoke="getAmountApplied" path="org.apache.ofbiz.accounting.workFlow.AccountingWorkflow"/>
+        <response name="success" type="none"/>
+    </request-map>
+    <request-map uri="getRemarks">
+        <security https="true" auth="true"/>
+        <event type="java" invoke="getRemarks" path="org.apache.ofbiz.common.activitiServices.WorkFlowServices"/>
+
+        <response name="success" type="none" value=""/>
+        <response name="error" type="view" value="main"/>
+    </request-map>
+
+
+    <request-map uri="getPaymentMob">
+
+        <security https="false" auth="false"/>
+        <event type="java" invoke="getTaskDetails" path="org.apache.ofbiz.humanres.MobileServices"/>
+        <response name="success" type="none"/>
+    </request-map>
+
+    <request-map uri="completeTaskMob">
+
+        <security https="false" auth="false"/>
+        <event type="java" invoke="completeTaskMob" path="org.apache.ofbiz.humanres.MobileServices"/>
+        <response name="success" type="none"/>
+    </request-map>
+
+    <request-map uri="getTaskData">
+
+        <security https="false" auth="false"/>
+        <event type="java" invoke="getTaskData" path="org.apache.ofbiz.humanres.MobileServices"/>
+        <response name="success" type="none"/>
+    </request-map>
+
+    <!--getPartyIdOnUserLogin ... Form Mobile-->
+    <request-map uri="getPartyIdOnUserLogin">
+        <security https="false" auth="false"/>
+        <event type="java" invoke="getPartyIdOnUserLogin" path="org.apache.ofbiz.humanres.MobileServices"/>
+        <response name="success" type="none"/>
+    </request-map>
+
+    <request-map uri="PasswordChanged">
+        <security https="false" auth="false"/>
+        <event type="java" invoke="changePassword" path="org.apache.ofbiz.webapp.control.ChangePassword"/>
+        <response name="success" type="request-redirect" value="changepassword"/>
+        <response name="error" type="request-redirect" value="changepassword"/>
+    </request-map>
+
+
+    <request-map uri="getInboxStatus">
+        <security https="false" auth="false"/>
+        <event type="java" invoke="getInboxStatus" path="org.apache.ofbiz.common.activitiServices.WorkFlowServices"/>
+        <response name="success" type="none" value=""/>
+    </request-map>
+
+
+    <request-map uri="setCommonContainer">
+        <security https="false" auth="false"/>
+        <event type="java" invoke="setCommonContainer"
+               path="org.apache.ofbiz.common.activitiServices.WorkFlowServices"/>
+        <response name="success" type="none" value=""/>
+    </request-map>
+    <request-map uri="LookupPerson">
+        <security auth="true" https="true"/>
+        <response name="success" type="view" value="LookupPerson"/>
+    </request-map>
+
+    <view-map name="LookupPerson" type="screen"
+              page="component://party/widget/partymgr/LookupScreens.xml#LookupPerson"/>
+
+    <request-map uri="LookupEmployeeName">
+        <security auth="true" https="true"/>
+        <response name="success" type="view" value="LookupEmployeeName"/>
+    </request-map>
+
+    <view-map name="LookupEmployeeName" type="screen"
+              page="component://party/widget/partymgr/LookupScreens.xml#LookupEmployeeName"/>
+
+
+    <request-map uri="fillBasicSalary">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="fillBasicSalary" path="org.apache.ofbiz.humanres.PayrollServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+
+    <request-map uri="getPositionEmployee">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getPositionEmployee" path="org.apache.ofbiz.humanres.PayrollServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+
+    <request-map uri="testRollback">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="testRollback" path="org.apache.ofbiz.humanres.PayrollServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+
+    <!--.................-->
+    <request-map uri="getAllowencesIdDropDown">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getAllowencesIdDropDown" path="org.apache.ofbiz.humanres.PayrollServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+    <!--........................-->
+    <request-map uri="getEmployeePositionDetails">
+        <security auth="true" https="true"/>
+        <event type="java" invoke="getEmployeePositionDetails" path="org.apache.ofbiz.humanres.PayrollServices"/>
+        <response name="success" value="none" type="none"></response>
+    </request-map>
+
+    <request-map uri="getEmployeeDetails">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getEmployeeDetails" path="org.apache.ofbiz.humanres.PersonUtilServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+    <request-map uri="getEmployeeStatus">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getEmployeeStatus" path="org.apache.ofbiz.humanres.PayrollServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+
+    <request-map uri="getAcctTrans_FromEmplSalaryAcctgTrans">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getAcctTrans_FromEmplSalaryAcctgTrans"
+               path="org.apache.ofbiz.humanres.PayrollServices"/>
+        <response name="success" type="none" value="none"/>
+        <response name="error" type="none" value="none"/>
+
+    </request-map>
+
+    <request-map uri="getHiredDate">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getHiredDate" path="org.apache.ofbiz.humanres.PersonUtilServices"/>
+        <response name="success" type="none" value="none"/>
+        <response name="error" type="none" value="none"/>
+    </request-map>
+
+
+    <request-map uri="startVacation">
+        <security https="true" auth="true"/>
+        <event type="java" invoke="startVacations"
+               path="org.apache.ofbiz.humanres.activitiServices.VacationAndLeavesWorkFlow"/>
+        <response name="success" type="none" value="sucess"/>
+        <response name="error" type="none" value="sucess"/>
+    </request-map>
+
+    <request-map uri="getPartyIdAndFM_DropDown">
+        <security https="true" auth="true"/>
+        <event type="java" invoke="getPartyIdAndFM_DropDown" path="org.apache.ofbiz.humanres.PersonUtilServices"/>
+        <response name="success" type="none"></response>
+
+    </request-map>
+
+    <request-map uri="getPartyIdAndFM_JSON">
+        <security https="true" auth="true"/>
+        <event type="java" invoke="getPartyIdAndFM_JSON" path="org.apache.ofbiz.humanres.PersonUtilServices"/>
+        <response name="success" type="none"></response>
+
+    </request-map>
+
+    <request-map uri="isHaveRow_Validation">
+        <security auth="true" https="true"/>
+        <event type="java" invoke="isHaveRow_Validation" path="org.apache.ofbiz.humanres.PayrollServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+    <request-map uri="getEmployeeVacationExtFMData">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getEmployeeVacationExtFMData"
+               path="org.apache.ofbiz.humanres.vacations.VacationsServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+    <request-map uri="getEmplVacationDetails">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getEmplVacationDetails"
+               path="org.apache.ofbiz.humanres.vacations.VacationsServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+
+    <request-map uri="getEmplLeaveDetails">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getEmplLeaveDetails" path="org.apache.ofbiz.humanres.leaves.LeavesServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+
+    <request-map uri="updateVacationAndLeave_Status">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="updateVacationAndLeave_Status"
+               path="org.apache.ofbiz.humanres.vacations.VacationsServices"/>
+        <response name="success" type="request-redirect" value="MyInbox"/>
+        <response name="error" type="request-redirect" value="MyInbox"/>
+    </request-map>
+
+
+    <request-map uri="updateVacation">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="updateVacation" path="org.apache.ofbiz.humanres.vacations.VacationsServices"/>
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+
+
+    <request-map uri="createLeave">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="createLeave" path="org.apache.ofbiz.humanres.leaves.LeavesServices"/>
+
+        <!--        <event type="service" invoke="callCreateVacation"/>-->
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+
+
+    <request-map uri="updateLeave">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="updateLeave" path="org.apache.ofbiz.humanres.leaves.LeavesServices"/>
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+
+
+    <request-map uri="deleteEmplLeaveExt">
+        <security https="false" auth="false"/>
+        <event type="service" invoke="deleteEmplLeaveExt"/>
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+
+
+    <request-map uri="LeaveCompletedDetails">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="LeaveCompletedDetails"/>
+    </request-map>
+    <view-map name="LeaveCompletedDetails" type="screen"
+              page="component://humanres/widget/EmplLeaveScreens.xml#LeaveCompletedDetails"/>
+
+    <request-map uri="VacationCompletedDetails">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="VacationCompletedDetails"/>
+        <response name="error" type="view" value="VacationCompletedDetails"/>
+    </request-map>
+    <view-map name="VacationCompletedDetails" type="screen"
+              page="component://humanres/widget/EmplLeaveScreens.xml#VacationCompletedDetails"/>
+
+    <!--...............vacaction .........-->
+
+    <request-map uri="createVacation">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="createVacation" path="org.apache.ofbiz.humanres.vacations.VacationsServices"/>
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+
+    <request-map uri="getEmployeeVacationData">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getEmployeeVacationData"
+               path="org.apache.ofbiz.humanres.vacations.VacationsServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+    <request-map uri="deleteVacation">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="deleteVacation" path="org.apache.ofbiz.humanres.vacations.VacationsServices"/>
+        <!--        <event type="service" invoke="callCreateVacation"/>-->
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+
+    <request-map uri="getPartyIdAndFM_Json">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getPartyIdAndFM_Json" path="org.apache.ofbiz.humanres.PersonUtilServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+    <request-map uri="getEmployeeVacationExtData">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getEmployeeVacationExtData"
+               path="org.apache.ofbiz.humanres.vacations.VacationsServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+    <request-map uri="updateEmplLeaveExtention">
+        <security https="false" auth="false"/>
+        <event type="service" invoke="updateEmplLeaveExtention"/>
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+
+    <request-map uri="getLeavesInfo">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getLeavesInfo" path="org.apache.ofbiz.humanres.leaves.LeavesServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+
+    <!--..........Push Notification .........-->
+
+    <request-map uri="sendMessage">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="sendMessage"
+               path="org.apache.ofbiz.humanres.pushnotification.PushNotificationServices"/>
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+
+
+    <!--................. Global Setting .........-->
+
+
+    <request-map uri="setGlobalPayrollSetting">
+        <security https="false" auth="false"/>
+        <event type="java" invoke="setGlobalPayrollSetting" path="org.apache.ofbiz.humanres.PayrollServices"/>
+        <response name="success" type="view" value="success"/>
+        <response name="error" type="view" value="error"/>
+    </request-map>
+
+    <request-map uri="getGlobalPayrollSetting">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getGlobalPayrollSetting" path="org.apache.ofbiz.humanres.PayrollServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+    <request-map uri="storeSessionFromMyPortal">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="storeSessionFromMyPortal" path="org.apache.ofbiz.humanres.PersonUtilServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+    <request-map uri="getPartyIdByUserLogin">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getPartyIdByUserLogin" path="org.apache.ofbiz.humanres.PersonUtilServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+    <request-map uri="getEmployeeLeaveData">
+        <security auth="false" https="true"/>
+        <event type="java" invoke="getEmployeeLeaveData" path="org.apache.ofbiz.humanres.leaves.LeavesServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+    <request-map uri="getEmplLeaveReason">
+        <security auth="false" https="true"/>
+        <event type="java" invoke="getEmplLeaveReason" path="org.apache.ofbiz.humanres.leaves.LeavesServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+    <!--...............salary slip...................-->
+
+    <request-map uri="SalarySlip_Employee">
+        <security auth="false" https="true"/>
+        <event type="java" invoke="SalarySlip_Employee" path="org.apache.ofbiz.humanres.PayrollServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+    <!--.........vacation Balance..........-->
+    <request-map uri="getVacationBalanceData">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getVacationBalanceData"
+               path="org.apache.ofbiz.humanres.vacations.VacationBalanceService"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+    <!--.............my payment - Portal .........-->
+
+    <request-map uri="getMyPaymentData">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getMyPaymentData" path="org.apache.ofbiz.accounting.payment.MyPaymentService"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+    <request-map uri="setGlobalPayrollSettings">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="setGlobalPayrollSettings" path="org.apache.ofbiz.humanres.PayrollServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+    <!--.............family member .......-->
+
+    <request-map uri="getFamilyMemberDate_JSON">
+        <security auth="false" https="false"/>
+        <event type="java" invoke="getFamilyMemberDate_JSON" path="org.apache.ofbiz.humanres.PersonUtilServices"/>
+        <response name="success" type="none"></response>
+    </request-map>
+
+    <!--............... change Password ..................-->
+
+    <request-map uri="changePassword">
+        <security https="false" auth="false"/>
+        <event type="java" invoke="changePassword" path="org.apache.ofbiz.webapp.control.ChangePassword"/>
+        <response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
+    </request-map>
+
+
+</site-conf>

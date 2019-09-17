@@ -1,0 +1,1640 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Human Resources Services</description>
+    <vendor>OFBiz</vendor>
+    <version>1.0</version>
+    <!-- Ability Group -->
+    <service name="createPartyQual" engine="entity-auto" default-entity-name="PartyQual" invoke="create" auth="true">
+        <description>Create a Party Qualification entry</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="partyId" mode="IN" type="String"/>
+        <attribute name="partyQualTypeId" mode="IN" type="String"/>
+        <attribute name="fromDate" mode="INOUT" type="Timestamp" optional="true"/>
+    </service>
+
+    <service name="updatePartyQual" engine="entity-auto" default-entity-name="PartyQual" invoke="update" auth="true">
+        <description>Update Qualification of Party</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deletePartyQual" engine="entity-auto" default-entity-name="PartyQual" invoke="delete" auth="true">
+        <description>Delete Qualification of Party</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createPartyResume" engine="entity-auto" default-entity-name="PartyResume" invoke="create" auth="true">
+        <description>Create Resume for a Party</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="updatePartyResume" engine="entity-auto" default-entity-name="PartyResume" invoke="update" auth="true">
+        <description>Update a Resume of Party</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deletePartyResume" engine="entity-auto" default-entity-name="PartyResume" invoke="delete" auth="true">
+        <description>Delete a Resume of Party</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createPartySkill" engine="entity-auto" default-entity-name="PartySkill" invoke="create" auth="true">
+        <description>Create Skill for a Party</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="updatePartySkill" engine="entity-auto" default-entity-name="PartySkill" invoke="update" auth="true">
+        <description>Update a PartySkill</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deletePartySkill" engine="entity-auto" default-entity-name="PartySkill" invoke="delete" auth="true">
+        <description>Delete a PartySkill</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createPerfReview" engine="entity-auto" default-entity-name="PerfReview" invoke="create" auth="true">
+        <description>Create an Performance Review</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute mode="IN" type="String" name="perfReviewId" optional="true"/>
+        <attribute mode="OUT" type="String" name="perfReviewId" optional="false"/>
+        <attribute mode="INOUT" type="String" name="employeePartyId" optional="false"/>
+        <attribute mode="INOUT" type="String" name="employeeRoleTypeId" optional="false"/>
+    </service>
+
+    <service name="updatePerfReview" engine="entity-auto" default-entity-name="PerfReview" invoke="update" auth="true">
+        <description>Update a Performance Review</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deletePerfReview" engine="entity-auto" default-entity-name="PerfReview" invoke="delete" auth="true">
+        <description>Delete a Performance Review</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createPerfReviewItem" engine="entity-auto" default-entity-name="PerfReviewItem" invoke="create" auth="true">
+        <description>Create Performance Review Item</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute mode="IN" type="String" name="employeePartyId" optional="false"/>
+        <attribute mode="IN" type="String" name="employeeRoleTypeId" optional="false"/>
+        <attribute mode="IN" type="String" name="perfReviewId" optional="false"/>
+        <attribute mode="OUT" type="String" name="perfReviewItemSeqId" optional="false"/>
+    </service>
+
+    <service name="updatePerfReviewItem" engine="entity-auto" default-entity-name="PerfReviewItem" invoke="update" auth="true">
+        <description>Update a Performance Review Item</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deletePerfReviewItem" engine="entity-auto" default-entity-name="PerfReviewItem" invoke="delete" auth="true">
+        <description>Delete a Performance Review Item</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createPerformanceNote" engine="entity-auto" default-entity-name="PerformanceNote" invoke="create" auth="true">
+        <description>Create Performance Note</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override type="Timestamp" mode="IN" name="fromDate" optional="true"/>
+    </service>
+
+    <service name="updatePerformanceNote" engine="entity-auto" default-entity-name="PerformanceNote" invoke="update" auth="true">
+        <description>Update a Performance Note</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deletePerformanceNote" engine="entity-auto" default-entity-name="PerformanceNote" invoke="delete" auth="true">
+        <description>Delete a Performance Note</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <!-- Employment Group -->
+    <!--<service name="createEmployment" engine="entity-auto" default-entity-name="Employment" invoke="create" auth="true">-->
+    <service name="createEmployment" engine="simple" default-entity-name="Employment"
+             location="component://humanres/minilang/HumanResServices.xml" invoke="createEmployment" auth="true">
+        <description>Create Employment</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <!--<override type="Timestamp" mode="IN" name="fromDate" optional="true"/>-->
+    </service>
+
+    <service name="createEmploymentMoving" engine="entity-auto" default-entity-name="Employment" invoke="create" auth="true">
+        <description>Create an Employment Application</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+    <service name="updateEmployment" engine="entity-auto" default-entity-name="Employment" invoke="update" auth="true">
+        <description>Update an Employment</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deleteEmployment" engine="entity-auto" default-entity-name="Employment" invoke="delete" auth="false">
+        <description>Delete an Employment</description>
+        <!--<permission-service service-name="humanResManagerPermission" main-action="DELETE"/>-->
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="createEmploymentApp" engine="entity-auto" default-entity-name="EmploymentApp" invoke="create" auth="true">
+        <description>Create an Employment Application</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="updateEmploymentApp" engine="entity-auto" default-entity-name="EmploymentApp" invoke="update" auth="true">
+        <description>Update an Employment Application</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deleteEmploymentApp" engine="entity-auto" default-entity-name="EmploymentApp" invoke="delete" auth="true">
+        <description>Delete an Employment Application</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createPartyBenefit" engine="entity-auto" default-entity-name="PartyBenefit" invoke="create" auth="true">
+        <description>Create Party Benefit</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override type="Timestamp" mode="IN" name="fromDate" optional="true"/>
+    </service>
+
+    <service name="updatePartyBenefit" engine="entity-auto" default-entity-name="PartyBenefit" invoke="update" auth="true">
+        <description>Update Party Benefit</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deletePartyBenefit" engine="entity-auto" default-entity-name="PartyBenefit" invoke="delete" auth="true">
+        <description>Delete Party Benefit</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createPayGrade" engine="entity-auto" default-entity-name="PayGrade" invoke="create" auth="true">
+        <description>Create a Pay Grade</description>
+        <!-- permission-service service-name="humanResManagerPermission" main-action="CREATE"/> -->
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="payGradeName" optional="false"/>
+    </service>
+
+    <service name="updatePayGrade" engine="entity-auto" default-entity-name="PayGrade" invoke="update" auth="true">
+        <description>Update a Pay Grade</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="payGradeName" optional="false"/>
+    </service>
+
+    <service name="deletePayGrade" engine="entity-auto" default-entity-name="PayGrade" invoke="delete" auth="true">
+        <description>Delete a Pay Grade</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createPayHistory" engine="entity-auto" default-entity-name="PayHistory" invoke="create" auth="true">
+        <description>Create Pay History</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <!--<override type="Timestamp" mode="IN" name="fromDate" optional="true"/>-->
+    </service>
+
+    <service name="updatePayHistory" engine="entity-auto" default-entity-name="PayHistory" invoke="update" auth="true">
+        <description>Update Pay History</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deletePayHistory" engine="simple" default-entity-name="PayHistory"
+             location="component://humanres/minilang/HumanResServices.xml" invoke="deletePayHistory" auth="true">
+        <description>Delete Pay History</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createPayrollPreference" engine="entity-auto" default-entity-name="PayrollPreference" invoke="create" auth="true">
+        <description>Create Payroll Preference</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <!-- <attribute name="payrollPreferenceSeqId" mode="OUT" type="String" optional="false"/> -->
+        <override type="String" mode="IN" name="payrollPreferenceSeqId" optional="true"/>
+    </service>
+
+    <service name="updatePayrollPreference" engine="entity-auto" default-entity-name="PayrollPreference" invoke="update" auth="true">
+        <description>Update Payroll Preference</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deletePayrollPreference" engine="entity-auto" default-entity-name="PayrollPreference" invoke="delete" auth="true">
+        <description>Delete Payroll Preference</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createSalaryStep" engine="simple" default-entity-name="SalaryStep"
+             location="component://humanres/minilang/HumanResServices.xml" invoke="createSalaryStep" auth="true">
+        <description>Create Salary Step</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override type="String" mode="IN" name="salaryStepSeqId" optional="true"/>
+    </service>
+
+    <service name="updateSalaryStep" engine="simple" default-entity-name="SalaryStep"
+             location="component://humanres/minilang/HumanResServices.xml" invoke="updateSalaryStep" auth="true">
+        <description>Update Salary Step</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deleteSalaryStep" engine="entity-auto" default-entity-name="SalaryStep" invoke="delete" auth="true">
+        <description>Delete Salary Step</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createTerminationReason" engine="entity-auto" default-entity-name="TerminationReason" invoke="create" auth="true">
+        <description>Create an Termination Reason</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+
+    <service name="updateTerminationReason" engine="entity-auto" default-entity-name="TerminationReason" invoke="update" auth="true">
+        <description>Update an Termination Reason</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+
+    <service name="deleteTerminationReason" engine="entity-auto" default-entity-name="TerminationReason" invoke="delete" auth="true">
+        <description>Delete an Termination Reason</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createUnemploymentClaim" engine="entity-auto" default-entity-name="UnemploymentClaim" invoke="create" auth="true">
+        <description>Create an Unemployment Claim</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="updateUnemploymentClaim" engine="entity-auto" default-entity-name="UnemploymentClaim" invoke="update" auth="true">
+        <description>Update an Unemployment Claim</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deleteUnemploymentClaim" engine="entity-auto" default-entity-name="UnemploymentClaim" invoke="delete" auth="true">
+        <description>Delete an Unemployment Claim</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <!-- Job Group -->
+
+    <service name="createJobGroup" default-entity-name="JobGroup" engine="entity-auto"
+             invoke="create" auth="true" >
+        <auto-attributes mode="IN" include="pk" optional="true"/>
+        <auto-attributes include="pk" mode="OUT" />
+        <auto-attributes include="nonpk" mode="IN" optional="true" />
+                 
+    </service>
+ 
+    <service name="updateJobGroup" default-entity-name="JobGroup" engine="entity-auto" invoke="update" auth="false">
+        <auto-attributes include="pk" mode="INOUT" optional="false"/>
+        <auto-attributes include="nonpk" mode="INOUT" optional="true"/>
+    </service>
+ 
+ 
+    <service name="deleteJobGroup" engine="entity-auto" default-entity-name="JobGroup" invoke="delete" auth="true">
+        <description>Delete </description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN"  include="pk" optional="true"/>
+    </service>
+
+
+    <!-- Position Group -->
+    <service name="createEmplPosition" engine="entity-auto" default-entity-name="EmplPosition" invoke="create" auth="true">
+        <description>Create an Employee Position</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <!--<service name="updateEmplPosition" engine="entity-auto" default-entity-name="EmplPosition" invoke="update" auth="true">-->
+    <service name="updateEmplPosition" engine="simple" default-entity-name="EmplPosition"
+             location="component://humanres/minilang/HumanResServices.xml" invoke="updateEmplPosition" auth="true">
+        <description>Update an Employee Position</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <!--<attribute name="errorMessage" type="String" optional="true" mode="OUT"/>-->
+    </service>
+    <service name="updateEmplPositionToOccupied" engine="simple" default-entity-name="EmplPosition"
+             location="component://humanres/minilang/HumanResServices.xml" invoke="updateEmplPositionToOccupied" auth="true">
+        <description>Update an Employee Position To Occupied</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <attribute name="statusId" type="String" mode="IN" optional="true"/>
+    </service>
+    <service name="updateEmplPositionInEmployment" engine="simple" default-entity-name="Employment"
+             location="component://humanres/minilang/HumanResServices.xml" invoke="updateEmplPositionInEmployment" auth="true">
+        <description>Update an Employee Position In Employment</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+    <service name="updateEmplPositionToActive" engine="simple" default-entity-name="EmplPosition"
+             location="component://humanres/minilang/HumanResServices.xml" invoke="updateEmplPositionToActive" auth="true">
+        <description>Update an Employee Position To Active</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <attribute name="statusId" type="String" mode="IN" optional="true"/>
+    </service>
+    <service name="updateEmplStatusToHired" engine="simple" default-entity-name="Person"
+             location="component://humanres/minilang/HumanResServices.xml" invoke="updateEmplStatusToHired" auth="true">
+        <description>Update an Employee Position To Active</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <attribute name="EmplStatus" type="String" mode="IN" optional="true"/>
+    </service>
+    
+    <service name="updateEmplStatusToTerminated" engine="simple" default-entity-name="Person"
+             location="component://humanres/minilang/HumanResServices.xml" invoke="updateEmplStatusToTerminated" auth="true">
+        <description>Update an Employee Position To Active</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <attribute name="EmplStatus" type="String" mode="IN" optional="true"/>
+    </service>
+    
+    <service name="deleteEmplPosition" engine="entity-auto" default-entity-name="EmplPosition" invoke="delete" auth="true">
+        <description>Delete an Employee Position</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createEmplPositionFulfillment" engine="entity-auto" default-entity-name="EmplPositionFulfillment" invoke="create" auth="true">
+        <description>Create Employee Position Fulfillment</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="OUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override mode="IN" name="fromDate" optional="true"/><!--  type="Timestamp" -->
+        <!--<override mode="IN" name="degreeId" optional="true"/>-->
+        <attribute name="degreeId" type="String" mode="IN" optional="true"/>
+        
+        <attribute name="roleTypeIdFrom" type="String" mode="IN" optional="true"/>
+        <attribute name="roleTypeIdTo" type="String" mode="IN" optional="true"/>
+        <attribute name="partyIdTo" type="String" mode="IN" optional="true"/>
+        <attribute name="partyIdFrom" type="String" mode="IN" optional="true"/>
+    </service>
+
+    <service name="updateEmplPositionFulfillment" engine="entity-auto" default-entity-name="EmplPositionFulfillment" invoke="update" auth="true">
+        <description>Update Employee Position Fulfillment</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deleteEmplPositionFulfillment" engine="entity-auto" default-entity-name="EmplPositionFulfillment" invoke="delete" auth="false">
+        <description>Delete Employee Position Fulfillment</description>
+        <!--<permission-service service-name="humanResManagerPermission" main-action="DELETE"/>-->
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createEmplPositionReportingStruct" engine="simple" default-entity-name="EmplPositionReportingStruct"
+             location="component://humanres/minilang/HumanResServices.xml" invoke="createEmplPositionReportingStruct" auth="true">
+        <description>Create Employee Position Reporting Structure</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override type="Timestamp" mode="IN" name="fromDate" optional="true"/>
+    </service>
+
+    <service name="updateEmplPositionReportingStruct" engine="entity-auto" default-entity-name="EmplPositionReportingStruct" invoke="update" auth="true">
+        <description>Update Employee Position Reporting Structure</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deleteEmplPositionReportingStruct" engine="entity-auto" default-entity-name="EmplPositionReportingStruct" invoke="delete" auth="true">
+        <description>Delete Employee Position Reporting Structure</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createEmplPositionResponsibility" engine="entity-auto" default-entity-name="EmplPositionResponsibility" invoke="create" auth="true">
+        <description>Create Employee Position Responsibility</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override type="Timestamp" mode="IN" name="fromDate" optional="true"/>
+    </service>
+
+    <service name="updateEmplPositionResponsibility" engine="entity-auto" default-entity-name="EmplPositionResponsibility" invoke="update" auth="true">
+        <description>Update Employee Position Responsibility</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deleteEmplPositionResponsibility" engine="entity-auto" default-entity-name="EmplPositionResponsibility" invoke="delete" auth="true">
+        <description>Delete Employee Position Responsibility</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createValidResponsibility" engine="entity-auto" default-entity-name="ValidResponsibility" invoke="create" auth="true">
+        <description>Create Valid Responsibility</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override type="Timestamp" mode="IN" name="fromDate" optional="true"/>
+    </service>
+
+    <service name="updateValidResponsibility" engine="entity-auto" default-entity-name="ValidResponsibility" invoke="update" auth="true">
+        <description>Update Valid Responsibility</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deleteValidResponsibility" engine="entity-auto" default-entity-name="ValidResponsibility" invoke="delete" auth="true">
+        <description>Delete Valid Responsibility</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="humanResManagerPermission" engine="simple"
+             location="component://humanres/minilang/permission/HumanResPermissionServices.xml" invoke="humanResManagerPermission" auth="true">
+        <implements service="permissionInterface"/>
+    </service>
+
+    <service name="createSkillType" engine="entity-auto" default-entity-name="SkillType" invoke="create" auth="true">
+        <description>Create Valid SkillType</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+
+    <service name="updateSkillType" engine="entity-auto" default-entity-name="SkillType" invoke="update" auth="true">
+        <description>Update Valid SkillType</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+    <service name="deleteSkillType" engine="entity-auto" default-entity-name="SkillType" invoke="delete" auth="true">
+        <description>Delete Valid SkillType</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+    <service name="createEmployee" engine="simple"
+             location="component://humanres/minilang/HumanResServices.xml" invoke="createEmployee">
+        <description>Create an Employee its role and contact details</description>
+        <auto-attributes entity-name="Person" mode="IN" optional="true">
+            <exclude field-name="partyId"/>
+        </auto-attributes>
+        <auto-attributes entity-name="PostalAddress" mode="IN" optional="true">
+            <exclude field-name="contactMechId"/>
+        </auto-attributes>
+        <auto-attributes entity-name="TelecomNumber" mode="IN" optional="true">
+            <exclude field-name="contactMechId"/>
+        </auto-attributes>
+        <attribute name="emailAddress" type="String" mode="IN" optional="true"/>
+        <attribute name="fromDate" type="String" mode="IN" optional="true"/>
+        <attribute name="postalAddContactMechPurpTypeId" type="String" mode="IN" optional="false"/>
+        <attribute name="partyId" type="String" mode="OUT"/>
+    </service>
+
+    <service name="createResponsibilityType" default-entity-name="ResponsibilityType" engine="entity-auto" invoke="create" auth="true">
+        <description>Create Valid ResponsibilityType</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes include="pk" mode="INOUT" optional="true"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+    <service name="updateResponsibilityType" default-entity-name="ResponsibilityType" engine="entity-auto" invoke="update" auth="true">
+        <description>Update Valid ResponsibilityType</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes include="pk" mode="IN" optional="false"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+    <service name="deleteResponsibilityType" default-entity-name="ResponsibilityType" engine="entity-auto" invoke="delete" auth="true">
+        <description>Delete Valid ResponsibilityTrype</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes include="pk" mode="IN" optional="false"/>
+    </service>
+
+    <service name="createTerminationType" engine="entity-auto" default-entity-name="TerminationType" invoke="create" auth="true">
+        <description>Create Valid TerminationType</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+
+    <service name="updateTerminationType" engine="entity-auto" default-entity-name="TerminationType" invoke="update" auth="true">
+        <description>Update Valid TerminationType</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+    <service name="deleteTerminationType" engine="entity-auto" default-entity-name="TerminationType" invoke="delete" auth="true">
+        <description>Delete Valid TerminationType</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createEmplPositionType" engine="entity-auto" default-entity-name="EmplPositionType" invoke="create" auth="true">
+        <description>Create Valid PositionType</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+
+    <service name="updateEmplPositionType" engine="entity-auto" default-entity-name="EmplPositionType" invoke="update" auth="true">
+        <description>Update Valid PositionType</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+
+    <service name="deleteEmplPositionType" engine="entity-auto" default-entity-name="EmplPositionType" invoke="delete" auth="true">
+        <description>Delete EmplPositionType</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="updateEmplPositionTypeRate" engine="simple" default-entity-name="EmplPositionTypeRate"
+             location="component://humanres/minilang/HumanResServices.xml" invoke="updateEmplPositionTypeRate" auth="true">
+        <description>Update Valid EmplPositionTypeRate</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes include="pk" mode="IN" optional="false"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+        <attribute name="rateAmount" type="BigDecimal" mode="IN" optional="true"/>
+        <attribute name="rateCurrencyUomId" type="String" mode="IN" optional="true"/>
+        <attribute name="periodTypeId" type="String" mode="IN"/>
+        <override name="fromDate" optional="true"/>
+    </service>
+
+    <service name="deleteEmplPositionTypeRate" engine="simple" default-entity-name="EmplPositionTypeRate"
+             location="component://humanres/minilang/HumanResServices.xml" invoke="deleteEmplPositionTypeRate" auth="true">
+        <description>Delete Valid EmplPositionTypeRate</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <attribute name="rateAmountFromDate" type="Timestamp" mode="IN" optional="true"/><!-- to be able to expire rateamount specific to a party records....-->
+        <attribute name="periodTypeId" type="String" mode="IN" optional="true"/>
+    </service>
+
+    <service name="createAgreementEmploymentAppl" engine="entity-auto" default-entity-name="AgreementEmploymentAppl" invoke="create" auth="true">
+        <description>Create Agreement Employment Appl</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="updateAgreementEmploymentAppl" engine="entity-auto" default-entity-name="AgreementEmploymentAppl" invoke="update" auth="true">
+        <description>Update Valid AgreementEmploymentAppl</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deleteAgreementEmploymentAppl" engine="entity-auto" default-entity-name="AgreementEmploymentAppl" invoke="delete" auth="true">
+        <description>Delete AgreementEmploymentAppl</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+    
+    <service name="createEmplLeave" engine="entity-auto" default-entity-name="EmplLeave" invoke="create" auth="false">
+        <description>Create Employee Leave and vacation</description>
+        <!--<permission-service service-name="humanResManagerPermission" main-action="CREATE"/>-->
+        <auto-attributes include="pk" mode="INOUT" optional="true"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true" />
+    </service>
+    
+    <service name="createEmplLeaveExtention" engine="entity-auto" default-entity-name="EmplLeaveExtension" invoke="create" auth="false">
+        <description>Create Employee vacation</description>
+        <!--<permission-service service-name="humanResManagerPermission" main-action="CREATE"/>-->
+        <auto-attributes include="pk" mode="INOUT" />
+        <auto-attributes include="nonpk" mode="INOUT" optional="true" />
+    </service>
+    
+    <service name="createEmplLeaveExtentionFM" engine="entity-auto" default-entity-name="EmplLeaveExtFMTicket" invoke="create" auth="false">
+        <description>Create Employee vacation</description>
+        <!--<permission-service service-name="humanResManagerPermission" main-action="CREATE"/>-->
+        <auto-attributes include="pk" mode="INOUT" />
+        <auto-attributes include="nonpk" mode="INOUT" optional="true" />
+    </service>
+
+    <service name="updateEmplLeave" engine="entity-auto" default-entity-name="EmplLeave" invoke="update" auth="false">
+        <description>Update Valid Employee Leave</description>
+        <!--<permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>-->
+        <auto-attributes mode="IN" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+    
+    <service name="deleteEmplLeaveExt" engine="entity-auto" default-entity-name="EmplLeave" invoke="delete" auth="false">
+        <description>Update Valid Employee Leave</description>
+        <!--<permission-service service-name="humanResManagerPermission" main-action="delete"/>-->
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        
+    </service>
+    
+    
+    <service name="updateEmplLeaveExtention" engine="entity-auto" default-entity-name="EmplLeaveExtension" invoke="update" auth="true">
+        <description>Update Valid Employee Leave</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+    
+    <service name="updateEmplLeaveExtFMTicket" engine="entity-auto" default-entity-name="EmplLeaveExtFMTicket" invoke="update" auth="true">
+        <description>Update Valid Employee Leave</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+    
+    <service name="deleteEmplLeaveExtFMTicket" engine="entity-auto" default-entity-name="EmplLeaveExtFMTicket" invoke="delete" auth="true">
+        <description>Delete AgreementEmploymentAppl</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" />
+    </service>
+    
+
+    <service name="deleteEmplLeave" engine="entity-auto" default-entity-name="EmplLeave" invoke="delete" auth="true">
+        <description>Delete AgreementEmploymentAppl</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createEmplLeaveType" engine="entity-auto" default-entity-name="EmplLeaveType" invoke="create" auth="true">
+        <description>Create  </description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+
+    <service name="updateEmplLeaveType" engine="entity-auto" default-entity-name="EmplLeaveType" invoke="update" auth="true">
+        <description>Update  </description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+
+    <service name="deleteEmplLeaveType" engine="entity-auto" default-entity-name="EmplLeaveType" invoke="delete" auth="true">
+        <description>Delete  </description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <!--...............vacation contract and transaction .....-->
+
+    <service name="createPartyVacationContract" engine="entity-auto" default-entity-name="PartyVacationContract" invoke="create" auth="true">
+        <description>Create  </description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="updatePartyVacationContract" engine="entity-auto" default-entity-name="PartyVacationContract" invoke="update" auth="true">
+        <description>Update  </description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+
+    <service name="deletePartyVacationContract" engine="entity-auto" default-entity-name="PartyVacationContract" invoke="delete" auth="true">
+        <description>Delete  </description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="updatePartyVacationContract_EndDate"  engine="java"
+             location="org.apache.ofbiz.humanres.vacations.VacationContractServices" invoke="updatePartyVacationContract_EndDate" auth="false">
+
+        <description>Update </description>
+
+        <auto-attributes mode="IN" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="fromDate" type="java.sql.Date" mode="IN" optional="false"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+    </service>
+
+
+
+
+    <service name="createPartyVacationTransaction" engine="entity-auto" default-entity-name="PartyVacationTransaction" invoke="create" auth="true">
+        <description>Create  </description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="updatePartyVacationTransaction" engine="entity-auto" default-entity-name="PartyVacationTransaction" invoke="update" auth="true">
+        <description>Update  </description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+
+    <service name="deletePartyVacationTransaction" engine="entity-auto" default-entity-name="PartyVacationTransaction" invoke="delete" auth="true">
+        <description>Delete  </description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+    <!--.............-->
+
+
+    <service name="getCurrentPartyEmploymentData" engine="simple"
+             location="component://humanres/minilang/HumanResServices.xml" invoke="getCurrentPartyEmploymentData" auth="true">
+        <description>Delete Valid LeaveType</description>
+        <permission-service service-name="humanResManagerPermission" main-action="VIEW"/>
+        <attribute name="partyId" type="String" mode="IN"/>
+        <attribute name="partyBenefitTypes" type="java.util.List" mode="OUT" optional="true"/>
+        <attribute name="employment" type="org.apache.ofbiz.entity.GenericValue" mode="OUT" optional="true"/>
+        <attribute name="emplPosition" type="org.apache.ofbiz.entity.GenericValue" mode="OUT" optional="true"/>
+        <attribute name="emplPositionType" type="org.apache.ofbiz.entity.GenericValue" mode="OUT" optional="true"/>
+        <attribute name="emplPositionRateType" type="org.apache.ofbiz.entity.GenericValue" mode="OUT" optional="true"/>
+        <attribute name="emplPositionRateAmount" type="org.apache.ofbiz.entity.GenericValue" mode="OUT" optional="true"/>
+    </service>
+
+    <service name="createJobRequisition" engine="entity-auto" default-entity-name="JobRequisition" invoke="create" auth="true">
+        <description>Create a new Job Requisition</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="INOUT" entity-name="JobRequisition" include="pk" optional="true"/>
+        <auto-attributes mode="IN" entity-name="JobRequisition" include="nonpk" optional="true"/>
+        <override name="noOfResources" optional="false"/>
+        <override name="qualification" optional="false"/>
+        <override name="jobLocation" optional="false"/>
+        <override name="skillTypeId" optional="false"/>
+        <override name="experienceMonths" optional="false"/>
+        <override name="experienceYears" optional="false"/>
+    </service>
+
+    <service name="updateJobRequisition" engine="entity-auto" default-entity-name="JobRequisition" invoke="update" auth="true">
+        <description>Update Job Requisition</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="noOfResources" optional="false"/>
+        <override name="jobLocation" optional="false"/>
+        <override name="skillTypeId" optional="false"/>
+        <override name="experienceMonths" optional="false"/>
+        <override name="experienceYears" optional="false"/>
+    </service>
+
+    <service name="deleteJobRequisition" engine="entity-auto" default-entity-name="JobRequisition" invoke="delete" auth="true">
+        <description>Delete a Job Requisition</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createInternalJobPosting" engine="entity-auto" default-entity-name="EmploymentApp" invoke="create" auth="true">
+        <description>Create a New Internal Job Posting</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="INOUT" entity-name="EmploymentApp" include="pk" optional="true"/>
+        <auto-attributes mode="IN" entity-name="EmploymentApp" include="nonpk" optional="true"/>
+        <override name="applyingPartyId" optional="false"/>
+        <override name="approverPartyId" optional="false"/>
+        <override name="jobRequisitionId" optional="false"/>
+    </service>
+
+    <service name="updateInternalJobPosting" engine="entity-auto" default-entity-name="EmploymentApp" invoke="update" auth="true">
+        <description>Update Internal Job Posting</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="applyingPartyId" optional="false"/>
+        <override name="approverPartyId" optional="false"/>
+        <override name="jobRequisitionId" optional="false"/>
+    </service>
+
+    <service name="deleteInternalJobPosting" engine="entity-auto" default-entity-name="EmploymentApp" invoke="delete" auth="true">
+        <description>Delete an Internal Job Posting</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createJobInterview" engine="entity-auto" default-entity-name="JobInterview" invoke="create" auth="true">
+        <description>Create Job Interview</description>
+        <auto-attributes mode="INOUT" entity-name="JobInterview" include="pk"  optional="true"/>
+        <auto-attributes mode="IN" entity-name="JobInterview" include="nonpk" optional="true"/>
+        <override name="jobIntervieweePartyId" optional="false"/>
+        <override name="jobRequisitionId" optional="false"/>
+        <override name="jobInterviewerPartyId" optional="false"/>
+    </service>
+
+    <service name="updateJobInterview" engine="entity-auto" default-entity-name="JobInterview" invoke="update" auth="true">
+        <description>Update Job Interview</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="jobIntervieweePartyId" optional="false"/>
+        <override name="jobRequisitionId" optional="false"/>
+        <override name="jobInterviewTypeId" optional="false"/>
+    </service>
+
+    <service name="deleteJobInterview" engine="entity-auto" default-entity-name="JobInterview" invoke="delete" auth="true">
+        <description>Delete Job Interview</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createJobInterviewType" engine="entity-auto" default-entity-name="JobInterviewType" invoke="create" auth="true">
+        <description>Create a New Interview Type</description>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+
+    <service name="updateJobInterviewType" engine="entity-auto" default-entity-name="JobInterviewType" invoke="update" auth="true">
+        <description>Update Interview Type</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+
+    <service name="deleteJobInterviewType" engine="entity-auto" default-entity-name="JobInterviewType" invoke="delete" auth="true">
+        <description>Delete Interview Type</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="updateApprovalStatus" engine="entity-auto" default-entity-name="EmploymentApp" invoke="update" auth="true">
+        <description>Update Approval Status</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="updateTrainingStatus" engine="entity-auto" default-entity-name="PersonTraining" invoke="update" auth="true">
+        <description>Update Training Status</description>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="reason" optional="false"/>
+    </service>
+
+    <service name="applyTraining" engine="simple" default-entity-name="PersonTraining" 
+             location="component://humanres/minilang/HumanResServices.xml" invoke="applyTraining" auth="true">
+        <description>Create Training Request</description>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="approverId" optional="false"/>
+        <override name="trainingClassTypeId" optional="false">
+            <type-validate>
+                <fail-property resource="HumanResErrorUiLabels.xml" property="HumanResRequiredFieldMissingTrainingClassTypeId"/>
+            </type-validate>
+        </override>
+        <override name="fromDate" optional="true"/>
+        <override name="workEffortId" optional="false"/>
+    </service>
+
+    <service name="assignTraining" engine="simple" default-entity-name="PersonTraining" 
+             location="component://humanres/minilang/HumanResServices.xml" invoke="assignTraining" auth="true">
+        <description>Create Training Request</description>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="approverId" optional="false"/>
+        <override name="trainingClassTypeId" optional="false">
+            <type-validate>
+                <fail-property resource="HumanResErrorUiLabels.xml" property="HumanResRequiredFieldMissingTrainingClassTypeId"/>
+            </type-validate>
+        </override>
+    </service>
+
+    <service name="createTrainingTypes" engine="entity-auto" default-entity-name="TrainingClassType" invoke="create" auth="true">
+        <description>Create a New Training type</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <attribute name="trainingClassTypeId" mode="IN" type="String" optional="false"/>
+        <attribute name="parentTypeId" mode="IN" type="String" optional="true"/>
+        <attribute name="description" mode="IN" type="String" optional="false"/>
+    </service>
+
+    <service name="updateTrainingTypes" engine="entity-auto" default-entity-name="TrainingClassType" invoke="update" auth="true">
+        <description>Update a Training Type</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+
+    <service name="deleteTrainingTypes" engine="entity-auto" default-entity-name="TrainingClassType" invoke="delete" auth="true">
+        <description>Delete a Training Type</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="createEmplLeaveReasonType" engine="entity-auto" default-entity-name="EmplLeaveReasonType" invoke="create" auth="true">
+        <description>Create Valid Leave Reason Type</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+
+    <service name="updateEmplLeaveReasonType" engine="entity-auto" default-entity-name="EmplLeaveReasonType" invoke="update" auth="true">
+        <description>Update Valid Leave Reason Type</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <override name="description" optional="false"/>
+    </service>
+
+    <service name="deleteEmplLeaveReasonType" engine="entity-auto" default-entity-name="EmplLeaveReasonType" invoke="delete" auth="true">
+        <description>Delete Valid Leave Reason Type</description>
+        <permission-service service-name="humanResManagerPermission" main-action="DELETE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+
+    <service name="updateEmplLeaveStatus" engine="entity-auto" default-entity-name="EmplLeave" invoke="update" auth="true">
+        <description>Update Leave Approval Status</description>
+        <permission-service service-name="humanResManagerPermission" main-action="UPDATE"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <!-- PartyQualType services -->
+    <service name="createPartyQualType" default-entity-name="PartyQualType" engine="entity-auto" invoke="create" auth="true">
+        <description>Create a PartyQualType record</description>
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+    <service name="updatePartyQualType" default-entity-name="PartyQualType" engine="entity-auto" invoke="update" auth="true">
+        <description>Update a PartyQualType record</description>
+        <auto-attributes mode="IN" include="pk"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+    <service name="deletePartyQualType" default-entity-name="PartyQualType" engine="entity-auto" invoke="delete" auth="true">
+        <description>Delete a PartyQualType record</description>
+        <auto-attributes mode="IN" include="pk"/>
+    </service>
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+    <!--...................Insurance srvices ......-->
+
+
+    <service name="createInsuranceList" default-entity-name="InsuranceCompanyList" engine="entity-auto" invoke="create" auth="true">
+        <description>Create a Depandances</description>
+        <auto-attributes include="pk" mode="OUT" />
+        <auto-attributes include="nonpk" mode="IN" optional="true" />
+    </service>
+  
+  
+  
+    <service name="updateInsuranceList" default-entity-name="InsuranceCompanyList" engine="entity-auto" invoke="update" auth="true">
+        <description>Update a PartyQualType record</description>
+        <auto-attributes mode="IN" include="pk"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deleteInsuranceList" default-entity-name="InsuranceCompanyList" engine="entity-auto" invoke="delete" auth="true">
+        <description>Delete a PartyQualType record</description>
+        <auto-attributes mode="IN" include="pk"/>
+    </service>
+
+
+
+
+
+
+    <service name="createCompanyInsuranceContract" default-entity-name="CompanyInsuranceContract" engine="entity-auto" invoke="create" auth="true">
+        <description>Create a Depandances</description>
+        <auto-attributes include="pk" mode="OUT" />
+        <auto-attributes include="nonpk" mode="IN" optional="true" />
+    </service>
+  
+  
+  
+    <service name="updateCompanyInsuranceContract" default-entity-name="CompanyInsuranceContract" engine="entity-auto" invoke="update" auth="true">
+        <description>Update a PartyQualType record</description>
+        <auto-attributes mode="IN" include="pk"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deleteCompanyInsuranceContract" default-entity-name="CompanyInsuranceContract" engine="entity-auto" invoke="delete" auth="true">
+        <description>Delete a PartyQualType record</description>
+        <auto-attributes mode="IN" include="pk"/>
+    </service>
+    
+    
+    
+    <service name="createInsuranceClassCatogery" default-entity-name="InsuranceClassCatogery" engine="entity-auto" invoke="create" auth="true">
+        <description>Create a Depandances</description>
+        <auto-attributes include="pk" mode="OUT" />
+        <auto-attributes include="nonpk" mode="IN" optional="true" />
+    </service>
+  
+  
+  
+    <service name="updateInsuranceClassCatogery" default-entity-name="InsuranceClassCatogery" engine="entity-auto" invoke="update" auth="true">
+        <description>Update a PartyQualType record</description>
+        <auto-attributes mode="IN" include="pk"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deleteInsuranceClassCatogery" default-entity-name="InsuranceClassCatogery" engine="entity-auto" invoke="delete" auth="true">
+        <description>Delete a PartyQualType record</description>
+        <auto-attributes mode="IN" include="pk"/>
+    </service>
+    
+    
+    <service name="createCompanyInsContractDet" default-entity-name="CompanyInsContractDet" engine="entity-auto" invoke="create" auth="true">
+        <description>Create a Depandances</description>
+        <auto-attributes include="pk" mode="OUT" />
+        <auto-attributes include="nonpk" mode="IN" optional="true" />
+    </service>
+  
+  
+  
+    <service name="updateCompanyInsContractDet" default-entity-name="CompanyInsContractDet" engine="entity-auto" invoke="update" auth="true">
+        <description>Update a PartyQualType record</description>
+        <auto-attributes mode="IN" include="pk"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deleteCompanyInsContractDet" default-entity-name="CompanyInsContractDet" engine="entity-auto" invoke="delete" auth="true">
+        <description>Delete a PartyQualType record</description>
+        <auto-attributes mode="IN" include="pk"/>
+    </service>
+    
+    
+    
+    
+    
+    <service name="createInsuranceEmpDetails" default-entity-name="InsuranceEmpDetails" engine="entity-auto" invoke="create" auth="true">
+        <description>Create a Depandances</description>
+        <auto-attributes include="pk" mode="OUT" />
+        <auto-attributes include="nonpk" mode="IN" optional="true" />
+    </service>
+  
+  
+  
+    <service name="updateInsuranceEmpDetails" default-entity-name="InsuranceEmpDetails" engine="entity-auto" invoke="update" auth="true">
+        <description>Update a PartyQualType record</description>
+        <auto-attributes mode="IN" include="pk"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deleteInsuranceEmpDetails" default-entity-name="InsuranceEmpDetails" engine="entity-auto" invoke="delete" auth="true">
+        <description>Delete a PartyQualType record</description>
+        <auto-attributes mode="IN" include="pk"/>
+    </service>
+
+
+    <service name="createInsuranceEmpFmDetails" default-entity-name="InsuranceEmpDetails" engine="entity-auto" invoke="create" auth="true">
+        <description>Create a Depandances</description>
+        <auto-attributes include="pk" mode="OUT" />
+        <auto-attributes include="nonpk" mode="IN" optional="true" />
+    </service>
+  
+  
+  
+    <service name="updateInsuranceEmpFmDetails" default-entity-name="InsuranceEmpDetails" engine="entity-auto" invoke="update" auth="true">
+        <description>Update a PartyQualType record</description>
+        <auto-attributes mode="IN" include="pk"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deleteInsuranceEmpFmDetails" default-entity-name="InsuranceEmpDetails" engine="entity-auto" invoke="delete" auth="true">
+        <description>Delete a PartyQualType record</description>
+        <auto-attributes mode="IN" include="pk"/>
+    </service>
+    
+    
+    
+    <service name="createInsuranceContractExt" default-entity-name="InsuranceContractExt" engine="entity-auto" invoke="create" auth="true">
+        <description>Create </description>
+        <auto-attributes include="pk" mode="OUT" />
+        <auto-attributes include="nonpk" mode="IN" optional="true" />
+    </service>
+
+    <service name="createEmplSalaryGradeBounseAndPromotion"  engine="simple" default-entity-name="EmplSalaryGrade"
+             location="component://humanres/minilang/HumanResServices.xml" invoke="createEmplSalaryGradeBounseAndPromotion" auth="true">
+        <description>Create </description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/> 
+        <auto-attributes include="pk" mode="INOUT"  optional="true"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true" />
+    </service>
+    
+    <service name="createEmplSalaryGradeService" default-entity-name="EmplSalaryGrade" engine="entity-auto" invoke="create" auth="false">
+        <description>Create </description>
+        <auto-attributes include="pk" mode="INOUT" optional="false" />
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="TransDate" type="java.sql.Date" mode="IN" optional="false"/>
+        <attribute name="emplPositionId" type="String" mode="IN" optional="false"/>
+        <attribute name="gradeId" type="String" mode="IN" optional="false"/>
+        <attribute name="degreeId" type="String" mode="IN" optional="false"/>
+        <attribute name="partyIdFrom" type="String" mode="IN" optional="false"/>
+        <attribute name="jobGroupId" type="String" mode="IN" optional="false"/>
+        <attribute name="TransType" type="String" mode="IN" optional="false"/>
+        <attribute name="vacationId" type="String" mode="IN" optional="false"/>
+        <attribute name="userLoginId" type="String" mode="IN" optional="false"/>
+        <attribute name="notes" type="String" mode="IN" optional="true"/>
+        <attribute name="endDate" type="java.sql.Date" mode="IN" optional="true"/>
+
+    </service>
+     
+    <service name="createBonus_Validation"  engine="java"    
+             location="org.apache.ofbiz.humanres.PayrollServices" invoke="createBonus_Validation" auth="false">
+
+        <description>Create </description>
+       
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="TransDate" type="String" mode="IN" optional="false"/>
+        <attribute name="emplPositionId" type="String" mode="IN" optional="false"/>
+        <attribute name="gradeId" type="String" mode="IN" optional="false"/>
+        <attribute name="degreeId" type="String" mode="IN" optional="false"/>
+        <attribute name="currentDegreeId" type="String" mode="IN" optional="false"/>
+        <attribute name="partyIdFrom" type="String" mode="IN" optional="false"/>
+        <attribute name="jobGroupId" type="String" mode="IN" optional="false"/>
+        <attribute name="TransType" type="String" mode="IN" optional="false"/>
+        <attribute name="notes" type="String" mode="IN" optional="true"/>
+ 
+    </service>
+    <service name="createEmplPositionFulfillmentFromMoving" engine="entity-auto" default-entity-name="Employment" invoke="create" auth="true">
+        <description>Create Employee Position Fulfillment from promotion when add new grade for employee</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="OUT" include="pk" />
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <!--        <attribute name="fromDate" type="String" mode="IN" optional="false"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="emplPositionId" type="String" mode="IN" optional="false"/>-->
+    </service>
+    
+    <service name="createEmplPositionFulfillmentFromPromotion" engine="entity-auto" default-entity-name="EmplPositionFulfillment" invoke="create" auth="true">
+        <description>Create Employee Position Fulfillment from promotion when add new grade for employee</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/>
+        <auto-attributes mode="OUT" include="pk" />
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <!--        <attribute name="fromDate" type="String" mode="IN" optional="false"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="emplPositionId" type="String" mode="IN" optional="false"/>-->
+    </service>
+    <service name="updateEmplSalaryGradePromotion"  engine="java"    
+             location="org.apache.ofbiz.humanres.PayrollServices" invoke="createPromotion_Validation" auth="false">
+        <description>update trans status when employee have a new grade </description>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="TransDate" type="String" mode="IN" optional="false"/>
+        <attribute name="emplPositionId" type="String" mode="IN" optional="false"/>
+        <attribute name="gradeId" type="String" mode="IN" optional="false"/>
+        <attribute name="degreeId" type="String" mode="IN" optional="false"/>
+        <attribute name="partyIdFrom" type="String" mode="IN" optional="false"/>
+        <attribute name="jobGroupId" type="String" mode="IN" optional="false"/>
+        <attribute name="TransType" type="String" mode="IN" optional="false"/>
+        <attribute name="currentPositionId" type="String" mode="INOUT" optional="true"/>
+        <attribute name="fromDate" type="String" mode="IN" optional="true"/>
+        <attribute name="thruDateUpdate" type="String" mode="IN" optional="true"/>
+        <attribute name="notes" type="String" mode="IN" optional="true"/>
+    </service>
+    
+    
+    <service name="updateEmplPostionStatus"  engine="java"    
+             location="org.apache.ofbiz.humanres.PayrollServices" invoke="updateEmplPostionStatus" auth="false">
+        <description>update </description>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="currentPositionId" type="String" mode="IN" optional="false"/>
+        <attribute name="emplPositionId" type="String" mode="IN" optional="false"/>
+    </service>
+    
+    <service name="updateThruDateEmplPosition"  engine="java"    
+             location="org.apache.ofbiz.humanres.PayrollServices" invoke="updateThruDateEmplPosition" auth="false">
+        <description>update </description>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="currentPositionId" type="String" mode="IN" optional="true"/>
+        <attribute name="thruDateUpdate" type="String" mode="IN" optional="false"/>
+        <attribute name="fromDate" type="String" mode="IN" optional="true"/>
+    </service>
+    
+    <service name="updateInsuranceContractExt" default-entity-name="InsuranceContractExt" engine="entity-auto" invoke="update" auth="true">
+        <description>Update </description>
+        <auto-attributes mode="IN" include="pk"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deleteInsuranceContractExt" default-entity-name="InsuranceContractExt" engine="entity-auto" invoke="delete" auth="true">
+        <description>Delete </description>
+        <auto-attributes mode="IN" include="pk"/>
+    </service>
+    
+    <service name="createEmplSalaryGrade" engine="simple" default-entity-name="EmplSalaryGrade"
+             location="component://humanres/minilang/HumanResServices.xml" invoke="createEmplSalaryGrade" auth="true">
+        <description>Create a New Empl Salary Grade</description>
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/> 
+        <auto-attributes mode="INOUT" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+    <!--<service name="EcaUpdateInsuranceEndDate" engine="java"
+            location="org.apache.ofbiz.humanres.HumanResEvents" invoke="EcaUpdateInsuranceEndDate" auth="false">
+         <auto-attributes include="pk" mode="IN"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+        <attribute name="partyIdTo" type="String" mode="IN" optional="true"/>
+        <attribute name="thruDate" type="String" mode="IN" optional="true"/>
+    </service>-->
+    
+    
+    
+    
+    <service name="ImportTimeATTFile" engine="java"
+             location="org.apache.ofbiz.humanres.timeAttendance.TimeAttendanceServices" invoke="ImportTimeATTFile" auth="true">
+        <permission-service service-name="humanResManagerPermission" main-action="CREATE"/> 
+        <attribute mode="IN" name="uploadedFile" type="java.nio.ByteBuffer" optional="true" />
+        <attribute mode="IN" name="year" type="String" optional="true" />
+        <attribute mode="IN" name="month" type="String" optional="true" />
+    </service>
+        
+    <service name="updateThruDateEmployment"  engine="java"    
+             location="org.apache.ofbiz.humanres.moving.MovingEmployee" invoke="updateThruDateEmployment" auth="false">
+        <description>update </description>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="TransDate" type="String" mode="IN" optional="false"/>
+        <attribute name="gradeId" type="String" mode="IN" optional="false"/>
+        <attribute name="degreeId" type="String" mode="IN" optional="false"/>
+        <attribute name="partyIdFrom" type="String" mode="IN" optional="false"/>
+        <attribute name="jobGroupId" type="String" mode="IN" optional="false"/>
+        <attribute name="TransType" type="String" mode="IN" optional="false"/>
+        <attribute name="roleTypeIdFrom" type="String" mode="IN" optional="false"/>
+        <attribute name="roleTypeIdTo" type="String" mode="IN" optional="false"/>
+        <attribute name="emplPositionId" type="String" mode="IN" optional="false"/>
+        <attribute name="partyIdTo" type="String" mode="IN" optional="false"/>
+        <attribute name="fromDate" type="String" mode="IN" optional="false"/>
+        <attribute name="thruDate" type="String" mode="IN" optional="true"/>
+        <attribute name="notes" type="String" mode="IN" optional="true"/>
+        <attribute name="thruDateUpdate" type="String" mode="IN" optional="true"/>
+    </service>
+    
+    
+    <service name="updateEmplPositionStatus_DeletePromotion"  engine="java"    
+             location="org.apache.ofbiz.humanres.PayrollServices" invoke="updateEmplPositionStatus_DeletePromotion" auth="false">
+        <description>update </description>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="positionId" type="String" mode="IN" optional="false"/>
+        <attribute name="transDate" type="String" mode="IN" optional="false"/>
+        <attribute name="fromDate" type="String" mode="IN" optional="true"/>
+          <attribute name="thruDate" type="String" mode="IN" optional="true"/>
+        <attribute name="rowSeq" type="String" mode="IN" optional="true"/>
+    </service>
+
+    <service name="deleteEmplSalaryGradeAndFulfillment"  engine="java"    
+             location="org.apache.ofbiz.humanres.PayrollServices" invoke="deleteEmplSalaryGradeAndFulfillment" auth="false">
+        <description>update </description>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="transDate" type="String" mode="IN" optional="false"/>
+        <attribute name="rowSeq" type="String" mode="IN" optional="true"/>
+      
+    </service>
+    
+    
+    <service name="updateThruDateEmplPosition_DeletePromotion"  engine="java"    
+             location="org.apache.ofbiz.humanres.PayrollServices" invoke="updateThruDateEmplPosition_DeletePromotion" auth="false">
+        <description>update </description>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+    </service>
+       
+
+
+
+    <service name="deletePositionGradation_MOVING"  engine="java"    
+             location="org.apache.ofbiz.humanres.moving.MovingEmployee" invoke="deletePositionGradation_MOVING" auth="false">
+        <description>update </description>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="transDate" type="String" mode="IN" optional="false"/>
+        <attribute name="rowSeq" type="String" mode="IN" optional="false"/>
+    </service>
+    
+    
+   
+    
+    <service name="updateThruDateEmployment_DeleteMoving"  engine="java"    
+             location="org.apache.ofbiz.humanres.moving.MovingEmployee" invoke="updateThruDateEmployment_DeleteMoving" auth="false">
+        <description>update </description>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="partyId" type="String" mode="IN" optional="true"/>
+    </service>
+    
+    
+    
+    <service name="callDeleteBonus"  engine="java"    
+             location="org.apache.ofbiz.humanres.PayrollServices" invoke="deletePositionGradation_BONUS" auth="false">
+        <description>update </description>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="transDate" type="String" mode="IN" optional="false"/>
+        <attribute name="rowSeq" type="String" mode="IN" optional="false"/>
+        
+    </service>
+    
+    <service name="deleteEmplFulfillment" engine="entity-auto" default-entity-name="EmplPositionFulfillment" invoke="delete" auth="false">
+        <description>Delete </description>
+        <!--<permission-service service-name="humanResManagerPermission" main-action="DELETE"/>-->
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+    
+    
+    <service name="deleteEmplSalaryGrade" engine="entity-auto" default-entity-name="EmplSalaryGrade" invoke="delete" auth="false">
+        <description>Delete </description>
+        <!--<permission-service service-name="humanResManagerPermission" main-action="DELETE"/>-->
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <auto-attributes mode="IN" include="pk" optional="false"/>
+    </service>
+    
+    
+    <service name="updateEmploymentData_Terminated"  engine="java"    
+             location="org.apache.ofbiz.humanres.terminated.TerminatedEmployee" invoke="updateDateEmployment_Terminated" auth="false">
+        <description>update </description>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="thruDate" type="String" mode="IN" optional="false"/>
+        <attribute name="terminationReasonId" type="String" mode="IN" optional="false"/>
+        <attribute name="terminationTypeId" type="String" mode="IN" optional="false"/>
+        <attribute name="serviceType" type="String" mode="IN" optional="false"/>
+    </service>
+         
+    <service name="updateThruDateEmplFulfillment_Terminated"  engine="java"    
+             location="org.apache.ofbiz.humanres.terminated.TerminatedEmployee" invoke="updateThruDateEmplFulfillment_Terminated" auth="false">
+        <description>update </description>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="thruDate" type="String" mode="IN" optional="false"/>
+        <attribute name="serviceType" type="String" mode="IN" optional="false"/>
+    </service>
+         
+    <service name="updateEmplPositionStatusActive_Terminated"  engine="java"    
+             location="org.apache.ofbiz.humanres.terminated.TerminatedEmployee" invoke="updateEmplPositionStatus" auth="false">
+        <description>update </description>
+        <attribute name="emplPositionId" type="String" mode="IN" optional="false"/>
+       
+    </service>
+         
+    <service name="updateEmplStatusActive_Terminated"  engine="java"    
+             location="org.apache.ofbiz.humanres.terminated.TerminatedEmployee" invoke="updateEmplStatusToTerminated_Terminated" auth="false">
+        <description>update </description>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="thruDate" type="String" mode="IN" optional="false"/>
+        <attribute name="terminationReasonId" type="String" mode="IN" optional="false"/>
+        <attribute name="terminationTypeId" type="String" mode="IN" optional="false"/>
+        <attribute name="emplPositionId" type="String" mode="IN" optional="false"/>
+        <attribute name="serviceType" type="String" mode="IN" optional="false"/>
+    
+        <attribute name="TransDate" type="String" mode="IN" optional="false"/>
+        <attribute name="gradeId" type="String" mode="IN" optional="false"/>
+        <attribute name="degreeId" type="String" mode="IN" optional="false"/>
+        <attribute name="partyIdFrom" type="String" mode="IN" optional="false"/>
+        <attribute name="jobGroupId" type="String" mode="IN" optional="false"/>
+        <attribute name="TransType" type="String" mode="IN" optional="false"/>
+  
+        <attribute name="notes" type="String" mode="IN" optional="true"/>
+        
+    </service>
+
+
+    <!--Delete Hiring-->
+    <service name="updateEmplStatusToUnderHiring"  engine="java"    
+             location="org.apache.ofbiz.humanres.PayrollServices" invoke="updateEmplStatusToUnderHiring" auth="false">
+        <description>update </description>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="emplPositionId" type="String" mode="IN" optional="false"/>
+        <attribute name="transDate" type="String" mode="IN" optional="false"/>
+ 
+        <attribute name="rowSeq" type="String" mode="IN" optional="true"/>
+    </service>
+
+
+    <service name="deleteEmploymentJAVA"  engine="java"    
+             location="org.apache.ofbiz.humanres.PayrollServices" invoke="deleteEmployment" auth="false">
+        <description>update </description>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="transDate" type="String" mode="IN" optional="false"/>
+        <attribute name="rowSeq" type="String" mode="IN" optional="false"/>
+    </service>
+    <!--..... time Attendance config .....-->
+
+    <service name="createTimeAttendanceConfig" default-entity-name="TimeAttendanceConfig" engine="entity-auto" invoke="create" auth="true">
+        <description>Create a Depandances</description>
+        <auto-attributes include="pk" mode="OUT" />
+        <auto-attributes include="nonpk" mode="IN" optional="true" />
+    </service>
+  
+  
+  
+    <service name="updateTimeAttendanceConfig" default-entity-name="TimeAttendanceConfig" engine="entity-auto" invoke="update" auth="true">
+        <auto-attributes mode="IN" include="pk"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+
+    <service name="deleteTimeAttendanceConfig" default-entity-name="TimeAttendanceConfig" engine="entity-auto" invoke="delete" auth="true">
+        <description>Delete a PartyQualType record</description>
+        <auto-attributes mode="IN" include="pk"/>
+    </service>
+    
+    <service name="updateTimeAttendanceMain" default-entity-name="TimeAttendance" engine="entity-auto" invoke="update" auth="true">
+        <auto-attributes mode="IN" include="pk"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+    </service>
+    
+    
+    
+    
+    <!--Holding-->
+    
+    <service name="updateEmplStatusToHold"  engine="java"    
+             location="org.apache.ofbiz.humanres.holding.HoldingEmployee" invoke="updateEmplStatusToHold" auth="false">
+        <description>update </description>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="TransDate" type="String" mode="IN" optional="false"/>
+        <attribute name="gradeId" type="String" mode="IN" optional="false"/>
+        <attribute name="degreeId" type="String" mode="IN" optional="false"/>
+        <attribute name="partyIdFrom" type="String" mode="IN" optional="false"/>
+        <attribute name="jobGroupId" type="String" mode="IN" optional="false"/>
+        <attribute name="TransType" type="String" mode="IN" optional="false"/>
+        <attribute name="emplPositionId" type="String" mode="IN" optional="false"/>
+        <attribute name="notes" type="String" mode="IN" optional="false"/>
+    </service>
+    
+    <service name="deletePositionGradation_Holding"  engine="java"    
+             location="org.apache.ofbiz.humanres.holding.HoldingEmployee" invoke="deletePositionGradation_Holding" auth="false">
+        <description>update </description>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="transDate" type="String" mode="IN" optional="false"/>
+        <attribute name="rowSeq" type="String" mode="IN" optional="false"/>
+    </service>
+    
+    <service name="updateEmplStatusToHoldAndUNhold"  engine="java"    
+             location="org.apache.ofbiz.humanres.holding.HoldingEmployee" invoke="updateEmplStatusToHold" auth="false">
+        <description>update </description>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+
+    </service>
+    
+    
+    <!--........ Vacations .......-->
+    <service name="callCreateVacation"  engine="java"    
+             location="org.apache.ofbiz.humanres.vacations.VacationsServices" invoke="createVacation" auth="false">
+        <description>call create vacation </description>
+       
+        <attribute name="partyId" type="String" mode="IN" optional="true"/>
+        <attribute name="jsonText" type="String" mode="IN" optional="true"/>
+        <!--<attribute name="approverPartyId" type="String" mode="IN" optional="true"/>-->
+        <attribute name="emplLeaveReasonTypeId" type="String" mode="IN" optional="true"/>
+        <attribute name="transDate" type="java.sql.Date" mode="IN" optional="true"/>
+        <attribute name="fromDate_i18n" type="java.sql.Timestamp" mode="IN" optional="true"/>
+        <attribute name="thruDate_i18n" type="java.sql.Timestamp" mode="IN" optional="true"/>
+        
+        <attribute name="routeFrom" type="String" mode="IN" optional="true"/>
+        <attribute name="routeTo" type="String" mode="IN" optional="true"/>
+        <attribute name="noOfDays" type="String" mode="IN" optional="true"/>
+        <attribute name="description" type="String" mode="IN" optional="true"/>
+        <attribute name="leaveStatus" type="String" mode="IN" optional="true"/>
+        <attribute name="type" type="String" mode="IN" optional="true"/>
+        
+        <attribute name="ticketRequired" type="String" mode="IN" optional="true"/>
+        <attribute name="ticketChargeTo" type="String" mode="IN" optional="true"/>
+        <attribute name="visaRequired" type="String" mode="IN" optional="true"/>
+        <attribute name="visaChargeTo" type="String" mode="IN" optional="true"/>
+        <!--<attribute name="FMTicketEligable" type="String" mode="IN" optional="true"/>-->
+    </service>
+    
+    
+    
+    <service name="deleteVacation" default-entity-name="EmplLeave" engine="entity-auto" invoke="delete" auth="true">
+        <description>deleteVacation</description>
+        <auto-attributes mode="IN" include="pk"/>
+    </service>
+    
+    <service name="deleteVacationExt" default-entity-name="EmplLeaveExtension" engine="entity-auto" invoke="delete" auth="true">
+        <description>deleteVacationExt</description>
+        <auto-attributes mode="IN" include="pk"/>
+    </service>
+    
+    <service name="deleteVacationExtFM" default-entity-name="EmplLeaveExtId" engine="entity-auto" invoke="delete" auth="true">
+        <description>deleteVacationExtFM</description>
+        <auto-attributes mode="IN" include="pk"/>
+    </service>
+
+    
+        
+    <service name="updateEmplSalaryGrade_Hold" default-entity-name="EmplSalaryGrade" engine="entity-auto" invoke="update" auth="false">
+        <description>Update EmplSalaryGrade</description>
+        <auto-attributes mode="IN" include="pk" optional="true"/>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="endDate" type="java.sql.Date" mode="IN" optional="false"/>
+    </service>
+    
+    <!--Delete Terminated--> 
+   
+    <service name="updateEmplPositionStatus_DeleteTerminated"  engine="java"    
+               location="org.apache.ofbiz.humanres.terminated.TerminatedEmployee" invoke="updateEmplPositionStatus_DeleteTerminated" auth="false">
+        <description>update </description>
+        <auto-attributes mode="IN" include="nonpk" optional="true"/>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="positionId" type="String" mode="IN" optional="false"/>
+        <attribute name="transDate" type="String" mode="IN" optional="false"/>
+        <attribute name="fromDate" type="String" mode="IN" optional="true"/>
+        <attribute name="rowSeq" type="String" mode="IN" optional="true"/>
+        <attribute name="thruDate" type="String" mode="IN" optional="false"/>
+          <attribute name="terminationReasonId" type="String" mode="IN" optional="false"/>
+        <attribute name="terminationTypeId" type="String" mode="IN" optional="false"/>
+        <attribute name="serviceType" type="String" mode="IN" optional="false"/>
+         <attribute name="emplSalaryGrade" type="String" mode="IN" optional="false"/>
+        
+    </service>
+</services>

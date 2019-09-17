@@ -1,0 +1,221 @@
+
+
+nav .fancyNav{
+	/* Affects the UL element */
+	overflow: hidden;
+	display: inline-block;
+}
+
+nav .fancyNav li{
+	/* Specifying a fallback color and we define CSS3 gradients for the major browsers: */
+	
+	background-color: #f0f0f0;
+	background-image: -webkit-gradient(linear,left top, left bottom,from(#fefefe), color-stop(0.5,#f0f0f0), color-stop(0.51, #e6e6e6));
+	background-image: -moz-linear-gradient(#fefefe 0%, #f0f0f0 50%, #e6e6e6 51%);
+	background-image: -o-linear-gradient(#fefefe 0%, #f0f0f0 50%, #e6e6e6 51%);
+	background-image: -ms-linear-gradient(#fefefe 0%, #f0f0f0 50%, #e6e6e6 51%);
+	background-image: linear-gradient(#fefefe 0%, #f0f0f0 50%, #e6e6e6 51%);
+	
+	
+	
+	/* Adding a 1px inset highlight for a more polished efect: */
+	
+	box-shadow: 1px -1px 0 rgba(255, 255, 255, 0.6) inset;
+	-moz-box-shadow: 1px -1px 0 rgba(255, 255, 255, 0.6) inset;
+	-webkit-box-shadow: 1px -1px 0 rgba(255, 255, 255, 0.6) inset;
+	
+	position:relative;
+	
+	float: left;
+	list-style: none;
+}
+
+nav .fancyNav li:after{
+
+	/* This creates a pseudo element inslide each LI */	
+	
+	content:'.';
+	text-indent:-9999px;
+	overflow:hidden;
+	position:absolute;
+	width:100%;
+	height:4px;
+	top:0;
+	left:0;
+	z-index:1;
+	opacity:0;
+	border-radius: 4px 4px 4px 4px;
+	/* Gradients! */
+	
+    background-image: -webkit-gradient(linear, left top, right top, from(rgb(50, 118, 177)),color-stop(0.5,rgba(168, 168, 168, 0.48)), to(rgb(50, 118, 177)));	background-image:-o-linear-gradient(left, rgba(168,168,168,0.5), rgba(168,168,168,0) 50%, rgba(168,168,168,0.5));
+	background-image:-ms-linear-gradient(left, rgba(168,168,168,0.5), rgba(168,168,168,0) 50%, rgba(168,168,168,0.5));
+	background-image:linear-gradient(left, rgba(168,168,168,0.5), rgba(168,168,168,0) 50%, rgba(168,168,168,0.5));
+	
+	/* Creating borders with box-shadow. Useful, as they don't affect the size of the element. */
+	
+	box-shadow:-1px 0 0 #a3a3a3,-2px 0 0 #fff,1px 0 0 #a3a3a3,2px 0 0 #fff;
+	-moz-box-shadow:-1px 0 0 #a3a3a3,-2px 0 0 #fff,1px 0 0 #a3a3a3,2px 0 0 #fff;
+	-webkit-box-shadow:-1px 0 0 #a3a3a3,-2px 0 0 #fff,1px 0 0 #a3a3a3,2px 0 0 #fff;
+	
+	/* This will create a smooth transition for the opacity property */
+	
+	-moz-transition:0.25s all;
+	-webkit-transition:0.25s all;
+	-o-transition:0.25s all;
+	transition:0.25s all;
+}
+
+/* Treating the first LI and li:after elements separately */
+
+
+
+nav .fancyNav li:first-child:after,
+nav .fancyNav li.selected:first-child:after{
+	box-shadow:1px 0 0 #a3a3a3,2px 0 0 #fff;
+	-moz-box-shadow:1px 0 0 #a3a3a3,2px 0 0 #fff;
+	-webkit-box-shadow:1px 0 0 #a3a3a3,2px 0 0 #fff;
+	
+	border-radius: 4px 0px 0px 4px;
+}
+
+nav .fancyNav li:last-child{
+	border-radius: 0px 4px 4px 0px;
+}
+nav .fancyNav li:first-child{
+	border-radius: 4px 0px 0px 4px;
+}
+
+/* Treating the last LI and li:after elements separately */
+
+nav .fancyNav li:last-child:after,
+nav .fancyNav li.selected:last-child:after{
+	box-shadow:-1px 0 0 #a3a3a3,-2px 0 0 #fff;
+	-moz-box-shadow:-1px 0 0 #a3a3a3,-2px 0 0 #fff;
+	-webkit-box-shadow:-1px 0 0 #a3a3a3,-2px 0 0 #fff;
+	border-radius: 0px 4px 4px 0px;
+	
+}
+
+nav .fancyNav li:hover:after,
+nav .fancyNav li.selected:after,
+nav .fancyNav li:target:after{
+	/* This property triggers the CSS3 transition */
+	opacity:1;
+}
+
+
+
+nav .fancyNav li.selected:hover:after,
+nav .fancyNav li:target:hover:after{
+	opacity:1 !important;
+}
+
+/* Styling the anchor elements */
+
+nav .fancyNav li a{
+	color: #000;
+	display: inline-block;
+	font: 20px/1 Lobster,Arial,sans-serif;
+        padding:12px 17px 12px 16px;
+	position: relative;
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6);
+	z-index:2;
+	text-decoration:none !important;
+	white-space:nowrap;
+        font-size: 11px;
+	border-right: 1px solid rgba(9, 9, 9, 0.04);
+}
+nav .fancyNav li a:hover{
+	color: #3276b1 !important;
+      
+}
+
+nav .fancyNav a.homeIcon{
+	background:url('/images/BusinessInnovation/images/home.png') no-repeat center center;
+	display: block;
+	overflow: hidden;
+	padding-left: 12px;
+	padding-right: 12px;
+	text-indent: -9999px;
+	width: 100%;
+}
+
+
+
+.smart-style-1 a.button1.facebook {
+    background: #f997b0;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#fb3c4a), to(#d02f0b));
+    background: -moz-linear-gradient(#fb3c4a, #d02f0b);
+    background: linear-gradient(#fb3c4a, #d02f0b);
+    border: solid 1px #ee8090;
+    border-bottom: solid 3px #cb5462;
+    box-shadow: inset 0 0 0 1px #e0b1bd;
+    color: #ffffff;
+}
+    
+.smart-style-1 a.button1.facebook:hover {
+    background: #f57184;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#fb3c4a), to(#d02f0b));
+    background: -moz-linear-gradient(#dcbcbf, #e28a76);
+     background: linear-gradient(#dcbcbf, #e28a76);
+    border: solid 1px #e26272;
+    border-bottom: solid 3px #cb5462;
+    box-shadow: inset 0 0 0 1px #f9aab5; }
+    
+.smart-style-1 a.button1.facebook:active {
+    background: #f06a7c;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f06a7c), to(#f56c7e));
+    background: -moz-linear-gradient(#f06a7c, #f56c7e);
+    background: linear-gradient(#f06a7c, #f56c7e);
+    border: solid 1px #a14753;
+    box-shadow: inset 0 10px 15px 0 #d45d6d; }
+    
+ 
+.smart-style-2 a.button1.facebook {
+    background: #99b6df;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#587592), to(#2c3742));
+    background: -moz-linear-gradient(#587592, #2c3742);
+    background: linear-gradient(#587592, #2c3742);
+    border: solid 1px #6d94ce;
+    border-bottom: solid 3px #2c3742;
+    box-shadow: inset 0 0 0 1px #bbcfeb;
+    color: #fff;
+    text-shadow: 0 1px 0 #3c61ab;
+}
+.smart-style-3 a.button1.facebook {
+    background: #99b6df;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#ffbc8b), to(#e68139));
+    background: -moz-linear-gradient(#ffbc8b, #e68139);
+    background: linear-gradient(#ffbc8b, #e68139);
+    border: solid 1px #f0883d;
+    border-bottom: solid 3px #f4d7c3;
+    box-shadow: inset 0 0 0 1px #bbcfeb;
+    color: #fff;
+    text-shadow: 0 1px 0 #3c61ab;
+}
+
+.smart-style-3 a.button1.facebook:hover {
+    background: #f57184;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#ffeee1), to(#f5b587));
+    background: -moz-linear-gradient(#ffeee1, #f5b587);
+     background: linear-gradient(#fff8f4, #e8b18a);
+    border: solid 1px #f0883d;
+    border-bottom: solid 3px #f4d7c3;
+    box-shadow: inset 0 0 0 1px #3c61ab; }
+
+.smart-style-5 a.button1.facebook {
+    background: #99b6df;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#99b6df), to(#638ec8));
+    background: -moz-linear-gradient(#99b6df, #638ec8);
+    background: linear-gradient(#fffadf, #debe18);
+    border: solid 1px #77680f;
+    border-bottom: solid 3px #77680f;
+    box-shadow: inset 0 0 0 1px #bbcfeb;
+    color: #4b5a5a;
+    text-shadow: 0 0px 0 #f1da91;
+}
+
+
+
+
+

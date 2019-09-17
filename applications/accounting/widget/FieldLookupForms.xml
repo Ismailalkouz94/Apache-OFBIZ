@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+    <form name="LookupFixedAsset" target="LookupFixedAsset" title="" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="FixedAsset" default-field-type="hidden"/>
+        <field name="fixedAssetId" widget-style="form-control"><text-find/></field>
+        <field name="fixedAssetName" widget-style="form-control"><text-find/></field>
+        <field name="fixedAssetTypeId" widget-style="form-control" title="${uiLabelMap.AccountingFixedAssetTypeId}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="FixedAssetType">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+             </drop-down>
+        </field>
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <grid name="ListLookupFixedAsset" list-name="listIt" title="" paginate-target="LookupFixedAsset"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="FixedAsset"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="fixedAssetId" widget-style="buttontext">
+            <hyperlink description="${fixedAssetId}" target="javascript:set_value('${fixedAssetId}')" also-hidden="false" target-type="plain"/>
+        </field>
+        <field name="fixedAssetName" title="${uiLabelMap.CommonName}"><display/></field>
+        <field name="fixedAssetTypeId" title="${uiLabelMap.AccountingFixedAssetTypeId}"><display-entity entity-name="FixedAssetType"/></field>
+    </grid>
+    <form name="LookupBudget"  target="LookupBudget" title="" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="Budget" default-field-type="hidden"/>
+        <field name="budgetId" title="${uiLabelMap.BudgetId}" widget-style="form-control"><text-find/></field>
+        <field name="budgetTypeId" title="${uiLabelMap.AccountingBudgetType}" widget-style="form-control">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="BudgetType">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+             </drop-down>
+        </field>
+        <field name="customTimePeriodId" widget-style="form-control"><text-find/></field>
+        <field name="comments" widget-style="form-control"><text-find/></field>
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="ListLookupBudget" list-name="listIt" title="" type="list" paginate-target="LookupBudget"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="FixedAsset"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="fixedAssetId" widget-style="buttontext">
+            <hyperlink description="${fixedAssetId}" target="javascript:set_value('${fixedAssetId}')" also-hidden="false" target-type="plain"/>
+        </field>
+        <field name="fixedAssetName" title="${uiLabelMap.CommonName}"><display/></field>
+        <field name="fixedAssetTypeId" title="${uiLabelMap.AccountingFixedAssetTypeId}"><display-entity entity-name="FixedAssetType"/></field>
+    </form>
+    <form name="lookupBillingAccount" target="LookupBillingAccount" title="" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="BillingAccount" default-field-type="hidden"/>
+        <field name="billingAccountId" widget-style="form-control" title="${uiLabelMap.AccountingBillingAccountId}"><text-find/></field>
+        <field name="description" widget-style="form-control" title="${uiLabelMap.CommonDescription}"><text-find/></field>
+        <field name="externalAccountId" widget-style="form-control" title="${uiLabelMap.AccountingExternalAccountId}"><text-find/></field>
+
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <grid name="ListBillingAccount" list-name="listIt" title="" paginate-target="LookupBillingAccount"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="BillingAccount"/>
+                <field-map field-name="orderBy" value="billingAccountId"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="billingAccountId" title="${uiLabelMap.AccountingBillingAccountId}" widget-style="buttontext">
+            <hyperlink description="${billingAccountId}" target="javascript:set_value('${billingAccountId}')" also-hidden="false" target-type="plain"/>
+        </field>
+        <field name="description"><display/></field>
+        <field name="externalAccountId" title="${uiLabelMap.AccountingExternalAccountId}"><display/></field>
+    </grid>
+
+    <form name="LookupGlAccount" target="LookupGlAccount" title="" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="GlAccount" default-field-type="hidden"/>
+        <field name="glAccountId" widget-style="form-control" title="${uiLabelMap.AccountingGlAccountId}"><text-find/></field>
+        <field name="accountName" widget-style="form-control" title="${uiLabelMap.CommonName}"><text-find/></field>
+        <field name="glAccountTypeId" widget-style="form-control" title="${uiLabelMap.CommonType}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="GlAccountType">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="glAccountClassId" widget-style="form-control" title="${uiLabelMap.AccountingGlAccountClass}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="GlAccountClass">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="ListLookupGlAccount" list-name="listIt" title="" paginate-target="LookupGlAccount"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="GlAccount"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="glAccountId" title="${uiLabelMap.AccountingGlAccountId}" widget-style="buttontext">
+            <hyperlink description="${glAccountId}" target="javascript:set_value('${glAccountId}')" also-hidden="false" target-type="plain"/>
+        </field>
+        <field name="accountName" title="${uiLabelMap.CommonName}"><display/></field>
+        <field name="glAccountTypeId" title="${uiLabelMap.CommonType}"><display-entity entity-name="GlAccountType"/></field>
+        <field name="glAccountClassId" title="${uiLabelMap.AccountingGlAccountClass}"><display-entity entity-name="GlAccountClass"/></field>
+    </form>
+     <form name="LookupGlAccountC" target="LookupGlAccountC" title="" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="GlAccount" default-field-type="hidden"/>
+        <field name="glAccountId" widget-style="form-control" title="${uiLabelMap.AccountingGlAccountId}"><text-find/></field>
+        <field name="accountName" widget-style="form-control" title="${uiLabelMap.CommonName}"><text-find/></field>
+        <field name="glAccountTypeId" widget-style="form-control" title="${uiLabelMap.CommonType}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="GlAccountType">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="glAccountClassId" widget-style="form-control" title="${uiLabelMap.AccountingGlAccountClass}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="GlAccountClass">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="ListLookupGlAccountC" list-name="listIt" title="" paginate-target="LookupGlAccountC"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <set field="inputFields" from-field="parameters"/>
+            <set field="orderBy" value="accountCode"/>
+            <set field="entityName" value="GlOrganizationGlAccount"/>
+            <script location="component://accounting/groovyScripts/GLTransaction/CostCenterGL.groovy"/>
+        </actions>
+        <field name="glAccountId" title="${uiLabelMap.AccountingGlAccountId}" widget-style="buttontext">
+            <hyperlink description="${glAccountId}" target="javascript:set_value('${glAccountId}')" also-hidden="false" target-type="plain"/>
+        </field>
+        <field name="accountName" title="${uiLabelMap.CommonName}"><display/></field>
+        <field name="glAccountTypeId" title="${uiLabelMap.CommonType}"><display-entity entity-name="GlAccountType"/></field>
+        <field name="glAccountClassId" title="${uiLabelMap.AccountingGlAccountClass}"><display-entity entity-name="GlAccountClass"/></field>
+    </form>
+       <form name="LookupGlAccountE" target="LookupGlAccountE" title="" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="GlAccount" default-field-type="hidden"/>
+               	<field name="myPartyId" id="myPartyIdE"><hidden/></field>
+        <field name="glAccountId" widget-style="form-control" title="${uiLabelMap.AccountingGlAccountId}"><text-find/></field>
+        <field name="accountName" widget-style="form-control" title="${uiLabelMap.CommonName}"><text-find/></field>
+        <field name="glAccountTypeId" widget-style="form-control" title="${uiLabelMap.CommonType}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="GlAccountType">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="glAccountClassId" widget-style="form-control" title="${uiLabelMap.AccountingGlAccountClass}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="GlAccountClass">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="ListLookupGlAccountE" list-name="listIt" title="" paginate-target="LookupGlAccountE"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <set field="inputFields" from-field="parameters"/>
+            <set field="orderBy" value="accountCode"/>
+            <set field="entityName" value="GlAccount"/> <!-- update -->
+            <script location="component://accounting/groovyScripts/GLTransaction/EmployeesGL.groovy"/>
+        </actions>
+        <field name="glAccountId" title="${uiLabelMap.AccountingGlAccountId}" widget-style="buttontext">
+            <hyperlink description="${glAccountId}" target="javascript:set_value('${glAccountId}')" also-hidden="false" target-type="plain"/>
+        </field>
+        <field name="accountName" title="${uiLabelMap.CommonName}"><display/></field>
+        <field name="glAccountTypeId" title="${uiLabelMap.CommonType}"><display-entity entity-name="GlAccountType"/></field>
+        <field name="glAccountClassId" title="${uiLabelMap.AccountingGlAccountClass}"><display-entity entity-name="GlAccountClass"/></field>
+    </form>
+    <form name="LookupGlAccountV" target="LookupGlAccountV" title="" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="GlAccount" default-field-type="hidden"/>
+        	<field name="myPartyId" id="myPartyIdV"><hidden value="123"/></field>
+        <field name="glAccountId" widget-style="form-control" title="${uiLabelMap.AccountingGlAccountId}"><text-find/></field>
+        <field name="accountName" widget-style="form-control" title="${uiLabelMap.CommonName}"><text-find/></field>
+        <field name="glAccountTypeId" widget-style="form-control" title="${uiLabelMap.CommonType}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="GlAccountType">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="glAccountClassId" widget-style="form-control" title="${uiLabelMap.AccountingGlAccountClass}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="GlAccountClass">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="ListLookupGlAccountV" list-name="listIt" title="" paginate-target="LookupGlAccountV"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <set field="inputFields" from-field="parameters"/>
+            <set field="orderBy" value="accountCode"/>
+            <set field="entityName" value="GlAccount"/> <!-- update -->
+            <script location="component://accounting/groovyScripts/GLTransaction/VendorGL.groovy"/>
+        </actions>
+        <field name="glAccountId" title="${uiLabelMap.AccountingGlAccountId}" widget-style="buttontext">
+            <hyperlink description="${glAccountId}" target="javascript:set_value('${glAccountId}')" also-hidden="false" target-type="plain"/>
+        </field>
+        <field name="accountName" title="${uiLabelMap.CommonName}"><display/></field>
+        <field name="glAccountTypeId" title="${uiLabelMap.CommonType}"><display-entity entity-name="GlAccountType"/></field>
+        <field name="glAccountClassId" title="${uiLabelMap.AccountingGlAccountClass}"><display-entity entity-name="GlAccountClass"/></field>
+    </form>
+    <form name="LookupGlAccountG" target="LookupGlAccountG" title="" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="GlAccount" default-field-type="hidden"/>
+        <field name="glAccountId" widget-style="form-control" title="${uiLabelMap.AccountingGlAccountId}"><text-find/></field>
+        <field name="accountName" widget-style="form-control" title="${uiLabelMap.CommonName}"><text-find/></field>
+        <field name="glAccountTypeId" widget-style="form-control" title="${uiLabelMap.CommonType}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="GlAccountType">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="glAccountClassId" widget-style="form-control" title="${uiLabelMap.AccountingGlAccountClass}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="GlAccountClass">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="ListLookupGlAccountG" list-name="listIt" title="" paginate-target="LookupGlAccountG"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <set field="inputFields" from-field="parameters"/>
+            <set field="orderBy" value="accountCode"/>
+            <set field="entityName" value="GlOrganizationGlAccount"/> <!-- update -->
+            <script location="component://accounting/groovyScripts/GLTransaction/GlAccountGL.groovy"/>
+        </actions>
+        <field name="glAccountId" title="${uiLabelMap.AccountingGlAccountId}" widget-style="buttontext">
+            <hyperlink description="${glAccountId}" target="javascript:set_value('${glAccountId}')" also-hidden="false" target-type="plain"/>
+        </field>
+        <field name="accountName" title="${uiLabelMap.CommonName}"><display/></field>
+        <field name="glAccountTypeId" title="${uiLabelMap.CommonType}"><display-entity entity-name="GlAccountType"/></field>
+        <field name="glAccountClassId" title="${uiLabelMap.AccountingGlAccountClass}"><display-entity entity-name="GlAccountClass"/></field>
+    </form>
+    <form name="LookupPayment" target="LookupPayment" title="" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="Payment" default-field-type="hidden"/>
+        <field name="paymentId" widget-style="form-control" title="${uiLabelMap.AccountingPaymentID}"><text-find/></field>
+        <field name="partyIdFrom" widget-style="form-control"><lookup  target-form-name="LookupPartyName"/></field>
+        <field name="partyIdTo" widget-style="form-control"><lookup  target-form-name="LookupPartyName"/></field>
+        <field name="amountApplied" widget-style="form-control"><text-find default-value=""></text-find> </field>
+
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="ListPayment" list-name="listIt" title="" paginate-target="LookupPayment"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="Payment"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="paymentId" widget-style="buttontext">
+            <hyperlink description="${paymentId}" target="javascript:set_value('${paymentId}')" also-hidden="false" target-type="plain"/>
+        </field>
+        <field name="partyIdFrom"><display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName}${lastName}[${partyId}]"/></field>
+        <field name="partyIdTo"><display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName}${lastName}[${partyId}]"/></field>
+        <field name="effectiveDate"><display/></field>
+        <field name="amount"><display/></field>
+        <field name="currencyUomId"><display/></field>
+    </form>
+    
+    <form name="LookupInvoice" target="LookupInvoice" title="" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <!--auto-fields-entity entity-name="Invoice" default-field-type="hidden" /-->
+        <field position="1" name="invoiceId" widget-style="form-control" ><text-find/></field>
+        <field position="1" name="invoiceTypeId" widget-style="form-control">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="InvoiceType"/>
+            </drop-down>
+        </field>
+        <field  widget-style="form-control" name="statusId" title="${uiLabelMap.CommonStatus}" position="1">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="StatusItem">
+                    <entity-constraint name="statusTypeId" operator="equals" value="INVOICE_STATUS"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field position="1" widget-style="form-control" name="partyIdFrom"><lookup  target-form-name="LookupPartyName"/></field>
+        <field position="2" widget-style="form-control" name="partyId" title="${uiLabelMap.AccountingPartyIdTo}"><lookup  target-form-name="LookupPartyName"/></field>
+        <field position="1" widget-style="form-control" name="Datefrom" title="${uiLabelMap.CommonFromDate}"><date-time/></field>
+        <field position="2" widget-style="form-control" name="DateThru" title="${uiLabelMap.CommonThruDate}"><date-time/></field>
+
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="ListInvoice" list-name="listIt" title="" paginate-target="LookupInvoice"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="Invoice"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="invoiceId" widget-style="buttontext">
+            <hyperlink description="${invoiceId}" target="javascript:set_value('${invoiceId}')" also-hidden="false" target-type="plain"/>
+        </field>
+        <field name="invoiceTypeId"><display-entity entity-name="InvoiceType"/></field>
+        <field name="statusId" title="${uiLabelMap.CommonStatus}"><display-entity entity-name="StatusItem"/></field>
+        <field name="description"><display/></field>
+        <field name="partyIdFrom"><display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName}${lastName}[${partyId}]"/></field>
+        <field name="partyId" title="${uiLabelMap.AccountingPartyIdTo}"><display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName}${lastName}[${partyId}]"/></field>
+        <field name="amount"><display/></field>
+        <field name="currencyUomId"><display/></field>
+    </form>
+
+    <form name="LookupAgreement" target="LookupAgreement" title="" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="agreementId" widget-style="form-control" ><text-find/></field>
+        <field name="productId" widget-style="form-control" ><text-find/></field>
+        <field name="partyIdFrom" widget-style="form-control"><text-find/></field>
+        <field name="partyId" widget-style="form-control" title="${uiLabelMap.AccountingPartyIdTo}"><text-find/></field>
+        <field name="agreementDate" widget-style="form-control" title="${uiLabelMap.CommonFromDate}"><date-time/></field>
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <grid name="ListAgreements" list-name="listIt" title="" target="LookupAgreement"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="Agreement"/>
+            </service>
+        </actions>
+        <field name="agreementId" widget-style="buttontext">
+            <hyperlink description="${agreementId}" target="javascript:set_value('${agreementId}')" also-hidden="false" target-type="plain"/>
+        </field>
+        <field name="productId"><display/></field>
+        <field name="partyIdFrom"><display/></field>
+        <field name="partyIdTo"><display/></field>
+        <field name="agreementDate" title="${uiLabelMap.CommonFromDate}"><display/></field>
+        <field name="agreementTypeId"><display/></field>
+        <field name="description"><display/></field>
+    </grid>
+
+    <form name="LookupAgreementItem" target="LookupAgreementItem" title="" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="agreementId" widget-style="form-control"><text-find/></field>
+        <field name="agreementItemSeqId" widget-style="form-control"><text-find/></field>
+        <field name="agreementItemTypeId" widget-style="form-control" title="${uiLabelMap.FormFieldTitle_agreementItemType}">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="AgreementItemType"/>
+            </drop-down>
+        </field>
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <grid name="ListAgreementItems" list-name="listIt" title="" target="LookupAgreementItem"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="AgreementItem"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="agreementId"><display/></field>
+        <field name="agreementItemSeqId" widget-style="buttontext">
+            <hyperlink description="${agreementItemSeqId}" target="javascript:set_value('${agreementItemSeqId}')" also-hidden="false" target-type="plain"/>
+        </field>
+        <field name="agreementItemTypeId"><display/></field>
+        <field name="currencyUomId"><display/></field>
+    </grid>
+
+    <form name="LookupPaymentGroupMember" target="LookupPaymentGroupMember" title="" type="single" header-row-style="header-row" default-table-style="basic-table">
+        <field name="paymentGroupId" widget-style="form-control"><text-find/></field>
+        <field name="paymentId" widget-style="form-control"><text-find/></field>
+        <field name="fromDate" widget-style="form-control" position="1"><date-time/></field>
+        <field name="thruDate" widget-style="form-control" position="2"><date-time/></field>
+        <field name="sequenceNum" widget-style="form-control"><text-find/></field>
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <grid name="ListPaymentGroupMember" list-name="listIt" title="" target="LookupPaymentGroupMember"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="PaymentGroupMember"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="paymentGroupId" widget-style="buttontext">
+            <hyperlink description="${paymentGroupId}" target="javascript:set_value('${paymentGroupId}')" also-hidden="false" target-type="plain"/>
+        </field>
+        <field name="paymentId"><display/></field>
+        <field name="sequenceNum"><display/></field>
+    </grid>
+
+    <form name="LookupGlReconciliation" target="LookupGlReconciliation" type="single"
+            header-row-style="header-row" default-table-style="basic-table">
+        <field name="glReconciliationId" widget-style="form-control" title="${uiLabelMap.FormFieldTitle_glReconciliationId}"><text-find/></field>
+        <field name="glReconciliationName" widget-style="form-control" title="${uiLabelMap.FormFieldTitle_glReconciliationName}"><text-find/></field>
+        <field name="organizationPartyId" widget-style="form-control" title="${uiLabelMap.FormFieldTitle_organizationPartyId}"><lookup  target-form-name="LookupPartyName"/></field>
+        <field name="description" widget-style="form-control" title="${uiLabelMap.CommonDescription}"><text-find/></field>
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <grid name="ListLookupReconciliation" list-name="listIt" target="LookupGlReconciliation"
+            odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="GlReconciliation"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="glReconciliationId" widget-style="buttontext">
+            <hyperlink description="${glReconciliationId}" target="javascript:set_value('${glReconciliationId}')" also-hidden="false" target-type="plain"/>
+        </field>
+        <field name="glReconciliationName"><display/></field>
+        <field name="organizationPartyId"><display-entity entity-name="PartyNameView" key-field-name="partyId" description="${groupName}${firstName} ${lastName}[${partyId}]"/></field>
+        <field name="description" title="${uiLabelMap.CommonDescription}"><display/></field>
+    </grid>
+    
+    <form name="LookupCustomTimePeriod" target="LookupCustomTimePeriod" title="" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <auto-fields-entity entity-name="CustomTimePeriod" default-field-type="hidden"/>
+        <field name="customTimePeriodId" widget-style="form-control"><text-find/></field>
+        <field name="parentPeriodId" widget-style="form-control"><text-find/></field>
+        <field name="periodTypeId" widget-style="form-control">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="PeriodType">
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+             </drop-down>
+        </field>
+        <field name="periodNum" widget-style="form-control"><text-find/></field>
+        <field name="periodName" widget-style="form-control"><text-find/></field>
+        <field name="fromDate" widget-style="form-control"><date-time/></field>
+        <field name="thruDate" widget-style="form-control"><date-time/></field>
+        <field name="isClosed" widget-style="form-control">
+            <drop-down allow-empty="true">
+                <option key="Y" description="${uiLabelMap.CommonY}"/>
+                <option key="N" description="${uiLabelMap.CommonN}"/>
+            </drop-down>
+        </field>
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <grid name="ListLookupCustomTimePeriod" list-name="listIt" title="" paginate-target="LookupCustomTimePeriod"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="CustomTimePeriod"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="customTimePeriodId" widget-style="buttontext">
+            <hyperlink description="${customTimePeriodId}" target="javascript:set_value('${customTimePeriodId}')" also-hidden="false" target-type="plain"/>
+        </field>
+        <field name="parentPeriodId"><display/></field>
+        <field name="periodTypeId"><display-entity entity-name="PeriodType"/></field>
+        <field name="periodNum"><display/></field>
+        <field name="periodName"><display/></field>
+        <field name="fromDate"><display/></field>
+        <field name="thruDate"><display/></field>
+        <field name="isClosed"><display/></field>
+    </grid>
+    
+    <form name="partyCostCenter" target="partyCostCenter" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="roleTypeId" widget-style="form-control"><hidden value="COST_CENTER"/></field>
+        <field name="partyId" title="${uiLabelMap.PartyPartyId}" widget-style="form-control"><text-find/></field>
+<!--        <field name="partyTypeId" title="${uiLabelMap.PartyTypeId}" widget-style="form-control">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="PartyType"/>
+            </drop-down>
+        </field>-->
+        <!--<field name="firstName" title="${uiLabelMap.PartyFirstName}" widget-style="form-control"><text-find/></field>-->
+        <!--<field name="lastName"  title="${uiLabelMap.PartyLastName}" widget-style="form-control"><text-find/></field>-->
+        <field name="groupName" title="${uiLabelMap.PartyGroupName}" widget-style="form-control"><text-find/></field>
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}"><submit button-type="button"/></field>
+    </form>
+    <form name="ListpartyCostCenter" type="list" list-name="listIt" paginate-target="partyCostCenter"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <set field="inputFields" from-field="parameters"/>
+            <set field="orderBy" value="partyId"/>
+            <set field="entityName" value="PartyRolePartyGroup"/>
+            <script location="component://accounting/groovyScripts/GLTransaction/partyCostCenter.groovy"/>
+        </actions>
+        <field name="partyId" title="${uiLabelMap.PartyPartyId}"  widget-style="smallSubmit">
+            <hyperlink description="${partyId}" target="javascript:set_value('${partyId}')" also-hidden="false" target-type="plain"/>
+        </field>
+<!--        <field name="partyTypeId" title="${uiLabelMap.PartyTypeId}">
+            <display-entity also-hidden="false" entity-name="PartyType"/>
+        </field>-->
+        <!--<field name="firstName" title="${uiLabelMap.PartyFirstName}"><display/></field>-->
+        <!--<field name="lastName"  title="${uiLabelMap.PartyLastName}"><display/></field>-->
+        <field name="groupName" title="${uiLabelMap.PartyGroupName}"><display/></field>
+    </form>  
+    <form name="partyEmployees" target="partyEmployees" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="roleTypeId" widget-style="form-control"><hidden value="EMPLOYEE"/></field>
+        <field name="partyId" title="${uiLabelMap.PartyPartyId}" widget-style="form-control"><text-find/></field>
+<!--        <field name="partyTypeId" title="${uiLabelMap.PartyTypeId}" widget-style="form-control">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="PartyType"/>
+            </drop-down>
+        </field>-->
+        <field name="firstName" title="${uiLabelMap.PartyFirstName}" widget-style="form-control"><text-find/></field>
+        <field name="lastName"  title="${uiLabelMap.PartyLastName}" widget-style="form-control"><text-find/></field>
+        <!--<field name="groupName" title="${uiLabelMap.PartyGroupName}" widget-style="form-control"><text-find/></field>-->
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}"><submit button-type="button"/></field>
+    </form>
+    <form name="ListpartyEmployees" type="list" list-name="listIt" paginate-target="partyEmployees"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <set field="inputFields" from-field="parameters"/>
+            <set field="orderBy" value="partyId"/>
+            <set field="entityName" value="PartyRolePerson"/>
+            <script location="component://accounting/groovyScripts/GLTransaction/partyEmployees.groovy"/>
+        </actions>
+        <field name="partyId" title="${uiLabelMap.PartyPartyId}"  widget-style="smallSubmit">
+            <hyperlink description="${partyId}" target="javascript:set_value('${partyId}')" also-hidden="false" target-type="plain"/>
+        </field>
+<!--        <field name="partyTypeId" title="${uiLabelMap.PartyTypeId}">
+            <display-entity also-hidden="false" entity-name="PartyType"/>
+        </field>-->
+        <field name="firstName" title="${uiLabelMap.PartyFirstName}"><display/></field>
+        <field name="lastName"  title="${uiLabelMap.PartyLastName}"><display/></field>
+        <!--<field name="groupName" title="${uiLabelMap.PartyGroupName}"><display/></field>-->
+    </form>  
+    <form name="partyVendor" target="partyVendor" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="roleTypeId" widget-style="form-control"><hidden value="BILL_FROM_VENDOR"/></field>
+        <field name="partyId" title="${uiLabelMap.PartyPartyId}" widget-style="form-control"><text/></field>
+<!--        <field name="partyTypeId" title="${uiLabelMap.PartyTypeId}" widget-style="form-control">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="PartyType"/>
+            </drop-down>
+        </field>-->
+        <field name="firstName" title="${uiLabelMap.PartyFirstName}" widget-style="form-control"><text/></field>
+        <field name="lastName"  title="${uiLabelMap.PartyLastName}" widget-style="form-control"><text/></field>
+        <!--<field name="groupName" title="${uiLabelMap.PartyGroupName}" widget-style="form-control"><text-find/></field>-->
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}"><submit button-type="button"/></field>
+    </form>
+    <form name="ListpartyVendor" type="list" list-name="listIt" paginate-target="partyVendor"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <!--<set field="inputFields" from-field="parameters"/>-->
+            <!--<set field="orderBy" value="partyId"/>-->
+            <!--<set field="entityName" value="PartyRolePerson"/>-->
+            <script location="component://accounting/groovyScripts/GLTransaction/partyVendor.groovy"/>
+        </actions>
+        <field name="partyId" title="${uiLabelMap.PartyPartyId}"  widget-style="smallSubmit">
+            <hyperlink description="${partyId}" target="javascript:set_value('${partyId}')" also-hidden="false" target-type="plain"/>
+        </field>
+<!--        <field name="partyTypeId" title="${uiLabelMap.PartyTypeId}">
+            <display-entity also-hidden="false" entity-name="PartyType"/>
+        </field>-->
+        <field name="firstName" title="${uiLabelMap.PartyFirstName}"><display/></field>
+        <field name="lastName"  title="${uiLabelMap.PartyLastName}"><display/></field>
+        <!--<field name="groupName" title="${uiLabelMap.PartyGroupName}"><display/></field>-->
+    </form>  
+    <form name="partyGlAccount" target="partyGlAccount" type="single"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="roleTypeId" widget-style="form-control"><hidden value="INTERNAL_ORGANIZATIO"/></field>
+        <field name="partyId" title="${uiLabelMap.PartyPartyId}" widget-style="form-control"><text-find/></field>
+<!--        <field name="partyTypeId" title="${uiLabelMap.PartyTypeId}" widget-style="form-control">
+            <drop-down allow-empty="true">
+                <entity-options entity-name="PartyType"/>
+            </drop-down>
+        </field>-->
+        <!--<field name="firstName" title="${uiLabelMap.PartyFirstName}" widget-style="form-control"><text-find/></field>-->
+        <!--<field name="lastName"  title="${uiLabelMap.PartyLastName}" widget-style="form-control"><text-find/></field>-->
+        <field name="groupName" title="${uiLabelMap.PartyGroupName}" widget-style="form-control"><text-find/></field>
+        <field name="noConditionFind" widget-style="form-control"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitButton" title="${uiLabelMap.CommonFind}"><submit button-type="button"/></field>
+    </form>
+    <form name="ListpartyGlAccount" type="list" list-name="listIt" paginate-target="partyGlAccount"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+        <actions>
+            <set field="inputFields" from-field="parameters"/>
+            <set field="orderBy" value="partyId"/>
+            <set field="entityName" value="PartyRolePartyGroupPartyAccPref"/>
+            <script location="component://accounting/groovyScripts/GLTransaction/partyGlAccount.groovy"/>
+        </actions>
+        <field name="partyId" title="${uiLabelMap.PartyPartyId}"  widget-style="smallSubmit">
+            <hyperlink description="${partyId}" target="javascript:set_value('${partyId}')" also-hidden="false" target-type="plain"/>
+        </field>
+<!--        <field name="partyTypeId" title="${uiLabelMap.PartyTypeId}">
+            <display-entity also-hidden="false" entity-name="PartyType"/>
+        </field>-->
+        <!--<field name="firstName" title="${uiLabelMap.PartyFirstName}"><display/></field>-->
+        <!--<field name="lastName"  title="${uiLabelMap.PartyLastName}"><display/></field>-->
+        <field name="groupName" title="${uiLabelMap.PartyGroupName}"><display/></field>
+    </form>  
+</forms>

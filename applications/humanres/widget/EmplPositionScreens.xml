@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://ofbiz.apache.org/Widget-Screen" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="FindEmplPositions">
+        <section>
+            <actions>
+                <set field="titleProperty" value="HumanResFindEmplPosition"/>
+                <set field="headerItem" value="EmplPosition"/>
+                <set field="tabButtonItem" value="FindEmplPositions"/>
+                <set field="layoutSettings.javaScripts[]" value="/partymgr/static/HrPosition.js" global="true"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonEmplPositionDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="menu-bar">
+                                <section>
+                                    <widgets>
+                                        
+                                            <link target="EditEmplPosition" text="${uiLabelMap.HumanResNewEmplPosition}" style="buttontext create"/>
+                                            <!--<include-menu name="EmplPostionBar2" location="component://humanres/widget/HumanresMenus.xml"/>-->
+                                     
+                                    </widgets>
+                                </section>
+                            </decorator-section>
+                                <decorator-section name="search-options">
+                                   <include-form name="FindEmplPositions" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                                </decorator-section>
+                               <decorator-section name="search-results">
+                                    <include-form name="ListEmplPositions" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                                </decorator-section>
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="findFulfillments">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Find Fulfillments"/>
+                <!--<set field="headerItem" value="EmplPosition"/>-->
+                <set field="tabButtonItem" value="EmplPositionFulfillments"/>
+                <set field="organizationPartyId" value=""/>
+                <set field="action" value="SEARCH"/>
+                <set field="layoutSettings.javaScripts[]" value="/partymgr/static/HrPosition.js" global="true"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonEmplPositionDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">  
+			<label style="h2" text="Search"/>       
+                            <decorator-section name="menu-bar">
+                                <section>
+                                    <widgets>
+					  <platform-specific><html><html-template location="component://humanres/template/PositionGradationMenu.ftl"/></html></platform-specific>
+<!--                                         <include-menu name="PositionGradationBar" location="component://humanres/widget/HumanresMenus.xml"/>-->
+                                    </widgets>
+                                </section>
+                            </decorator-section>
+                              <platform-specific>                           
+                                <html>
+                                    <html-template location="component://humanres/widget/forms/postionGradation/ftl/search.ftl"/>
+                                </html>
+                            </platform-specific>  
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+      <screen name="customEmplPositionFulfillments">
+        <section>
+            <actions>  
+                <!--<set field="headerItem" value="EmplPositionFulfillments"/>--> 
+                <!--<set field="layoutSettings.javaScripts[]" value="/images/jgridTable/jgridGlobal.js" global="true"/>-->  
+                <!--<set field="layoutSettings.javaScripts[]" value="/images/BusinessInnovation/js/plugin/jqgrid/grid.locale-en.min.js" global="true"/>-->  
+                <!--<set field="layoutSettings.javaScripts[]" value="/images/BusinessInnovation/js/plugin/jqgrid/jquery.jqGrid.min.js" global="true"/>-->  
+                <set field="titleProperty" value="PageTitleListEmplPositionFulfillments"/>
+                <set field="tabButtonItem" value="EmplPositionFulfillments"/>
+                <set field="emplPositionId" from-field="parameters.emplPositionId"/>
+                <!--<set field="statusId" from-field="parameters.statusId"/>-->
+                <!--<set field="partyId" from-field="parameters.partyId"/>-->
+                <set field="layoutSettings.javaScripts[]" value="/partymgr/static/HrPosition.js" global="true"/> 
+                <set field="action" value="HIRING"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+			<label style="h2" text="Hiring"/>
+                        <decorator-section name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="menu-bar">
+                                <section>
+                                    <widgets>
+					  <platform-specific><html><html-template location="component://humanres/template/PositionGradationMenu.ftl"/></html></platform-specific>
+
+                                    </widgets>
+                                </section>
+                            </decorator-section>       
+                              <platform-specific>                           
+                                <html>
+                                    <html-template location="component://humanres/widget/forms/postionGradation/ftl/hiring.ftl"/>
+                                </html>
+                            </platform-specific> 
+                                       
+<!--                            <screenlet id="AddEmplPositionFulfillmentPanel" title="${uiLabelMap.HumanResAddEmplPositionFulfillment}" collapsible="true">
+                                <include-form name="customAddEmplPositionFulfillment" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                            </screenlet>
+                            <screenlet title="List Employee Position Fulfillments" id="MyListEmplPositionFulfillments">
+                                <include-form name="customListEmplPositionFulfillments" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                            </screenlet>-->
+                        </decorator-section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+            
+        </section>
+    </screen>
+    <screen name="ListEmplPositionsParty">
+        <section>
+            <actions>
+                <set field="titleProperty" value="HumanResFindEmplPosition"/>
+                <set field="headerItem" value="EmplPosition"/>
+                <set field="tabButtonItem" value="ListEmplPositions"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="EmployeeDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.HumanResEmployeePosition}" tab-menu-name="ListEmplPositionsParty">
+                            <include-form name="ListEmplPositionsParty" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditEmplPosition">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditEmplPosition"/>
+                <set field="tabButtonItem" value="EditEmplPosition"/>
+                <set field="emplPositionId" from-field="parameters.emplPositionId"/>
+                <!--<set field="statusId" from-field="parameters.statusId"/>-->
+                <!--<set field="partyId" from-field="parameters.partyId"/>-->
+                <entity-one entity-name="EmplPosition" value-field="emplPosition"/>
+                <set field="layoutSettings.javaScripts[]" value="/partymgr/static/HrPosition.js" global="true"/>
+                <!--<entity-one entity-name="EmplPositionFulfillment" value-field="emplPositionFulfillment"/>-->
+                 <!--<script location="component://humanres/groovyScripts/employeePosition.groovy"/>-->
+
+            </actions>
+            <widgets>
+		<label style="h2" text="Edit Employee Position"/>
+                <decorator-screen name="CommonEmplPositionDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.HumanResEditEmplPosition}">
+                            <include-form name="EditEmplPosition" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditEmplPositionFulfillments">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleListEmplPositionFulfillments"/>
+                <set field="tabButtonItem" value="EditEmplPositionFulfillments"/>
+                <set field="emplPositionId" from-field="parameters.emplPositionId"/>
+                <!--<set field="statusId" from-field="parameters.statusId"/>-->
+                <!--<set field="partyId" from-field="parameters.partyId"/>-->
+                <set field="layoutSettings.javaScripts[]" value="/partymgr/static/HrPosition.js" global="true"/>
+                 
+              
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonEmplPositionDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet id="AddEmplPositionFulfillmentPanel" title="${uiLabelMap.HumanResAddEmplPositionFulfillment}" collapsible="true">
+                            <include-form name="AddEmplPositionFulfillment" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                        </screenlet>
+		        <screenlet title="List Employee Position Fulfillments" id="MyListEmplPositionFulfillments">
+                        <include-form name="ListEmplPositionFulfillments" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                        </screenlet>
+		    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditEmplPositionResponsibilities">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleListEmplPositionResponsibilities"/>
+                <set field="tabButtonItem" value="EditEmplPositionResponsibilities"/>
+                <set field="emplPositionId" from-field="parameters.emplPositionId"/>
+                <!--<set field="statusId" from-field="parameters.statusId"/>-->
+                <!--<set field="partyId" from-field="parameters.partyId"/>-->
+                
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonEmplPositionDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet id="AddEmplPositionResponsibilityPanel" title="${uiLabelMap.HumanResAddEmplPositionResponsibility}" collapsible="true">
+                            <include-form name="AddEmplPositionResponsibility" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                        </screenlet>
+			<screenlet title="List Employee Position Responsibilities">
+                        <include-form name="ListEmplPositionResponsibilities" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                        </screenlet>
+		    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditEmplPositionReportingStructs">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleListEmplPositionReportingStructs"/>
+                <set field="tabButtonItem" value="EditEmplPositionReportingStructs"/>
+                <set field="emplPositionId" from-field="parameters.emplPositionId"/>
+                <!--<set field="statusId" from-field="parameters.statusId"/>-->
+                <!--<set field="partyId" from-field="parameters.partyId"/>-->
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonEmplPositionDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <container>
+                            <label style="h1" text="${uiLabelMap.HumanResEditEmplPositionReportingStruct} ${uiLabelMap.CommonFor}: [${uiLabelMap.CommonId}:${parameters.emplPositionId}]"/>
+                        </container>
+                        <screenlet id="AddReportsToEmplPositionReportingStructPanel" title="${uiLabelMap.HumanResAddReportsToEmplPositionReportingStruct}" collapsible="true">
+                            <include-form name="AddReportsToEmplPositionReportingStruct" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                        </screenlet>
+			<screenlet title="List Reports To Employee Position Reporting Structs">
+                        <include-form name="ListReportsToEmplPositionReportingStructs" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                        </screenlet>
+                         <screenlet id="AddReportedToEmplPositionReportingStructPanel" title="${uiLabelMap.HumanResAddReportedToEmplPositionReportingStruct}" collapsible="true">
+                            <include-form name="AddReportedToEmplPositionReportingStruct" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                        </screenlet>
+			<screenlet title="List Reported To Employee Position Reporting Structs">
+                        <include-form name="ListReportedToEmplPositionReportingStructs" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                        </screenlet>
+		    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditEmplPositionStructuring">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleListEmplPositionReportingStructs"/>
+                <set field="tabButtonItem" value="EditEmplPositionStructuring"/>
+                <set field="tabButtonItem2" value="ReportingStructure"/>
+                <set field="emplPositionId" from-field="parameters.emplPositionId"/>
+                <!--<set field="statusId" from-field="parameters.statusId"/>-->
+                <!--<set field="partyId" from-field="parameters.partyId"/>-->
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonEmplPositionDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                            <include-menu name="Structuring" location="component://humanres/widget/HumanresMenus.xml"/>
+                            <platform-specific>                           
+                                <html>
+                                    <html-template location="component://humanres/widget/forms/Structuring/ftl/ReportingStructure.ftl"/>
+                                </html>
+                            </platform-specific>
+		    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="ListValidResponsibilities">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleListValidResponsibilities"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.HumanResListValidResponsibility}">
+                            <container>
+                                <link target="EditValidResponsibility" text="${uiLabelMap.HumanResAddValidResponsibility}" style="buttontext"/>
+                            </container>
+                            <include-form name="ListValidResponsibilities" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditValidResponsibility">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditValidResponsibility"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="${uiLabelMap.HumanResAddValidResponsibility}">
+                            <container>
+                                <link target="EditValidResponsibility" text="${uiLabelMap.HumanResAddValidResponsibility}" style="buttontext"/>
+                            </container>
+                            <include-form name="AddValidResponsibility" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EmplPositionView">
+        <section>
+            <actions>
+                <set field="titleProperty" value="HumanResEmplPositionSummary"/>
+                <set field="tabButtonItem" value="EmplPositionView"/>
+                <set field="emplPositionId" from-field="parameters.emplPositionId"/>
+                <!--<set field="statusId" from-field="parameters.statusId"/>-->
+                <!--<set field="partyId" from-field="parameters.partyId"/>-->
+                <entity-one entity-name="EmplPosition" value-field="emplPosition"/>
+                <set field="layoutSettings.javaScripts[]" value="/partymgr/static/HrPosition.js" global="true"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonEmplPositionDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                                <container style="lefthalf">
+                                    <screenlet title="${uiLabelMap.HumanResEmployeePosition} ${uiLabelMap.CommonInformation}">
+                                        <section>
+                                            <widgets>
+                                                <include-form name="EmplPositionInfo" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                                            </widgets>
+                                        </section>
+                                    </screenlet>
+                                    <include-screen name="EmplPositionFulfilmentView"/>
+                                    <include-screen name="EmplPositionResponsibilityView"/>
+                                </container>
+                                <container style="righthalf">
+                                    <include-screen name="EmplPositionReportsToView"/>
+                                    <include-screen name="EmplPositionReportedToView"/>
+                                </container>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EmplPositionFulfilmentView">
+        <section>
+            <actions>
+                <entity-condition entity-name="EmplPositionFulfillment" list="emplPositionFulfillments">
+                    <condition-expr field-name="emplPositionId" operator="equals" from-field="parameters.emplPositionId"/>
+                    <order-by field-name="fromDate"/>
+                </entity-condition>
+            </actions>
+            <widgets>
+                <screenlet title="${uiLabelMap.HumanResPositionFulfillments}">
+                    <section>
+                        <widgets>
+                            <include-form name="ListEmplPositionFulfilmentInfo" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                        </widgets>
+                    </section>
+                </screenlet>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EmplPositionResponsibilityView">
+        <section>
+            <actions>
+                <entity-condition entity-name="EmplPositionResponsibility" list="emplPositionResponsibilities">
+                    <condition-expr field-name="emplPositionId" operator="equals" from-field="parameters.emplPositionId"/>
+                    <order-by field-name="fromDate"/>
+                </entity-condition>
+            </actions>
+            <widgets>
+                <screenlet title="${uiLabelMap.HumanResEmplPositionResponsibilities}">
+                    <section>
+                        <widgets>
+                            <include-form name="ListEmplPositionResponsibilityInfo" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                        </widgets>
+                    </section>
+                </screenlet>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EmplPositionReportsToView">
+        <section>
+            <actions>
+                <entity-condition entity-name="EmplPositionReportingStruct" list="emplPositionReportingStructs">
+                    <condition-expr field-name="emplPositionIdManagedBy" operator="equals" from-field="parameters.emplPositionId"/>
+                    <order-by field-name="fromDate"/>
+                </entity-condition>
+            </actions>
+            <widgets>
+                <screenlet title="${uiLabelMap.HumanResEmplPositionReportingStruct}:${uiLabelMap.HumanResReportsTo}">
+                    <section>
+                        <widgets>
+                            <include-form name="ListEmplPositionReportsToInfo" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                        </widgets>
+                    </section>
+                </screenlet>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EmplPositionReportedToView">
+        <section>
+            <actions>
+                <entity-condition entity-name="EmplPositionReportingStruct" list="emplPositionReportingStructs">
+                    <condition-expr field-name="emplPositionIdReportingTo" operator="equals" from-field="parameters.emplPositionId"/>
+                    <order-by field-name="fromDate"/>
+                </entity-condition>
+            </actions>
+            <widgets>
+                <screenlet title="${uiLabelMap.HumanResEmplPositionReportingStruct}:${uiLabelMap.HumanResReportedTo}">
+                    <section>
+                        <widgets>
+                            <include-form name="ListEmplPositionReportedToInfo" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                        </widgets>
+                    </section>
+                </screenlet>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditInternalOrgFtl">
+        <section>
+            <actions>
+            </actions>
+            <widgets>
+                <platform-specific><html><html-template location="component://humanres/template/internalorg/EditInternalOrg.ftl"/></html></platform-specific>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditInternalOrgOnlyForm">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditInternalOrg"/>
+                <set field="tabButtonItem" value="EditInternalOrg"/>
+                <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
+                <entity-one entity-name="PartyRole" value-field="partyRole"/>
+            </actions>
+            <widgets>
+                <include-form name="ListInternalOrg" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="RemoveInternalOrgFtl">
+        <section>
+            <widgets>
+                <platform-specific><html><html-template location="component://humanres/template/internalorg/RemoveInternalOrg.ftl"/></html></platform-specific>
+            </widgets>
+        </section>
+    </screen>
+         <screen name="MyInbox">
+        <section>
+            <actions>  
+                <set field="headerItem" value="MyInbox"/>             
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">		
+                             <platform-specific>                           
+                            <html>
+                                <html-template location="component://myportal/widget/MyInbox/myInbox.ftl"/>
+                            </html>
+                        </platform-specific> 
+                        </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="FindEmplPositionFulfillmentsPerson">
+        <section>
+            <actions>
+                <set field="titleProperty" value="Find Employee Position Fulfillments"/>
+                <set field="headerItem" value="EmplPosition"/>
+                <set field="tabButtonItem" value="FindEmplPositionFulfillmentsPerson"/>
+                <!--<set field="layoutSettings.javaScripts[]" value="/partymgr/static/HrPosition.js" global="true"/>-->
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonEmplPositionDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                            <decorator-section name="menu-bar">
+                                <section>
+                                    <widgets>
+                                        <container style="button-bar">
+                                            <link target="EditEmplPosition" text="${uiLabelMap.HumanResNewEmplPosition}" style="buttontext"/>
+                                            <include-menu name="EmplPostionBar2" location="component://humanres/widget/HumanresMenus.xml"/>
+                                        </container>
+                                    </widgets>
+                                </section>
+                            </decorator-section>
+                            <decorator-section name="search-options" >
+                                <include-form name="FindEmplPositionFulfillmentsPerson" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                            </decorator-section>
+                            <decorator-section name="search-results">
+                                <include-form name="ListEmplPositionFulfillmentsPerson" location="component://humanres/widget/forms/EmplPositionForms.xml"/>
+                            </decorator-section>
+                        </decorator-screen>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+	 <screen name="BonusEmployee">
+        <section>
+            <actions>  
+                <set field="headerItem" value="BonusEmployee"/> 
+                <set field="action" value="BONUS"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                             <label style="h2" text="Bonus Employee"/>
+                        <decorator-section name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+			    <platform-specific><html><html-template location="component://humanres/template/PositionGradationMenu.ftl"/></html></platform-specific>
+                            <platform-specific>                           
+                                <html>
+                                    <html-template location="component://humanres/widget/forms/postionGradation/ftl/bonus.ftl"/>
+                                </html>
+                            </platform-specific> 
+                        </decorator-section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+            
+        </section>
+    </screen>
+    
+     <screen name="PromotionEmployee">
+        <section>
+            <actions>  
+                <set field="headerItem" value="PromotionEmployee"/> 
+                <set field="action" value="PROMOTION"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <label style="h2" text="Promotion Employee"/>
+                        <decorator-section name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+			    <platform-specific><html><html-template location="component://humanres/template/PositionGradationMenu.ftl"/></html></platform-specific>
+                            <platform-specific>                           
+                                <html>
+                                    <html-template location="component://humanres/widget/forms/postionGradation/ftl/promotion.ftl"/>
+                                </html>
+                            </platform-specific> 
+                        </decorator-section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+            
+        </section>
+    </screen>
+     <screen name="MoveEmployee">
+        <section>
+            <actions>  
+                <set field="headerItem" value="MoveEmployee"/> 
+                        <set field="action" value="MOVING"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <label style="h2" text="Move Employee"/>
+                        <decorator-section name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+			    <platform-specific><html><html-template location="component://humanres/template/PositionGradationMenu.ftl"/></html></platform-specific>
+                            <platform-specific>                           
+                                <html>
+                                    <html-template location="component://humanres/widget/forms/postionGradation/ftl/move.ftl"/>
+                                </html>
+                            </platform-specific> 
+                        </decorator-section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+            
+        </section>
+    </screen>
+         <screen name="TerminateEmployee">
+        <section>
+            <actions>  
+                <set field="headerItem" value="TerminateEmployee"/> 
+                <set field="action" value="TERMINATE"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <label style="h2" text="Terminate Employee"/>
+                        <decorator-section name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+			    <platform-specific><html><html-template location="component://humanres/template/PositionGradationMenu.ftl"/></html></platform-specific>
+                            <platform-specific>                           
+                                <html>
+                                    <html-template location="component://humanres/widget/forms/postionGradation/ftl/terminate.ftl"/>
+                                </html>
+                            </platform-specific> 
+                        </decorator-section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+            
+        </section>
+    </screen>
+         <screen name="HoldEmployee">
+        <section>
+            <actions>  
+                <set field="headerItem" value="HoldEmployee"/> 
+                <set field="action" value="HOLD"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <label style="h2" text="Hold Employee"/>
+                        <decorator-section name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+			    <platform-specific><html><html-template location="component://humanres/template/PositionGradationMenu.ftl"/></html></platform-specific>
+                            <platform-specific>                           
+                                <html>
+                                    <html-template location="component://humanres/widget/forms/postionGradation/ftl/hold.ftl"/>
+                                </html>
+                            </platform-specific> 
+                        </decorator-section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+            
+        </section>
+    </screen>
+</screens>
